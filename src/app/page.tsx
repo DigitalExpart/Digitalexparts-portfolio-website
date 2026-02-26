@@ -10,6 +10,7 @@ import { TeamCard } from "@/components/TeamCard";
 import { FAQAccordion } from "@/components/FAQAccordion";
 import { CTABand } from "@/components/CTABand";
 import { HeroSlider } from "@/components/HeroSlider";
+import { LogoMarquee } from "@/components/LogoMarquee";
 import { siteConfig } from "@/data/site";
 import { services } from "@/data/services";
 import { caseStudies } from "@/data/caseStudies";
@@ -53,25 +54,7 @@ export default function HomePage() {
       <HeroSlider />
 
       {/* ============ SOCIAL PROOF STRIP ============ */}
-      <section className="border-y border-white/5 bg-navy-900/50 py-10">
-        <Container>
-          <p className="mb-6 text-center text-sm font-medium uppercase tracking-wider text-gray-500">
-            Trusted by innovative businesses
-          </p>
-          <div className="flex flex-wrap items-center justify-center gap-8 sm:gap-12">
-            {["TechStart", "GrowthCo", "ScaleUp", "InnovateLab", "FutureStack"].map(
-              (name) => (
-                <div
-                  key={name}
-                  className="font-heading text-lg font-bold text-gray-600 transition-colors hover:text-gray-400"
-                >
-                  {name}
-                </div>
-              )
-            )}
-          </div>
-        </Container>
-      </section>
+      <LogoMarquee />
 
       {/* ============ SERVICES PREVIEW ============ */}
       <section className="relative overflow-hidden bg-navy-950 py-20 sm:py-28">
