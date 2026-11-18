@@ -1,165 +1,173 @@
-"use client";
+import type { Metadata } from "next";
+import Image from "next/image";
+import { SERVICES } from "@/data/services";
+import { TOOLS_MARQUEE } from "@/data/home";
+import { SITE } from "@/data/site";
+import { HeadingReveal, FadeUp } from "@/components/motion/TextReveal";
+import { MagneticButton } from "@/components/motion/MagneticButton";
 
-import { motion } from "framer-motion";
-import { Container, SectionHeading } from "@/components/Container";
-import { Button } from "@/components/Button";
-import { AnimatedBlobs } from "@/components/AnimatedBlobs";
-import { CTABand } from "@/components/CTABand";
-import { siteConfig, getWhatsAppLink } from "@/data/site";
-import { services } from "@/data/services";
+export const metadata: Metadata = {
+  title: "Services",
+  description:
+    "Website design & development, no-code platforms (Wix, Squarespace, WordPress, Webflow), UI/UX design, branding, email marketing, and AI video production.",
+};
+
+const SERVICE_CONTACT_QUERY_MAP: Record<string, string> = {
+  "web-dev": "Website Design and Development",
+  nocode: "No-Code Platform Build",
+  "ui-ux": "UI/UX Design",
+  branding: "Graphic Design and Branding",
+  email: "Email Marketing",
+  "ai-video": "AI Video",
+};
 
 export default function ServicesPage() {
-    return (
-        <>
-            {/* Hero */}
-            <section className="relative overflow-hidden bg-navy-950 py-20 sm:py-28">
-                <AnimatedBlobs />
-                <Container className="relative z-10">
-                    <motion.div
-                        initial={{ opacity: 0, y: 30 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.7 }}
-                        className="mx-auto max-w-3xl text-center"
-                    >
-                        <span className="mb-4 inline-block rounded-full border border-accent-blue/30 bg-accent-blue/10 px-4 py-1.5 text-sm font-medium text-accent-cyan">
-                            What We Do
-                        </span>
-                        <h1 className="font-heading text-4xl font-bold tracking-tight text-white sm:text-5xl lg:text-6xl">
-                            Services Designed to Increase{" "}
-                            <span className="gradient-text">Leads, Sales, and Efficiency</span>
-                        </h1>
-                        <p className="mt-6 text-lg text-gray-300">
-                            Our {siteConfig.seoCopyName} deliver end-to-end digital solutions
-                            across three core disciplines — each one focused on measurable growth.
-                        </p>
-                    </motion.div>
-                </Container>
-            </section>
+  return (
+    <div className="pt-[calc(var(--header-height)+3.5rem)] pb-20 sm:pb-28">
+      {/* Hero */}
+      <section className="container-editorial space-y-10 pb-16 sm:pb-20">
+        <div className="space-y-5 max-w-4xl">
+          <p className="text-eyebrow">03 · Capabilities &amp; Stack</p>
+          <HeadingReveal as="h1" trigger="enter" delay={0.08} className="text-display">
+            Six disciplines. Delivered solo or by pod.
+          </HeadingReveal>
+          <FadeUp trigger="enter" delay={0.2}>
+            <p className="text-lead text-[var(--text-secondary)] max-w-2xl">
+              Whether you need one senior specialist to launch fast or a coordinated remote crew
+              across web, brand, email, and AI video, everything runs through one clear lead:{" "}
+              {SITE.owner}.
+            </p>
+          </FadeUp>
+        </div>
 
-            {/* Service detail sections */}
-            {services.map((service, i) => (
-                <section
-                    key={service.id}
-                    id={service.id}
-                    className={`py-20 sm:py-28 ${i % 2 === 0 ? "bg-navy-900/30" : "bg-navy-950"}`}
-                >
-                    <Container>
-                        <div className="grid items-start gap-12 lg:grid-cols-2">
-                            {/* Left: Content */}
-                            <motion.div
-                                initial={{ opacity: 0, x: -30 }}
-                                whileInView={{ opacity: 1, x: 0 }}
-                                viewport={{ once: true }}
-                                transition={{ duration: 0.6 }}
-                            >
-                                <div className="mb-4 text-5xl">{service.icon}</div>
-                                <h2 className="font-heading text-3xl font-bold text-white sm:text-4xl">
-                                    {service.title}
-                                </h2>
-                                <p className="mt-4 text-lg leading-relaxed text-gray-300">
-                                    {service.description}
-                                </p>
-                                <p className="mt-3 text-sm text-accent-cyan">
-                                    ⏱ Typical timeline: {service.timeline}
-                                </p>
-                                <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-                                    <Button
-                                        href={getWhatsAppLink(
-                                            `Hi, I'm interested in your ${service.title} services.`
-                                        )}
-                                        external
-                                        className="bg-gradient-to-r! from-green-500! to-emerald-600!"
-                                    >
-                                        💬 Discuss This Service
-                                    </Button>
-                                    <Button href="/work" variant="secondary">
-                                        See Related Work
-                                    </Button>
-                                </div>
-                            </motion.div>
+        {/* Quick Jump Pills */}
+        <FadeUp trigger="enter" delay={0.28} className="flex flex-wrap gap-2.5">
+          {SERVICES.map((svc) => (
+            <a
+              key={svc.id}
+              href={`#${svc.id}`}
+              className="inline-flex min-h-[44px] items-center gap-2 rounded-full border border-[var(--border-subtle)] bg-[var(--bg-elevated)] px-4 text-xs font-mono uppercase tracking-[0.1em] text-[var(--text-secondary)] hover:border-[var(--accent)] hover:text-[var(--accent)]"
+            >
+              <span className="text-[var(--accent)]">{svc.index}</span>
+              <span>{svc.title}</span>
+            </a>
+          ))}
+        </FadeUp>
+      </section>
 
-                            {/* Right: Deliverables & Features */}
-                            <motion.div
-                                initial={{ opacity: 0, x: 30 }}
-                                whileInView={{ opacity: 1, x: 0 }}
-                                viewport={{ once: true }}
-                                transition={{ duration: 0.6, delay: 0.2 }}
-                                className="space-y-6"
-                            >
-                                <div className="glass-card rounded-2xl p-6">
-                                    <h3 className="mb-4 font-heading text-lg font-semibold text-white">
-                                        What You Get
-                                    </h3>
-                                    <ul className="space-y-3">
-                                        {service.deliverables.map((d) => (
-                                            <li
-                                                key={d}
-                                                className="flex items-start gap-3 text-sm text-gray-300"
-                                            >
-                                                <svg className="mt-0.5 h-4 w-4 flex-shrink-0 text-accent-cyan" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                                                </svg>
-                                                {d}
-                                            </li>
-                                        ))}
-                                    </ul>
-                                </div>
+      {/* Deep-Dive Disciplines */}
+      <section className="container-editorial space-y-12 border-t border-[var(--border-subtle)] pt-14 sm:pt-20">
+        {SERVICES.map((svc, idx) => {
+          const prefill = encodeURIComponent(
+            SERVICE_CONTACT_QUERY_MAP[svc.id] || "Something Else"
+          );
 
-                                <div className="glass-card rounded-2xl p-6">
-                                    <h3 className="mb-4 font-heading text-lg font-semibold text-white">
-                                        Key Features
-                                    </h3>
-                                    <div className="flex flex-wrap gap-2">
-                                        {service.features.map((f) => (
-                                            <span
-                                                key={f}
-                                                className="rounded-full border border-accent-blue/20 bg-accent-blue/5 px-3 py-1 text-xs text-accent-cyan"
-                                            >
-                                                {f}
-                                            </span>
-                                        ))}
-                                    </div>
-                                </div>
-                            </motion.div>
-                        </div>
-                    </Container>
-                </section>
-            ))}
+          return (
+            <article
+              key={svc.id}
+              id={svc.id}
+              className="scroll-mt-24 grid grid-cols-1 gap-8 rounded-3xl border border-[var(--border-subtle)] bg-[var(--bg-elevated)]/65 p-6 sm:p-10 lg:grid-cols-12 lg:gap-12"
+            >
+              <div className="lg:col-span-7 flex flex-col justify-between gap-6">
+                <div className="space-y-4">
+                  <div className="flex flex-wrap items-center gap-3">
+                    <span className="font-mono text-xs text-[var(--accent)]">
+                      {svc.index}
+                    </span>
+                    <span className="rounded-full border border-[var(--border-subtle)] px-3 py-1 font-mono text-[11px] uppercase tracking-[0.12em] text-[var(--text-secondary)]">
+                      {svc.shortTag}
+                    </span>
+                  </div>
 
-            {/* Pricing note */}
-            <section className="bg-navy-950 py-16">
-                <Container>
-                    <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                        className="glass-card mx-auto max-w-2xl rounded-2xl p-8 text-center"
-                    >
-                        <h2 className="font-heading text-2xl font-bold text-white">
-                            💡 How Pricing Works
-                        </h2>
-                        <p className="mt-4 text-sm leading-relaxed text-gray-400">
-                            We don&apos;t believe in one-size-fits-all pricing. Every project is scoped
-                            individually based on your goals, complexity, and timeline. After a
-                            free consultation, we&apos;ll provide a transparent, fixed-price quote — no
-                            hidden fees, no surprises. Most projects start from $500.
-                        </p>
-                        <div className="mt-6">
-                            <Button
-                                href={getWhatsAppLink(
-                                    "Hi, I'd like to discuss pricing for a project."
-                                )}
-                                external
-                                className="bg-gradient-to-r! from-green-500! to-emerald-600!"
-                            >
-                                💬 Get a Free Quote
-                            </Button>
-                        </div>
-                    </motion.div>
-                </Container>
-            </section>
+                  <h2 className="font-display text-2xl sm:text-4xl font-bold tracking-tight">
+                    {svc.title}
+                  </h2>
 
-            <CTABand />
-        </>
-    );
+                  <p className="text-base sm:text-lg text-[var(--text-secondary)] leading-relaxed">
+                    {svc.description}
+                  </p>
+                </div>
+
+                <div className="space-y-4 border-t border-[var(--border-subtle)] pt-6">
+                  <p className="text-eyebrow">What&apos;s included</p>
+                  <ul className="grid grid-cols-1 gap-2.5 sm:grid-cols-2">
+                    {svc.capabilities.map((cap) => (
+                      <li
+                        key={cap}
+                        className="flex items-center gap-2.5 text-sm text-[var(--text-primary)]"
+                      >
+                        <span
+                          aria-hidden="true"
+                          className="h-1.5 w-1.5 shrink-0 rounded-full bg-[var(--accent)]"
+                        />
+                        <span>{cap}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                <div className="pt-2">
+                  <MagneticButton
+                    href={`/contact?service=${prefill}`}
+                    variant={idx % 2 === 0 ? "primary" : "secondary"}
+                    size="md"
+                  >
+                    <span>Start a {svc.title.split(" ")[0]} project</span>
+                    <span aria-hidden="true">→</span>
+                  </MagneticButton>
+                </div>
+              </div>
+
+              <div className="lg:col-span-5 flex flex-col justify-between gap-4">
+                <div className="relative aspect-[16/10] w-full overflow-hidden rounded-2xl border border-[var(--border-subtle)]">
+                  <Image
+                    src={svc.previewImage}
+                    alt={svc.previewAlt}
+                    fill
+                    sizes="(max-width: 1024px) 100vw, 40vw"
+                    className="object-cover"
+                  />
+                </div>
+                <div className="flex items-center justify-between rounded-xl border border-[var(--border-subtle)] bg-[var(--bg-primary)]/70 px-4 py-3 text-xs font-mono text-[var(--text-secondary)]">
+                  <span>{svc.accentLabel}</span>
+                  <span className="text-[var(--accent)]">Solo / Team</span>
+                </div>
+              </div>
+            </article>
+          );
+        })}
+      </section>
+
+      {/* Platforms Matrix */}
+      <section className="container-editorial mt-16 sm:mt-24 border-t border-[var(--border-subtle)] pt-14 space-y-8">
+        <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+          <div>
+            <p className="text-eyebrow">Platforms &amp; Tools</p>
+            <h2 className="mt-2 font-display text-2xl sm:text-4xl font-bold">
+              Built in the right tool for your team.
+            </h2>
+          </div>
+          <MagneticButton href="/work" variant="secondary" size="sm">
+            See shipped examples →
+          </MagneticButton>
+        </div>
+
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6">
+          {TOOLS_MARQUEE.map((tool) => (
+            <div
+              key={tool.name}
+              className="rounded-xl border border-[var(--border-subtle)] bg-[var(--bg-elevated)] p-4"
+            >
+              <p className="font-display text-base font-bold text-[var(--text-primary)]">
+                {tool.name}
+              </p>
+              <p className="mt-1 font-mono text-[11px] uppercase tracking-[0.12em] text-[var(--text-muted)]">
+                {tool.category}
+              </p>
+            </div>
+          ))}
+        </div>
+      </section>
+    </div>
+  );
 }

@@ -1,57 +1,50 @@
-"use client";
+import type { Metadata } from "next";
+import { HeadingReveal, FadeUp } from "@/components/motion/TextReveal";
+import { WorkGalleryClient } from "@/components/work/WorkGalleryClient";
+import { MagneticButton } from "@/components/motion/MagneticButton";
+import { SITE } from "@/data/site";
 
-import { motion } from "framer-motion";
-import { Container } from "@/components/Container";
-import { AnimatedBlobs } from "@/components/AnimatedBlobs";
-import { CaseStudyCard } from "@/components/CaseStudyCard";
-import { CTABand } from "@/components/CTABand";
-import { siteConfig } from "@/data/site";
-import { caseStudies } from "@/data/caseStudies";
+export const metadata: Metadata = {
+  title: "Work",
+  description:
+    "Explore selected Digital Expert projects across websites, no-code platforms, UI/UX design, branding, email marketing, and AI video.",
+};
 
 export default function WorkPage() {
-    return (
-        <>
-            {/* Hero */}
-            <section className="relative overflow-hidden bg-navy-950 py-20 sm:py-28">
-                <AnimatedBlobs />
-                <Container className="relative z-10">
-                    <motion.div
-                        initial={{ opacity: 0, y: 30 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.7 }}
-                        className="mx-auto max-w-3xl text-center"
-                    >
-                        <span className="mb-4 inline-block rounded-full border border-accent-blue/30 bg-accent-blue/10 px-4 py-1.5 text-sm font-medium text-accent-cyan">
-                            Our Portfolio
-                        </span>
-                        <h1 className="font-heading text-4xl font-bold tracking-tight text-white sm:text-5xl lg:text-6xl">
-                            Real Projects,{" "}
-                            <span className="gradient-text">Real Results</span>
-                        </h1>
-                        <p className="mt-6 text-lg text-gray-300">
-                            Explore how our {siteConfig.seoCopyName} have helped businesses across
-                            industries achieve measurable growth through web development, email
-                            marketing, and AI automation.
-                        </p>
-                    </motion.div>
-                </Container>
-            </section>
+  return (
+    <div className="pt-[calc(var(--header-height)+3.5rem)] pb-20 sm:pb-28">
+      <section className="container-editorial space-y-12 sm:space-y-16">
+        <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
+          <div className="space-y-4 max-w-4xl">
+            <p className="text-eyebrow">02 · Portfolio Archive</p>
+            <HeadingReveal as="h1" trigger="enter" delay={0.08} className="text-display">
+              Selected work that ships results.
+            </HeadingReveal>
+          </div>
 
-            {/* Case Studies Grid */}
-            <section className="bg-navy-900/30 py-20 sm:py-28">
-                <Container>
-                    <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-                        {caseStudies.map((study, i) => (
-                            <CaseStudyCard key={study.id} study={study} index={i} />
-                        ))}
-                    </div>
-                </Container>
-            </section>
+          <FadeUp trigger="enter" delay={0.2} className="max-w-md space-y-3">
+            <p className="text-sm sm:text-base text-[var(--text-secondary)]">
+              Filter by discipline below. Each build notes whether it ran as a solo sprint with{" "}
+              {SITE.owner} or alongside a vetted specialist pod.
+            </p>
+          </FadeUp>
+        </div>
 
-            <CTABand
-                title="Want Results Like These?"
-                subtitle="Tell us about your project and we'll show you what's possible."
-            />
-        </>
-    );
+        <WorkGalleryClient />
+
+        <div className="flex flex-col items-start justify-between gap-6 rounded-3xl border border-[var(--border-subtle)] bg-[var(--bg-elevated)] p-8 sm:flex-row sm:items-center sm:p-12">
+          <div className="space-y-2 max-w-xl">
+            <p className="text-eyebrow">Have a project in mind?</p>
+            <h2 className="font-display text-2xl sm:text-3xl font-bold">
+              Let&apos;s scope your next build — solo or with a tailored team.
+            </h2>
+          </div>
+          <MagneticButton href="/contact" variant="primary" size="lg">
+            <span>Discuss your project</span>
+            <span aria-hidden="true">→</span>
+          </MagneticButton>
+        </div>
+      </section>
+    </div>
+  );
 }

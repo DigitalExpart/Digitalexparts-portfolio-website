@@ -1,125 +1,206 @@
 @import "tailwindcss";
+@import "../styles/tokens.css";
 
-@theme {
-  --color-navy-950: #050B18;
-  --color-navy-900: #0B1F3B;
-  --color-navy-800: #122B4D;
-  --color-navy-700: #1A3A63;
-  --color-navy-600: #234B7A;
-  --color-accent-blue: #2563EB;
-  --color-accent-cyan: #22D3EE;
-  --color-light-bg: #F8FAFC;
-  --font-heading: 'Space Grotesk', sans-serif;
-  --font-body: 'Inter', sans-serif;
+@theme inline {
+  --font-display: var(--font-syne);
+  --font-sans: var(--font-inter);
+  --font-mono: var(--font-jetbrains);
+
+  --color-bg: var(--bg-primary);
+  --color-elevated: var(--bg-elevated);
+  --color-surface: var(--bg-surface);
+  --color-fg: var(--text-primary);
+  --color-fg-secondary: var(--text-secondary);
+  --color-fg-muted: var(--text-muted);
+  --color-accent: var(--accent);
+  --color-accent-ink: var(--accent-ink);
+  --color-border-subtle: var(--border-subtle);
 }
 
-/* Smooth scrolling */
-html {
-  scroll-behavior: smooth;
+@layer base {
+  html {
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    font-family: var(--font-body);
+    overflow-x: clip;
+    scroll-behavior: auto;
+    color-scheme: dark;
+  }
+
+  body {
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    font-family: var(--font-body);
+    font-size: var(--text-body);
+    line-height: 1.6;
+    min-height: 100dvh;
+    overflow-x: clip;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  ::selection {
+    background-color: var(--accent);
+    color: var(--accent-ink);
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  .font-display {
+    font-family: var(--font-display);
+    letter-spacing: -0.03em;
+  }
+
+  a,
+  button,
+  [role="button"],
+  input,
+  select,
+  textarea {
+    transition: color 0.2s ease, border-color 0.2s ease, opacity 0.2s ease;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+    border-radius: 3px;
+  }
 }
 
-/* Custom scrollbar */
-::-webkit-scrollbar {
-  width: 8px;
+/* Custom cursor hiding only on confirmed desktop fine pointers */
+@media (hover: hover) and (pointer: fine) {
+  html.has-custom-cursor body,
+  html.has-custom-cursor a,
+  html.has-custom-cursor button,
+  html.has-custom-cursor [role="button"],
+  html.has-custom-cursor summary {
+    cursor: none !important;
+  }
 }
 
-::-webkit-scrollbar-track {
-  background: #0B1F3B;
+/* Editorial Layout Primitives */
+.container-editorial {
+  width: 100%;
+  max-width: var(--container-max);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
 }
 
-::-webkit-scrollbar-thumb {
-  background: #2563EB;
-  border-radius: 4px;
+.section-pad {
+  padding-block: var(--section-space);
 }
 
-::-webkit-scrollbar-thumb:hover {
-  background: #22D3EE;
+.hairline-t {
+  border-top: 1px solid var(--border-subtle);
 }
 
-/* Selection colors */
-::selection {
-  background: rgba(37, 99, 235, 0.3);
-  color: white;
+.hairline-b {
+  border-bottom: 1px solid var(--border-subtle);
 }
 
-/* Reduced motion */
+.hairline-all {
+  border: 1px solid var(--border-subtle);
+}
+
+/* Fluid Typography Helpers */
+.text-display {
+  font-family: var(--font-display);
+  font-size: var(--text-display);
+  line-height: 0.94;
+  letter-spacing: -0.04em;
+  font-weight: 700;
+}
+
+.text-h1 {
+  font-family: var(--font-display);
+  font-size: var(--text-h1);
+  line-height: 0.98;
+  letter-spacing: -0.035em;
+  font-weight: 700;
+}
+
+.text-h2 {
+  font-family: var(--font-display);
+  font-size: var(--text-h2);
+  line-height: 1.04;
+  letter-spacing: -0.03em;
+  font-weight: 700;
+}
+
+.text-h3 {
+  font-family: var(--font-display);
+  font-size: var(--text-h3);
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  font-weight: 600;
+}
+
+.text-lead {
+  font-size: var(--text-lead);
+  line-height: 1.45;
+  letter-spacing: -0.01em;
+}
+
+.text-eyebrow {
+  font-family: var(--font-mono);
+  font-size: var(--text-micro);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+}
+
+/* SplitText / Line Mask Safety */
+.split-line-mask {
+  overflow: hidden;
+  display: block;
+}
+
+/* Pulsing Status Indicator */
+@keyframes pulse-ring {
+  0% {
+    transform: scale(0.95);
+    opacity: 0.85;
+  }
+  70% {
+    transform: scale(2.1);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(2.1);
+    opacity: 0;
+  }
+}
+
+.status-dot-pulse {
+  animation: pulse-ring 2.2s cubic-bezier(0.24, 0, 0.38, 1) infinite;
+}
+
+/* Sticky Footer Reveal only when desktop viewport is tall enough to avoid clipping */
+@media (min-width: 1024px) and (min-height: 760px) {
+  .sticky-footer-reveal {
+    position: sticky;
+    bottom: 0;
+    z-index: 0;
+  }
+}
+
+/* Preloader zero-flash guard for repeat session loads and reduced motion */
+html[data-preloader="done"] #de-preloader {
+  display: none !important;
+}
+
+/* Reduced Motion Guardrails */
 @media (prefers-reduced-motion: reduce) {
+  .status-dot-pulse {
+    animation: none;
+  }
 
   *,
   *::before,
   *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
-}
-
-/* Glass card effect */
-.glass-card {
-  background: rgba(11, 31, 59, 0.6);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(37, 99, 235, 0.15);
-}
-
-/* Gradient text */
-.gradient-text {
-  background: linear-gradient(135deg, #2563EB 0%, #22D3EE 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-/* Blob animation */
-@keyframes blob-float {
-
-  0%,
-  100% {
-    transform: translate(0, 0) scale(1);
-  }
-
-  25% {
-    transform: translate(30px, -30px) scale(1.05);
-  }
-
-  50% {
-    transform: translate(-20px, 20px) scale(0.95);
-  }
-
-  75% {
-    transform: translate(20px, 10px) scale(1.02);
-  }
-}
-
-.animate-blob-float {
-  animation: blob-float 20s ease-in-out infinite;
-}
-
-.animate-blob-float-delayed {
-  animation: blob-float 25s ease-in-out 5s infinite;
-}
-
-.animate-blob-float-slow {
-  animation: blob-float 30s ease-in-out 10s infinite;
-}
-
-/* Logo marquee */
-@keyframes marquee {
-  0% {
-    transform: translateX(0);
-  }
-
-  100% {
-    transform: translateX(-50%);
-  }
-}
-
-.animate-marquee {
-  animation: marquee 40s linear infinite;
-  width: max-content;
-}
-
-.animate-marquee:hover {
-  animation-play-state: paused;
 }

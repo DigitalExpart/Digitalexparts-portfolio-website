@@ -1,142 +1,225 @@
-"use client";
+import type { Metadata } from "next";
+import { ENGAGEMENT_MODELS, STATS, TEAM_ROLES } from "@/data/home";
+import { PLATFORM_PROFILES, SITE } from "@/data/site";
+import {
+  HeadingReveal,
+  FadeUp,
+  WordScrubHighlight,
+} from "@/components/motion/TextReveal";
+import { MagneticButton } from "@/components/motion/MagneticButton";
 
-import { motion } from "framer-motion";
-import { Container, SectionHeading } from "@/components/Container";
-import { AnimatedBlobs } from "@/components/AnimatedBlobs";
-import { TeamCard } from "@/components/TeamCard";
-import { CTABand } from "@/components/CTABand";
-import { siteConfig } from "@/data/site";
-import { team } from "@/data/team";
+export const metadata: Metadata = {
+  title: "About",
+  description: `Meet ${SITE.owner} and learn how Digital Expert delivers senior solo sprints and vetted remote team launches worldwide.`,
+};
 
-const values = [
-    {
-        icon: "🎯",
-        title: "Results-Driven",
-        desc: "Every decision we make is guided by measurable outcomes. We don't just build — we build to convert.",
-    },
-    {
-        icon: "🤝",
-        title: "Transparent & Collaborative",
-        desc: "No black boxes. We keep you in the loop with regular updates, clear timelines, and honest communication.",
-    },
-    {
-        icon: "⚡",
-        title: "Agile & Efficient",
-        desc: "Small team, big impact. We move fast, iterate quickly, and deliver quality without the overhead of a large agency.",
-    },
+const PRINCIPLES = [
+  {
+    index: "01",
+    title: "Plain language over buzzwords",
+    body: "You never get buried in vague agency jargon. Every milestone, tool recommendation, and metric is explained clearly so you can make fast decisions.",
+  },
+  {
+    index: "02",
+    title: "Right-sized engagement",
+    body: "Some launches only need one senior builder for two weeks; others need design, dev, copy, email, and AI video moving in parallel. You only pay for the horsepower your scope requires.",
+  },
+  {
+    index: "03",
+    title: "Performance & handover built in",
+    body: "Every site ships responsive from 375px to 1920px, keyboard accessible, SEO-ready, and paired with clean walkthrough videos so your team owns it confidently.",
+  },
 ];
 
 export default function AboutPage() {
-    return (
-        <>
-            {/* Hero */}
-            <section className="relative overflow-hidden bg-navy-950 py-20 sm:py-28">
-                <AnimatedBlobs />
-                <Container className="relative z-10">
-                    <motion.div
-                        initial={{ opacity: 0, y: 30 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.7 }}
-                        className="mx-auto max-w-3xl text-center"
-                    >
-                        <span className="mb-4 inline-block rounded-full border border-accent-blue/30 bg-accent-blue/10 px-4 py-1.5 text-sm font-medium text-accent-cyan">
-                            About Us
-                        </span>
-                        <h1 className="font-heading text-4xl font-bold tracking-tight text-white sm:text-5xl lg:text-6xl">
-                            A Small Team of{" "}
-                            <span className="gradient-text">Digital Experts</span>
-                        </h1>
-                        <p className="mt-6 text-lg text-gray-300">
-                            {siteConfig.brandName} is a focused digital agency built by specialists,
-                            not generalists. We combine deep expertise in web development, email
-                            marketing, and AI automation to deliver solutions that actually move
-                            the needle for your business.
-                        </p>
-                    </motion.div>
-                </Container>
-            </section>
+  return (
+    <div className="pt-[calc(var(--header-height)+3.5rem)] pb-20 sm:pb-28">
+      {/* Hero */}
+      <section className="container-editorial space-y-8 pb-16 sm:pb-24">
+        <div className="flex flex-wrap items-center gap-3 text-xs font-mono uppercase tracking-[0.14em] text-[var(--text-secondary)]">
+          <span>04 · About {SITE.brand}</span>
+          <span aria-hidden="true">·</span>
+          <span className="text-[var(--accent)]">Led by {SITE.owner}</span>
+          <span aria-hidden="true">·</span>
+          <span>{SITE.location}</span>
+        </div>
 
-            {/* Agency Positioning */}
-            <section className="bg-navy-900/30 py-20 sm:py-28">
-                <Container>
-                    <div className="mx-auto max-w-3xl text-center">
-                        <motion.div
-                            initial={{ opacity: 0, y: 20 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true }}
-                            transition={{ duration: 0.6 }}
-                        >
-                            <h2 className="font-heading text-3xl font-bold text-white sm:text-4xl">
-                                Why Choose {siteConfig.brandName}?
-                            </h2>
-                            <p className="mt-6 text-lg leading-relaxed text-gray-300">
-                                We&apos;re not a 100-person agency with layers of account managers.
-                                We&apos;re a lean team of {siteConfig.seoCopyName} who work directly
-                                with you. That means faster turnaround, better communication, and
-                                solutions that are custom-built — not template-driven.
-                            </p>
-                            <p className="mt-4 text-lg leading-relaxed text-gray-300">
-                                Our clients choose us because we focus on outcomes, not outputs.
-                                Every website we build, every email we send, and every workflow we
-                                automate is designed to drive measurable business growth.
-                            </p>
-                        </motion.div>
-                    </div>
-                </Container>
-            </section>
+        <HeadingReveal
+          as="h1"
+          trigger="enter"
+          delay={0.08}
+          className="text-display max-w-5xl"
+        >
+          Senior solo focus, backed by a vetted remote bench.
+        </HeadingReveal>
 
-            {/* Values */}
-            <section className="bg-navy-950 py-20 sm:py-28">
-                <Container>
-                    <SectionHeading
-                        badge="Our Values"
-                        title="What Drives Us"
-                    />
-                    <div className="grid gap-6 sm:grid-cols-3">
-                        {values.map((v, i) => (
-                            <motion.div
-                                key={v.title}
-                                initial={{ opacity: 0, y: 30 }}
-                                whileInView={{ opacity: 1, y: 0 }}
-                                viewport={{ once: true }}
-                                transition={{ duration: 0.5, delay: i * 0.15 }}
-                                className="glass-card rounded-2xl p-8 text-center"
-                            >
-                                <div className="mb-4 text-4xl">{v.icon}</div>
-                                <h3 className="font-heading text-xl font-bold text-white">
-                                    {v.title}
-                                </h3>
-                                <p className="mt-3 text-sm leading-relaxed text-gray-400">
-                                    {v.desc}
-                                </p>
-                            </motion.div>
-                        ))}
-                    </div>
-                </Container>
-            </section>
+        <FadeUp trigger="enter" delay={0.22} className="max-w-3xl">
+          <p className="text-lead text-[var(--text-secondary)]">
+            {SITE.brand} was created for founders, small businesses, and agencies tired of
+            choosing between unreliable solo generalists and slow, overpriced traditional agencies.
+          </p>
+        </FadeUp>
+      </section>
 
-            <CTABand
-                title="Want to Work with Us?"
-                subtitle="We're always looking for exciting projects. Let's chat!"
+      {/* Scroll-Highlight Manifesto */}
+      <section className="container-editorial border-t border-[var(--border-subtle)] py-16 sm:py-24">
+        <div className="grid grid-cols-1 gap-8 lg:grid-cols-12">
+          <div className="lg:col-span-3">
+            <p className="text-eyebrow">Studio Philosophy</p>
+          </div>
+          <div className="lg:col-span-9">
+            <WordScrubHighlight
+              text={`Hi, I'm ${SITE.owner}. Whether I'm building your flagship site one-on-one or leading a sprint pod of designers, developers, copywriters, email specialists, and AI motion artists — you always talk directly to the person responsible for shipping the work.`}
+              className="font-display text-[clamp(1.65rem,3.2vw,2.9rem)] font-semibold leading-[1.2] tracking-[-0.025em]"
             />
+          </div>
+        </div>
+      </section>
 
-            {/* Team */}
-            <section className="bg-navy-900/30 py-20 sm:py-28">
-                <Container>
-                    <SectionHeading
-                        badge="The Team"
-                        title={`Meet Our ${siteConfig.seoCopyName}`}
-                        subtitle="Each member brings deep expertise in their domain to deliver exceptional results."
-                    />
-                    <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
-                        {team.map((member, i) => (
-                            <TeamCard key={member.id} member={member} index={i} />
-                        ))}
-                    </div>
-                </Container>
-            </section>
+      {/* Solo vs Team Deep Comparison */}
+      <section className="container-editorial border-t border-[var(--border-subtle)] py-16 sm:py-20 space-y-10">
+        <div className="space-y-3 max-w-3xl">
+          <p className="text-eyebrow">Two Ways To Work Together</p>
+          <h2 className="text-h2">Built to scale up or down around your launch.</h2>
+        </div>
 
-            <CTABand />
-        </>
-    );
+        <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
+          {(["solo", "team"] as const).map((key) => {
+            const model = ENGAGEMENT_MODELS[key];
+            return (
+              <div
+                key={key}
+                className="flex flex-col justify-between gap-6 rounded-3xl border border-[var(--border-subtle)] bg-[var(--bg-elevated)] p-6 sm:p-9"
+              >
+                <div className="space-y-4">
+                  <span className="inline-block rounded-full border border-[var(--accent)]/40 bg-[var(--accent-soft)] px-3.5 py-1 font-mono text-xs uppercase tracking-[0.12em] text-[var(--accent)]">
+                    {model.badge}
+                  </span>
+                  <h3 className="font-display text-2xl sm:text-3xl font-bold">
+                    {model.label}
+                  </h3>
+                  <p className="text-sm sm:text-base text-[var(--text-secondary)] leading-relaxed">
+                    {model.summary}
+                  </p>
+                </div>
+
+                <ul className="space-y-2.5 border-t border-[var(--border-subtle)] pt-5">
+                  {model.howItWorks.map((item) => (
+                    <li
+                      key={item}
+                      className="flex items-start gap-2.5 text-sm text-[var(--text-primary)]"
+                    >
+                      <span
+                        aria-hidden="true"
+                        className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-[var(--accent)]"
+                      />
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+
+                <div className="flex flex-wrap items-center justify-between gap-3 border-t border-[var(--border-subtle)] pt-4 text-xs font-mono text-[var(--text-secondary)]">
+                  <span>Turnaround: {model.turnaround}</span>
+                  <span className="text-[var(--text-primary)]">{model.idealFor}</span>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </section>
+
+      {/* Vetted Roster */}
+      <section className="container-editorial border-t border-[var(--border-subtle)] py-16 sm:py-20 space-y-10">
+        <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+          <div className="space-y-3 max-w-2xl">
+            <p className="text-eyebrow">The Vetted Bench</p>
+            <h2 className="text-h2">Five specialist roles ready on demand.</h2>
+          </div>
+          <p className="max-w-sm text-sm text-[var(--text-secondary)]">
+            Zero random outsourcing — every collaborator is someone {SITE.owner} has shipped live
+            client work with repeatedly.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {TEAM_ROLES.map((role, i) => (
+            <div
+              key={role.title}
+              className="rounded-2xl border border-[var(--border-subtle)] bg-[var(--bg-elevated)] p-6 space-y-3"
+            >
+              <div className="flex items-center justify-between">
+                <span className="font-mono text-xs text-[var(--accent)]">0{i + 1}</span>
+                <span className="font-mono text-[11px] text-[var(--text-muted)]">
+                  {role.tools}
+                </span>
+              </div>
+              <h3 className="font-display text-xl font-bold">{role.title}</h3>
+              <p className="text-sm text-[var(--text-secondary)]">{role.focus}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* Operating Principles & Snapshot Numbers */}
+      <section className="container-editorial border-t border-[var(--border-subtle)] py-16 sm:py-20 space-y-12">
+        <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
+          {PRINCIPLES.map((p) => (
+            <div key={p.index} className="space-y-3 border-t border-[var(--border-subtle)] pt-5">
+              <span className="font-mono text-xs text-[var(--accent)]">{p.index}</span>
+              <h3 className="font-display text-xl font-bold">{p.title}</h3>
+              <p className="text-sm sm:text-base text-[var(--text-secondary)] leading-relaxed">
+                {p.body}
+              </p>
+            </div>
+          ))}
+        </div>
+
+        <div className="grid grid-cols-2 gap-4 rounded-3xl border border-[var(--border-subtle)] bg-[var(--bg-elevated)] p-6 sm:grid-cols-4 sm:p-8">
+          {STATS.map((s) => (
+            <div key={s.label}>
+              <p className="font-display text-3xl sm:text-4xl font-bold text-[var(--accent)]">
+                {String(s.value).padStart(s.padLength, "0")}
+                {s.suffix}
+              </p>
+              <p className="mt-1 text-xs sm:text-sm text-[var(--text-secondary)]">
+                {s.label}
+              </p>
+            </div>
+          ))}
+        </div>
+
+        {/* Direct CTAs */}
+        <div className="flex flex-wrap items-center justify-between gap-6 rounded-3xl border border-[var(--accent)]/30 bg-[var(--accent-soft)] p-7 sm:p-10">
+          <div className="space-y-2 max-w-xl">
+            <h2 className="font-display text-2xl sm:text-3xl font-bold text-[var(--text-primary)]">
+              Want to see if we&apos;re a fit?
+            </h2>
+            <p className="text-sm sm:text-base text-[var(--text-secondary)]">
+              Reach out via {SITE.email}, book a quick intro call, or hire directly on Fiverr or
+              Upwork.
+            </p>
+          </div>
+          <div className="flex flex-wrap gap-3">
+            <MagneticButton href="/contact" variant="primary" size="md">
+              Start a project →
+            </MagneticButton>
+            <MagneticButton href={SITE.calendlyUrl} external variant="secondary" size="md">
+              Book 30-min call ↗
+            </MagneticButton>
+            {PLATFORM_PROFILES.map((p) => (
+              <MagneticButton
+                key={p.label}
+                href={p.href}
+                external
+                variant="ghost"
+                size="md"
+              >
+                {p.label} ↗
+              </MagneticButton>
+            ))}
+          </div>
+        </div>
+      </section>
+    </div>
+  );
 }

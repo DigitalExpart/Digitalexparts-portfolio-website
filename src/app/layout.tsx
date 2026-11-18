@@ -1,115 +1,102 @@
-import type { Metadata } from "next";
-import { Inter, Space_Grotesk } from "next/font/google";
+import type { Metadata, Viewport } from "next";
+import { Syne, Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
-import { Navbar } from "@/components/Navbar";
-import { Footer } from "@/components/Footer";
-import { WhatsAppFloatingButton } from "@/components/WhatsAppFloatingButton";
-import { siteConfig } from "@/data/site";
+import { SiteShell } from "@/components/layout/SiteShell";
+import { SITE } from "@/data/site";
+
+const syne = Syne({
+  subsets: ["latin"],
+  weight: ["500", "600", "700", "800"],
+  variable: "--font-syne",
+  display: "swap",
+});
 
 const inter = Inter({
-  variable: "--font-body",
   subsets: ["latin"],
+  variable: "--font-inter",
   display: "swap",
 });
 
-const spaceGrotesk = Space_Grotesk({
-  variable: "--font-heading",
+const jetbrains = JetBrains_Mono({
   subsets: ["latin"],
+  weight: ["400", "500"],
+  variable: "--font-jetbrains",
   display: "swap",
 });
+
+export const viewport: Viewport = {
+  themeColor: "#05060A",
+  width: "device-width",
+  initialScale: 1,
+};
 
 export const metadata: Metadata = {
+  metadataBase: new URL(SITE.siteUrl),
   title: {
-    default: `${siteConfig.brandName} | Web Development, Email Marketing & AI Automation`,
-    template: `%s | ${siteConfig.brandName}`,
+    default: `${SITE.brand} — Websites, No-Code, Brand & AI Video Studio`,
+    template: `%s | ${SITE.brand}`,
   },
-  description: `${siteConfig.seoCopyName} in web development, email marketing, and AI automation. We build digital solutions that increase leads, sales, and efficiency for your business.`,
+  description: SITE.description,
   openGraph: {
     type: "website",
-    locale: "en_US",
-    siteName: siteConfig.brandName,
-    title: `${siteConfig.brandName} | Digital Experts in Web Dev, Email & AI`,
-    description: `${siteConfig.seoCopyName} in web development, email marketing, and AI automation. We build digital solutions that grow your business.`,
+    siteName: SITE.brand,
+    title: `${SITE.brand} — One-Stop Digital Partner`,
+    description: SITE.description,
   },
-  robots: {
-    index: true,
-    follow: true,
+  twitter: {
+    card: "summary_large_image",
+    title: `${SITE.brand} — One-Stop Digital Partner`,
+    description: SITE.description,
   },
 };
 
-// JSON-LD Organization Schema
-const organizationSchema = {
-  "@context": "https://schema.org",
-  "@type": "Organization",
-  name: siteConfig.brandName,
-  alternateName: siteConfig.seoCopyName,
-  url: siteConfig.siteUrl,
-  description: `${siteConfig.seoCopyName} in web development, email marketing, and AI automation.`,
-  contactPoint: {
-    "@type": "ContactPoint",
-    contactType: "customer service",
-    url: `https://wa.me/${siteConfig.whatsappNumber}`,
-  },
-  sameAs: [siteConfig.upworkUrl, siteConfig.fiverrUrl],
-};
-
-// JSON-LD Service Schema
-const serviceSchema = {
-  "@context": "https://schema.org",
-  "@type": "ItemList",
-  itemListElement: [
-    {
-      "@type": "Service",
-      name: "Web Development",
-      description:
-        "Custom websites and web applications that convert visitors into customers.",
-      provider: { "@type": "Organization", name: siteConfig.brandName },
-    },
-    {
-      "@type": "Service",
-      name: "Email Marketing",
-      description:
-        "Automated email campaigns that nurture leads and boost revenue.",
-      provider: { "@type": "Organization", name: siteConfig.brandName },
-    },
-    {
-      "@type": "Service",
-      name: "AI Automation",
-      description:
-        "Intelligent workflows and chatbots that save time and scale operations.",
-      provider: { "@type": "Organization", name: siteConfig.brandName },
-    },
-  ],
-};
+const PRELOADER_BOOT_SCRIPT = `
+try {
+  var seen = sessionStorage.getItem('de_preloader_seen') === '1';
+  var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  document.documentElement.dataset.preloader = (seen || reduced) ? 'done' : 'active';
+} catch (e) {}
+`;
 
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "ProfessionalService",
+    name: SITE.brand,
+    description: SITE.description,
+    url: SITE.siteUrl,
+    areaServed: "Worldwide",
+    founder: {
+      "@type": "Person",
+      name: SITE.owner,
+    },
+    serviceType: [
+      "Website Design and Development",
+      "No-Code Platform Builds (Wix, Squarespace, WordPress, Webflow)",
+      "UI/UX Design",
+      "Graphic Design and Branding",
+      "Email Marketing",
+      "AI Video Production",
+    ],
+  };
+
   return (
-    <html lang="en" className="dark">
-      <head>
+    <html
+      lang="en"
+      suppressHydrationWarning
+      className={`${syne.variable} ${inter.variable} ${jetbrains.variable}`}
+    >
+      <body suppressHydrationWarning>
+        <script dangerouslySetInnerHTML={{ __html: PRELOADER_BOOT_SCRIPT }} />
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify(organizationSchema),
-          }}
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify(serviceSchema),
-          }}
-        />
-      </head>
-      <body
-        className={`${inter.variable} ${spaceGrotesk.variable} bg-navy-950 font-body text-white antialiased`}
-      >
-        <Navbar />
-        <main className="pt-[73px]">{children}</main>
-        <Footer />
-        <WhatsAppFloatingButton />
+        <SiteShell>{children}</SiteShell>
       </body>
     </html>
   );
