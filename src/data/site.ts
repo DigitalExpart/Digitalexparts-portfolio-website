@@ -19,8 +19,8 @@ export const SITE = {
   location: "[LOCATION]",
   timezoneNote: "Remote · Serving clients worldwide",
   calendlyUrl: "[CALENDLY URL]",
-  fiverrUrl: "[FIVERR URL]",
-  upworkUrl: "[UPWORK URL]",
+  fiverrUrl: "https://www.fiverr.com/s/GPlqGkz",
+  upworkUrl: "https://www.upwork.com/freelancers/~01e12863196bfb5563?mp_source=share",
   siteUrl: process.env.NEXT_PUBLIC_SITE_URL || "https://digital-expert.example.com",
   tagline: "One-stop digital partner — solo speed or a vetted team.",
   description:
@@ -81,7 +81,7 @@ export const SOCIAL_LINKS: ExternalProfile[] = [
   { label: "LinkedIn", href: "[LINKEDIN URL]" },
   { label: "X / Twitter", href: "[X URL]" },
   { label: "Dribbble", href: "[DRIBBBLE URL]" },
-  { label: "Behance", href: "[BEHANCE URL]" },
+  { label: "Behance", href: "https://www.behance.net/bellojumato" },
 ];
 
 export function isPlaceholderHref(href: string): boolean {
