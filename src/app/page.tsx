@@ -21,7 +21,7 @@ export default function HomePage() {
       <LightContrastBand />
       <ProcessSection />
       <TestimonialsSection />
-      <FaqSection />
+      <FaqSection limit={4} />
       <ContactSection />
     </>
   );

@@ -9,6 +9,8 @@ import { useSmoothScroll } from "@/components/motion/SmoothScrollProvider";
 import { useMediaCapabilities } from "@/hooks/useMediaCapabilities";
 
 const WORDMARK_LETTERS = SITE.brandUpper.split("");
+const FOOTER_MARQUEE_PHRASES = ["Let's talk", "Let's build", "Let's grow"];
+const FOOTER_NAV = NAV_LINKS.filter((item) => item.href !== "/");
 
 export function SiteFooter() {
   const footerRef = useRef<HTMLElement>(null);
@@ -18,7 +20,7 @@ export function SiteFooter() {
   const { scrollTo } = useSmoothScroll();
   const { prefersReducedMotion } = useMediaCapabilities();
 
-  // M15: Giant wordmark letters rise as the main content lifts to reveal the footer
+  // M15: Giant wordmark letters rise as main content lifts to reveal footer
   useEffect(() => {
     ensureGsapRegistered();
     const footer = footerRef.current;
@@ -38,7 +40,7 @@ export function SiteFooter() {
           yPercent: 0,
           opacity: 1,
           duration: 0.85,
-          stagger: 0.028,
+          stagger: 0.026,
           ease: "expo.out",
           scrollTrigger: prevContent
             ? {
@@ -58,7 +60,7 @@ export function SiteFooter() {
     return () => ctx.revert();
   }, [prefersReducedMotion]);
 
-  // M15: Looping "Let's talk" footer marquee
+  // M15: Looping footer strip
   useEffect(() => {
     ensureGsapRegistered();
     const track = marqueeTrackRef.current;
@@ -81,11 +83,11 @@ export function SiteFooter() {
       ref={footerRef}
       className="relative z-0 border-t border-[var(--border-subtle)] bg-[#030408] text-[var(--text-primary)] sticky-footer-reveal"
     >
-      {/* Top Looping "Let's talk" Marquee Strip */}
+      {/* Top Looping Strip: Let's talk · Let's build · Let's grow */}
       <div className="overflow-hidden border-b border-[var(--border-subtle)] py-4">
         <TransitionLink
           href="/contact"
-          aria-label="Let's talk — open contact page"
+          aria-label="Let's talk — start your project"
           className="block overflow-hidden"
         >
           <div
@@ -98,15 +100,17 @@ export function SiteFooter() {
                 aria-hidden={dup === 1}
                 className="flex shrink-0 items-center gap-8 pr-8"
               >
-                {Array.from({ length: 6 }).map((_, i) => (
-                  <span
-                    key={`${dup}-${i}`}
-                    className="inline-flex items-center gap-6 font-display text-lg sm:text-2xl font-bold uppercase tracking-tight text-[var(--text-secondary)] transition-colors hover:text-[var(--accent)]"
-                  >
-                    <span>Let&apos;s talk</span>
-                    <span className="h-2 w-2 rounded-full bg-[var(--accent)]" />
-                  </span>
-                ))}
+                {Array.from({ length: 4 }).flatMap((_, rep) =>
+                  FOOTER_MARQUEE_PHRASES.map((phrase, pIdx) => (
+                    <span
+                      key={`${dup}-${rep}-${pIdx}`}
+                      className="inline-flex items-center gap-6 font-display text-lg sm:text-2xl font-bold uppercase tracking-tight text-[var(--text-secondary)] transition-colors hover:text-[var(--accent)]"
+                    >
+                      <span>{phrase}</span>
+                      <span className="h-2 w-2 rounded-full bg-[var(--accent)]" />
+                    </span>
+                  ))
+                )}
               </div>
             ))}
           </div>
@@ -114,24 +118,30 @@ export function SiteFooter() {
       </div>
 
       {/* Main Footer Grid */}
-      <div className="container-editorial py-12 sm:py-16">
+      <div className="container-editorial py-10 sm:py-14">
         <div className="grid grid-cols-1 gap-10 md:grid-cols-12 md:gap-8">
-          {/* Brand Summary */}
+          {/* Brand Summary & Name Clarity */}
           <div className="md:col-span-5 space-y-4">
-            <p className="text-eyebrow">Remote Studio · {SITE.location}</p>
-            <p className="max-w-sm font-display text-xl sm:text-2xl font-semibold leading-snug">
+            <p className="text-eyebrow">{SITE.shortLockup} · {SITE.location}</p>
+            <p className="max-w-md font-display text-xl sm:text-2xl font-semibold leading-snug">
               {SITE.tagline}
             </p>
-            <p className="text-xs sm:text-sm text-[var(--text-secondary)]">
-              Led by {SITE.owner}. Direct freelance speed or a vetted remote team.
+            <p className="text-xs sm:text-sm text-[var(--text-secondary)] leading-relaxed max-w-md">
+              {SITE.nameLine}{" "}
+              <TransitionLink
+                href="/about#names"
+                className="inline-flex min-h-[44px] items-center font-medium text-[var(--accent)] underline underline-offset-4 hover:text-[var(--text-primary)]"
+              >
+                Read who is who →
+              </TransitionLink>
             </p>
           </div>
 
           {/* Pages */}
           <div className="md:col-span-2 space-y-2">
-            <p className="text-eyebrow">Navigate</p>
+            <p className="text-eyebrow">Pages</p>
             <ul>
-              {NAV_LINKS.map((link) => (
+              {FOOTER_NAV.map((link) => (
                 <li key={link.href}>
                   <TransitionLink
                     href={link.href}
@@ -162,7 +172,7 @@ export function SiteFooter() {
               >
                 Book a 30-minute call ↗
               </a>
-              <div className="flex flex-wrap gap-3 pt-1">
+              <div className="flex flex-col items-start pt-1">
                 {PLATFORM_PROFILES.map((p) => (
                   <a
                     key={p.label}
@@ -181,7 +191,7 @@ export function SiteFooter() {
           {/* Social & Back to top */}
           <div className="md:col-span-2 flex flex-col justify-between gap-4">
             <div className="space-y-2">
-              <p className="text-eyebrow">Social</p>
+              <p className="text-eyebrow">Profiles</p>
               <ul>
                 {SOCIAL_LINKS.map((s) => (
                   <li key={s.label}>
@@ -214,7 +224,7 @@ export function SiteFooter() {
       </div>
 
       {/* Giant Full-Width Wordmark (M15) */}
-      <div className="container-editorial border-t border-[var(--border-subtle)] pt-6 pb-5">
+      <div className="container-editorial border-t border-[var(--border-subtle)] pt-5 pb-5">
         <div
           ref={wordmarkRef}
           aria-hidden="true"
@@ -224,7 +234,7 @@ export function SiteFooter() {
             <span
               key={`${char}-${idx}`}
               data-wordmark-char
-              className="font-display text-[clamp(1.65rem,9.8vw,9.5rem)] font-extrabold leading-[0.86] tracking-[-0.04em] text-[var(--text-primary)] will-change-transform"
+              className="font-display text-[clamp(1.42rem,9vw,8.8rem)] font-extrabold leading-[0.86] tracking-[-0.04em] text-[var(--text-primary)] will-change-transform"
             >
               {char === " " ? "\u00A0" : char}
             </span>
@@ -235,7 +245,7 @@ export function SiteFooter() {
           <span suppressHydrationWarning>
             © {new Date().getFullYear()} {SITE.brand}. All rights reserved.
           </span>
-          <span>Remote · Worldwide</span>
+          <span>Fully remote · All time zones</span>
         </div>
       </div>
     </footer>

@@ -12,22 +12,41 @@ export interface ExternalProfile {
 }
 
 export const SITE = {
-  brand: "Digital Expert",
-  brandUpper: "DIGITAL EXPERT",
-  owner: "[YOUR NAME]",
-  email: "[YOUR EMAIL]",
+  brand: "Digital Experts",
+  brandUpper: "DIGITAL EXPERTS",
+  alternateName: "Digital Exparts",
+  owner: "Jumat Bello",
+  fiverrBrand: "Isaac Clara",
+  fiverrAssistant: "Clara",
+  email: "digita.exparts@gmail.com",
   location: "[LOCATION]",
-  timezoneNote: "Remote · Serving clients worldwide",
-  calendlyUrl: "[CALENDLY URL]",
+  yearStarted: "[YEAR STARTED]",
+  yearsExperience: "[YEARS OF EXPERIENCE]",
+  teamSize: "[TEAM SIZE]",
+  responseTime: "[ONE BUSINESS DAY]",
+  timezoneNote: "Fully remote · Working across all time zones",
+  calendlyUrl: "[BOOKING LINK]",
   fiverrUrl: "https://www.fiverr.com/clara_success?public_mode=true",
   upworkUrl: "https://www.upwork.com/freelancers/~01e12863196bfb5563?mp_source=share",
-  siteUrl: process.env.NEXT_PUBLIC_SITE_URL || "https://digital-expert.example.com",
-  tagline: "One-stop digital partner — solo speed or a vetted team.",
+  behanceUrl: "https://www.behance.net/bellojumato",
+  siteUrl: process.env.NEXT_PUBLIC_SITE_URL || "https://digital-exparts.example.com",
+  tagline: "Websites, brands and AI video that turn visitors into clients.",
+  shortLockup: "Web. Design. Email. AI Video.",
+  nameLine:
+    "Digital Experts is the studio of Jumat Bello, also known as Isaac Clara on Fiverr.",
   description:
-    "Digital Expert is a remote digital studio led by [YOUR NAME], delivering websites, no-code builds, UI/UX, branding, email marketing, and AI video production worldwide.",
+    "Remote studio for web design and development on Wix, Squarespace, WordPress, Webflow and custom code, plus UI/UX, email marketing and AI video.",
   availability: {
     active: true,
-    label: "Available for projects",
+    label: "Taking on new projects",
+  },
+  proof: {
+    fiverrOrders: "200+",
+    fiverrClients: "100+",
+    fiverrReviews: "57",
+    fiverrRating: "4.7",
+    upworkJobs: "16",
+    upworkHours: "416",
   },
 } as const;
 
@@ -36,54 +55,66 @@ export const NAV_LINKS: NavItem[] = [
     index: "01",
     label: "Home",
     href: "/",
-    description: "Overview, capabilities & solo/team engagement",
+    description: "Websites, brands & AI video overview",
   },
   {
     index: "02",
     label: "Work",
     href: "/work",
-    description: "Selected websites, brands, email & AI video",
+    description: "Real projects, UI/UX concepts & results",
   },
   {
     index: "03",
     label: "Services",
     href: "/services",
-    description: "Six disciplines across code, no-code & creative",
+    description: "Web, no-code, branding, email & AI video",
   },
   {
     index: "04",
-    label: "About",
-    href: "/about",
-    description: "Meet [YOUR NAME] & how the vetted team scales",
+    label: "How we work",
+    href: "/how-we-work",
+    description: "Hire one solo expert or a coordinated team",
   },
   {
     index: "05",
+    label: "About",
+    href: "/about",
+    description: "Who is who: Jumat Bello & Isaac Clara",
+  },
+  {
+    index: "06",
+    label: "FAQ",
+    href: "/faq",
+    description: "Clear answers on scope, pricing & timelines",
+  },
+  {
+    index: "07",
     label: "Contact",
     href: "/contact",
-    description: "Start a project brief or book a 30-minute call",
+    description: "Start your project or book a 30-minute call",
   },
 ];
 
 export const PLATFORM_PROFILES: ExternalProfile[] = [
   {
-    label: "Fiverr",
+    label: "Fiverr (Isaac Clara)",
     href: SITE.fiverrUrl,
-    handle: "Top-tier packages",
+    handle: "4.7 rating · 57 reviews",
   },
   {
-    label: "Upwork",
+    label: "Upwork (Jumat Bello)",
     href: SITE.upworkUrl,
-    handle: "Direct contracts",
+    handle: "16 jobs · 416 hours",
   },
 ];
 
 export const SOCIAL_LINKS: ExternalProfile[] = [
   { label: "LinkedIn", href: "[LINKEDIN URL]" },
-  { label: "X / Twitter", href: "[X URL]" },
+  { label: "Behance", href: SITE.behanceUrl },
   { label: "Dribbble", href: "[DRIBBBLE URL]" },
-  { label: "Behance", href: "https://www.behance.net/bellojumato" },
+  { label: "X / Twitter", href: "[X URL]" },
 ];
 
 export function isPlaceholderHref(href: string): boolean {
-  return href.startsWith("[") && href.endsWith("]");
+  return href.includes("[") && href.includes("]");
 }

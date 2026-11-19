@@ -33,19 +33,19 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
   metadataBase: new URL(SITE.siteUrl),
   title: {
-    default: `${SITE.brand} — Websites, No-Code, Brand & AI Video Studio`,
-    template: `%s | ${SITE.brand}`,
+    default: "Digital Experts | Web Design, Development & AI Video Studio",
+    template: "%s | Digital Experts",
   },
   description: SITE.description,
   openGraph: {
     type: "website",
     siteName: SITE.brand,
-    title: `${SITE.brand} — One-Stop Digital Partner`,
+    title: "Digital Experts | Web Design, Development & AI Video Studio",
     description: SITE.description,
   },
   twitter: {
     card: "summary_large_image",
-    title: `${SITE.brand} — One-Stop Digital Partner`,
+    title: "Digital Experts | Web Design, Development & AI Video Studio",
     description: SITE.description,
   },
 };
@@ -63,25 +63,28 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const sameAs = [SITE.fiverrUrl, SITE.upworkUrl, SITE.behanceUrl];
+  const baseUrl = SITE.siteUrl.replace(/\/$/, "");
+
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "ProfessionalService",
+    "@id": `${baseUrl}/#studio`,
     name: SITE.brand,
-    description: SITE.description,
-    url: SITE.siteUrl,
+    alternateName: SITE.alternateName,
+    url: `${baseUrl}/`,
+    description:
+      "Remote web design, development, email marketing and AI video studio.",
+    email: SITE.email,
     areaServed: "Worldwide",
     founder: {
       "@type": "Person",
+      "@id": `${baseUrl}/#founder`,
       name: SITE.owner,
+      alternateName: SITE.fiverrBrand,
+      sameAs,
     },
-    serviceType: [
-      "Website Design and Development",
-      "No-Code Platform Builds (Wix, Squarespace, WordPress, Webflow)",
-      "UI/UX Design",
-      "Graphic Design and Branding",
-      "Email Marketing",
-      "AI Video Production",
-    ],
+    sameAs,
   };
 
   return (

@@ -1,7 +1,7 @@
 import { ImageResponse } from "next/og";
 import { SITE } from "@/data/site";
 
-export const alt = `${SITE.brand} — Websites, No-Code, Brand & AI Video Studio`;
+export const alt = `${SITE.brand} — Web Design, Development & AI Video Studio`;
 export const size = {
   width: 1200,
   height: 630,
@@ -59,31 +59,31 @@ export default function OpenGraphImage() {
               fontWeight: 600,
             }}
           >
-            Solo &amp; Vetted Team · Worldwide
+            200+ Orders · 4.7 Rating · Solo &amp; Full Team
           </div>
         </div>
 
         <div style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
           <div
             style={{
-              fontSize: "84px",
+              fontSize: "72px",
               fontWeight: 800,
-              lineHeight: 0.98,
+              lineHeight: 1.02,
               letterSpacing: "-0.04em",
             }}
           >
-            Websites that move people.
+            {SITE.tagline}
           </div>
           <div
             style={{
-              fontSize: "28px",
+              fontSize: "26px",
               color: "#A5ACB9",
               maxWidth: "960px",
               lineHeight: 1.35,
             }}
           >
-            Custom Web · No-Code (Webflow, WordPress, Wix, Squarespace) · UI/UX · Branding ·
-            Email · AI Video
+            Wix · Squarespace · WordPress · Webflow · React &amp; Next.js · UI/UX · Email · AI
+            Video
           </div>
         </div>
 
@@ -98,8 +98,8 @@ export default function OpenGraphImage() {
             color: "#A5ACB9",
           }}
         >
-          <span>Led by {SITE.owner}</span>
-          <span style={{ color: "#B6FF4A" }}>digital-expert</span>
+          <span>{SITE.nameLine}</span>
+          <span style={{ color: "#B6FF4A" }}>{SITE.email}</span>
         </div>
       </div>
     ),

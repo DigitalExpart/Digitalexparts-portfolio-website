@@ -6,7 +6,7 @@ export interface EngagementModel {
   summary: string;
   howItWorks: string[];
   typicalScope: string;
-  turnaround: string;
+  speedLabel: string;
   idealFor: string;
 }
 
@@ -18,7 +18,8 @@ export interface TeamRole {
 
 export interface StatItem {
   value: number;
-  padLength: number;
+  decimals?: number;
+  padLength?: number;
   suffix: string;
   label: string;
   detail: string;
@@ -41,10 +42,12 @@ export interface TestimonialItem {
   id: string;
   quote: string;
   author: string;
-  role: string;
-  company: string;
-  source: "Fiverr" | "Upwork" | "Direct Client";
+  country: string;
   projectType: string;
+  source: "Review from Fiverr" | "Review from Upwork";
+  price?: string;
+  duration?: string;
+  metaNote?: string;
 }
 
 export interface FaqItem {
@@ -54,248 +57,337 @@ export interface FaqItem {
   tag: string;
 }
 
+export const HERO_COPY = {
+  availabilityLabel: "Taking on new projects",
+  headline: "Websites, brands and AI video that turn visitors into clients.",
+  subhead:
+    "Digital Experts is a remote web design and development studio for Wix, Squarespace, WordPress, Webflow and custom code. We also handle UI/UX, graphic design, email marketing and AI video, solo or with a full team.",
+  primaryCta: "Start your project",
+  secondaryCta: "Book a 30-minute call",
+  canvasHint: "Hold to ripple · Press and hold the lines",
+  trustHeading: "Trusted by 100+ clients",
+  trustItems: [
+    "200+ orders completed on Fiverr",
+    "4.7 rating from 57 reviews",
+    "100+ unique clients",
+    "416 hours on Upwork",
+  ],
+  nameClarityLine:
+    "You may know us as Isaac Clara on Fiverr or Jumat Bello on Upwork. Same studio, same standards.",
+  nameClarityCta: "See how it fits together",
+};
+
 export const INTRO_COPY = {
-  eyebrow: "01 · About Digital Expert",
+  eyebrow: "01 · About Digital Experts",
   statement:
-    "Digital Expert is a remote digital studio led by [YOUR NAME]. Depending on what you are shipping, I build directly with you one-on-one or bring in my vetted team of specialists — so founders, small businesses, and agencies get custom websites, no-code builds, branding, email systems, and AI video without agency overhead.",
-  ctaLabel: "More about me",
+    "Digital Experts helps founders and small businesses get a website that looks sharp, loads fast and brings in enquiries. We build on Wix, Squarespace, WordPress and Webflow, or write custom code when a project needs it. Need a brand, email campaigns or AI video to go with it? One team handles all of it.",
+  ctaLabel: "More about us",
 };
 
 export const ENGAGEMENT_MODELS: Record<"solo" | "team", EngagementModel> = {
   solo: {
     id: "solo",
-    label: "Working with me directly",
-    badge: "Solo Sprint · 1-on-1",
-    headline: "Direct execution with zero handoff lag.",
+    label: "Work with one expert",
+    badge: "Direct · 1-on-1",
+    headline: "Jumat directly — fast, focused, one-to-one.",
     summary:
-      "You work straight with [YOUR NAME] from kickoff to launch. Strategy, design, and build happen in one tight feedback loop — ideal when speed, clarity, and senior focus matter most.",
+      "Small project? You work directly with one specialist from kickoff to launch. Communication is direct and one-to-one with a fixed quote based on scope.",
     howItWorks: [
-      "Direct Slack, Loom, and weekly check-ins with no account managers in between.",
-      "Single creative and technical vision across UI, copy hierarchy, and code or no-code build.",
-      "Rapid iteration cycles with live preview links after every milestone.",
+      "Direct and one-to-one communication with Jumat Bello from day one.",
+      "Fixed quote based on scope agreed in writing before work starts.",
+      "One person focused cleanly on your project from wireframe to launch.",
     ],
-    typicalScope: "High-converting marketing sites, Webflow/Wix/Squarespace builds, UI/UX sprints, email template kits.",
-    turnaround: "1 – 4 weeks",
-    idealFor: "Founders, lean startups, and small businesses launching fast.",
+    typicalScope:
+      "Landing pages, single-site builds on Wix, Squarespace or WordPress, logos, email setup.",
+    speedLabel: "One person focused on your project",
+    idealFor: "Founders and small businesses needing rapid, single-track delivery.",
   },
   team: {
     id: "team",
-    label: "Working with my team",
-    badge: "Vetted Pod · Multi-Disciplinary",
-    headline: "Full-studio output, led by one point of contact.",
+    label: "Work with the team",
+    badge: "Coordinated Pod",
+    headline: "Full-studio capacity with one point of contact.",
     summary:
-      "When your launch needs parallel tracks — brand identity, custom web engineering, lifecycle copy, and AI launch video at the same time — I assemble and direct a vetted pod of specialists I trust.",
+      "Bigger build? We bring in specialist designers, developers, motion artists and email experts from our team — work happens in parallel across roles while you still talk to one lead.",
     howItWorks: [
-      "[YOUR NAME] stays your sole lead — managing timelines, quality bar, and cross-discipline integration.",
-      "Specialists work in parallel tracks so branding, development, email, and video finish together.",
-      "Transparent milestone pricing with none of the traditional agency retainer bloat.",
+      "One point of contact who coordinates every designer, developer and specialist.",
+      "Work happens in parallel across web, branding, email and AI video.",
+      "Fixed quote with a clear breakdown by role before work begins.",
     ],
-    typicalScope: "Full rebrands + custom sites, multi-region CMS builds, product + email + AI video launch suites.",
-    turnaround: "3 – 8 weeks",
-    idealFor: "Growing brands, funded launches, and partner agencies scaling delivery.",
+    typicalScope:
+      "Full websites with branding, online stores, campaigns that combine web, email and video.",
+    speedLabel: "Work happens in parallel across roles",
+    idealFor: "Multi-track launches, growing businesses and agency partners.",
   },
 };
 
 export const TEAM_ROLES: TeamRole[] = [
   {
-    title: "UI/UX & Brand Designer",
-    focus: "Visual systems, Figma prototypes & typography",
-    tools: "Figma · Illustrator",
+    title: "Web & UI/UX Designer",
+    focus: "Clear user flows, wireframes & high-fidelity Figma screens",
+    tools: "Figma · Prototypes",
   },
   {
-    title: "Web & No-Code Developer",
-    focus: "Next.js, Webflow, WordPress, Wix & Squarespace",
-    tools: "Next.js · Webflow · WP",
+    title: "Front-End & Back-End Developer",
+    focus: "Custom React, Next.js, APIs, forms, bookings & deployments",
+    tools: "React · Next.js · APIs",
   },
   {
-    title: "Motion & AI Video Artist",
-    focus: "Launch films, 3D reels & kinetic ad variants",
-    tools: "AI Video · After Effects",
+    title: "No-Code Platform Specialist",
+    focus: "Wix Studio, Squarespace, WordPress, WooCommerce & Webflow",
+    tools: "Wix · WP · Webflow",
   },
   {
-    title: "Conversion Copywriter",
-    focus: "Clear positioning, landing copy & lifecycle sequences",
-    tools: "Messaging · UX Copy",
+    title: "Graphic Designer",
+    focus: "Logos, brand guidelines, pitch decks & social ad creative",
+    tools: "Identity · Social Kits",
   },
   {
-    title: "Email & CRM Specialist",
-    focus: "Klaviyo/Mailchimp flows, segmentation & deliverability",
-    tools: "Klaviyo · Mailchimp",
+    title: "Motion & AI Video Creator",
+    focus: "Scripted AI scenes, UGC product ads, explainers & captions",
+    tools: "AI Video · Editing",
+  },
+  {
+    title: "Email Specialist",
+    focus: "Responsive templates, lifecycle flows & segmentation",
+    tools: "Mailchimp · Klaviyo · HubSpot",
   },
 ];
 
 export const STATS: StatItem[] = [
   {
-    value: 64,
+    value: 200,
     padLength: 3,
     suffix: "+",
-    label: "Projects Shipped",
-    detail: "Websites, brand identities, lifecycle email systems & AI launch campaigns.",
+    label: "Orders completed",
+    detail: "Delivered on Fiverr across websites, fixes, deployments and creative builds.",
   },
   {
-    value: 7,
+    value: 100,
     padLength: 3,
     suffix: "+",
-    label: "Years Crafting",
-    detail: "Hands-on design, front-end engineering, and no-code architecture worldwide.",
+    label: "Unique clients",
+    detail: "Founders, small businesses and partner agencies served remotely worldwide.",
   },
   {
-    value: 48,
-    padLength: 3,
-    suffix: "+",
-    label: "Happy Clients",
-    detail: "Founders, small businesses, and partner agencies across 14+ timezones.",
+    value: 4.7,
+    decimals: 1,
+    suffix: "",
+    label: "Average rating",
+    detail: "Verified 4.7 rating from 57 client reviews on Fiverr (Isaac Clara).",
   },
   {
-    value: 15,
+    value: 416,
     padLength: 3,
-    suffix: "+",
-    label: "Platforms Mastered",
-    detail: "From Next.js and Three.js to Webflow, WordPress, Wix, Shopify & Klaviyo.",
+    suffix: "",
+    label: "Hours worked on Upwork",
+    detail: "Across 16 Upwork jobs alongside direct studio engagements.",
   },
 ];
 
 export const TOOLS_MARQUEE: ToolLogoItem[] = [
-  { name: "Wix Studio", category: "No-Code" },
+  { name: "Wix", category: "No-Code" },
   { name: "Squarespace", category: "No-Code" },
   { name: "WordPress", category: "CMS" },
   { name: "Webflow", category: "Visual Dev" },
   { name: "Shopify", category: "Commerce" },
-  { name: "Framer", category: "Interactive" },
   { name: "Figma", category: "UI/UX" },
-  { name: "React", category: "Engineering" },
+  { name: "React", category: "Front-End" },
   { name: "Next.js", category: "Full-Stack" },
   { name: "Mailchimp", category: "Email" },
   { name: "Klaviyo", category: "Retention" },
-  { name: "AI Video Suite", category: "Motion" },
+  { name: "HubSpot", category: "CRM & Email" },
+  { name: "AI Video Tools", category: "Motion" },
 ];
 
 export const PROCESS_STEPS: ProcessStep[] = [
   {
     index: "01",
     title: "Discover",
-    subtitle: "Clarity before pixels",
+    subtitle: "Scope & price in writing",
     description:
-      "We align on goals, audience, platform constraints, and whether solo focus or a vetted pod fits your timeline best. You leave kickoff with a clear scope and zero guesswork.",
+      "We learn your goals, audience and deadline, then agree scope and price in writing before work starts.",
     deliverables: [
-      "30-min discovery & goal mapping",
-      "Platform & solo/team scope recommendation",
-      "Site architecture, wireframes & milestone calendar",
+      "30-minute scope call or written brief review",
+      "Honest platform & solo-or-team recommendation",
+      "Written scope, timeline and fixed quote",
     ],
   },
   {
     index: "02",
-    title: "Design & Build",
-    subtitle: "Craft meets momentum",
+    title: "Design and build",
+    subtitle: "Progress at milestones",
     description:
-      "Visual direction, interactive prototypes, clean development, and supporting assets happen in structured weekly drops with async Loom walkthroughs you can review anytime.",
+      "We design the pages, build on the right platform and share progress so there are no surprises.",
     deliverables: [
-      "Custom UI/UX & motion prototyping",
-      "Responsive code or clean no-code implementation",
-      "Brand, email, or AI video assets built in parallel",
+      "Wireframes & high-fidelity visual direction",
+      "Custom code or clean no-code implementation",
+      "Milestone check-ins and revision rounds",
     ],
   },
   {
     index: "03",
-    title: "Launch & Grow",
-    subtitle: "Built to perform on day one",
+    title: "Launch and grow",
+    subtitle: "Tested & handed over",
     description:
-      "Every deliverable goes through mobile QA, accessibility checks, SEO metadata setup, and speed tuning — followed by a smooth handover or ongoing growth sprints.",
+      "We test on every device, launch, hand over training and stay available for updates and improvements.",
     deliverables: [
-      "375px–1920px QA, Lighthouse & SEO polish",
-      "Custom editor walkthrough videos for your team",
-      "Optional post-launch email, CRO & video iteration",
+      "Cross-device QA, speed & SEO foundation checks",
+      "Short training videos so you can edit on your own",
+      "Ongoing support for email, updates & AI video",
     ],
   },
 ];
 
+// Verbatim client reviews from the verified Fiverr profile (no paraphrasing or invented quotes)
 export const TESTIMONIALS: TestimonialItem[] = [
   {
-    id: "t-1",
+    id: "rev-erantoine",
     quote:
-      "Working directly with [YOUR NAME] felt effortless. Our new Webflow site went live in three weeks, loads instantly on mobile, and demo bookings jumped the very first month.",
-    author: "Elena Vance",
-    role: "Co-Founder",
-    company: "Kinetik Financial",
-    source: "Direct Client",
-    projectType: "Website & Motion",
+      "I can give nothing but 5 Stars. I have used them on several projects. They are now building a very big and complex web app for me. HIGHLY RECOMMENDED BY ME!!",
+    author: "erantoine",
+    country: "United States",
+    projectType: "Deployments & DevOps · 5 weeks",
+    source: "Review from Fiverr",
+    price: "$1,000–$2,500",
   },
   {
-    id: "t-2",
+    id: "rev-muamer9987",
     quote:
-      "Ordered a full brand + Squarespace build and got agency-caliber execution without the bloated layers. Communication was sharp from day one and revisions were handled overnight.",
-    author: "Marcus Thorne",
-    role: "Managing Director",
-    company: "Vespera Botanicals",
-    source: "Upwork",
-    projectType: "Branding + Squarespace",
+      "Did a phenomenal job. Created exactly what I needed and the website looks amazing. 10/10 would recommend and will work with him again in the future.",
+    author: "muamer9987",
+    country: "United States",
+    projectType: "Custom Websites · 11 days",
+    source: "Review from Fiverr",
+    price: "$400–$600",
+    metaNote: "Ongoing collaboration",
   },
   {
-    id: "t-3",
+    id: "rev-otttepanda",
     quote:
-      "Five stars doesn't cover it. [YOUR NAME] redesigned our SaaS onboarding in Figma and delivered clean component tokens our engineers shipped the same sprint.",
-    author: "Priya Nair",
-    role: "Head of Product",
-    company: "Pulseboard",
-    source: "Fiverr",
-    projectType: "UI/UX Design System",
+      "clara has gone above and beyond for what ive wanted in my website, she has put in the time and effort for when ive needed it in a rush, id highly recommend her. she has helped me so much and im happy i reached out to her and shes given me the results i didnt expect :)!",
+    author: "otttepanda",
+    country: "United Kingdom",
+    projectType: "Website Design & Build",
+    source: "Review from Fiverr",
   },
   {
-    id: "t-4",
+    id: "rev-nelboyd",
     quote:
-      "The Klaviyo flow overhaul paid for itself within three weeks. The templates look editorial on dark and light clients and our repeat coffee orders climbed 42%.",
-    author: "Daniel Sato",
-    role: "Founder",
-    company: "Sora Roastery",
-    source: "Direct Client",
-    projectType: "Email Marketing",
+      "Isaac was able to do everything I needed for my website. He's knowledgeable and was courteous and professional. He integrated everything seamlessly. I'd definitely work with him again.",
+    author: "nelboyd",
+    country: "United States",
+    projectType: "Website Builders Design · 7 days",
+    source: "Review from Fiverr",
+    price: "$50–$100",
   },
   {
-    id: "t-5",
+    id: "rev-hanlou246",
     quote:
-      "Bringing in [YOUR NAME]'s vetted motion artist alongside our web rebuild saved us two vendors and delivered a launch film that outperformed every paid ad we ran last year.",
-    author: "Hannah Lindqvist",
-    role: "VP Growth",
-    company: "Aether Labs",
-    source: "Upwork",
-    projectType: "Team Pod · Web & AI Video",
+      "Isaac was excellent at communicating. He responded to my queries very quickly. I am very pleased with his work. He really knows his stuff and helped me make my brand look much more professional. Thank you very much Isaac.- very much appreciated.",
+    author: "hanlou246",
+    country: "United Kingdom",
+    projectType: "Website Builders Design · 7 days",
+    source: "Review from Fiverr",
+    price: "$50",
+  },
+  {
+    id: "rev-humblecakes",
+    quote: "one of the best gigs I've worked with on fiverr, thanks",
+    author: "humblecakes",
+    country: "United Kingdom",
+    projectType: "Website Builders Design · 3 days",
+    source: "Review from Fiverr",
+    price: "$50–$100",
+  },
+  {
+    id: "rev-jmstout",
+    quote: "amazing to work with",
+    author: "Jmstout",
+    country: "United States",
+    projectType: "Custom Websites · 2 days",
+    source: "Review from Fiverr",
+    price: "$1,000–$2,500",
   },
 ];
 
 export const FAQ_ITEMS: FaqItem[] = [
   {
+    id: "names-who-is-who",
+    tag: "Names",
+    question: "Why do I see the names Isaac Clara and Jumat Bello?",
+    answer:
+      "They are the same studio. Digital Experts is the team. Jumat Bello is the founder and the name used on Upwork. Isaac Clara is the brand built on Fiverr over the years, and the Fiverr inbox is looked after by assistant Clara so messages get quick replies. The work is delivered by Digital Experts whichever profile you found.",
+  },
+  {
+    id: "solo-or-team",
+    tag: "Team",
+    question: "Do you work alone or with a team?",
+    answer:
+      "Both. Small projects can be handled by one expert working directly with you. Larger projects bring in designers, developers, video and email specialists, with one person coordinating so you have one point of contact.",
+  },
+  {
+    id: "platform-choice",
+    tag: "Platforms",
+    question:
+      "Which platform is best for my website: Wix, Squarespace, WordPress, Webflow or custom code?",
+    answer:
+      "It depends on your goals and budget. Wix and Squarespace suit fast, affordable, easy-to-edit sites. WordPress suits content-heavy sites and online stores. Webflow gives designers fine control over layout and motion. Custom code suits products with unique features. We will recommend the simplest option that meets your needs.",
+  },
+  {
     id: "pricing",
     tag: "Pricing",
-    question: "How do you price solo projects versus team projects?",
+    question: "How much does a website cost?",
     answer:
-      "Most builds are scoped on a transparent fixed project fee tied to deliverables rather than unpredictable hourly billing. Focused solo engagements (such as a landing page, UI audit, email kit, or single-platform site) start under $2K, while multi-discipline launches involving my vetted team are quoted upfront per milestone.",
+      "It depends on the number of pages, the platform and any custom features. We give a fixed written quote after a short conversation, so you know the price before work begins.",
   },
   {
     id: "timelines",
     tag: "Timelines",
-    question: "How quickly can we kick off and launch?",
+    question: "How long does a project take?",
     answer:
-      "Solo design or no-code sprints typically turn around in 1 to 4 weeks. Larger custom websites, full brand identities, or parallel team launches (web + email + AI video) take 3 to 8 weeks depending on feedback speed and scope.",
+      "Timelines depend on scope and platform — from focused multi-day landing page builds to multi-week custom web apps and team launches. We agree the timeline in writing before we start.",
   },
   {
-    id: "revisions",
-    tag: "Revisions",
-    question: "How do revisions and feedback rounds work?",
+    id: "self-editing",
+    tag: "Handover",
+    question: "Can I edit the website myself afterwards?",
     answer:
-      "Every milestone includes dedicated structured revision rounds plus async Loom walkthroughs so nothing gets lost in long threads. Because we align on wireframes and visual direction before full buildout, revisions focus on sharpening details rather than redoing foundations.",
+      "Yes. We build on platforms and structures you can manage, and we show you how to update text, images and pages with short training videos.",
   },
   {
-    id: "team",
-    tag: "Working with a team",
-    question: "Who is on your team if my project needs extra specialists?",
+    id: "redesign-migrate",
+    tag: "Migrations",
+    question: "Can you redesign or move my existing website?",
     answer:
-      "When a project benefits from parallel expertise, I tap a trusted roster of senior freelancers I have shipped with repeatedly — including a brand/UI designer, full-stack & no-code developer, motion/AI video artist, conversion copywriter, and email specialist. You still work through [YOUR NAME] as one clear lead.",
+      "Yes. We can redesign a site on its current platform or migrate it between Wix, Squarespace, WordPress and Webflow, keeping your content and your search rankings in mind.",
   },
   {
-    id: "platforms",
-    tag: "Platforms",
-    question: "Which platforms do you build on — custom code or no-code?",
+    id: "getting-started",
+    tag: "Kickoff",
+    question: "What do you need from me to start?",
     answer:
-      "Both. I recommend what fits your goals and internal team best: Next.js/React for bespoke performance and custom web apps, or Webflow, WordPress, Wix Studio, Squarespace, Shopify, and Framer when your marketing team wants visual day-to-day control.",
+      "Your goals, your logo and brand colours if you have them, any content you already have, and examples of sites you like. If you do not have content yet, we can help plan it.",
+  },
+  {
+    id: "fiverr-upwork-orders",
+    tag: "Marketplaces",
+    question: "Can I still order through Fiverr or Upwork?",
+    answer:
+      "Yes. If you found us there you can keep working with us there. New enquiries from this website go through the contact form or a booked call.",
+  },
+  {
+    id: "timezones",
+    tag: "Remote",
+    question: "Do you work with clients in my country and time zone?",
+    answer:
+      "Yes. We are fully remote and work with clients in any time zone, with set times for calls and updates so you are never waiting in the dark.",
+  },
+  {
+    id: "ai-video-included",
+    tag: "AI Video",
+    question: "What does AI video production include?",
+    answer:
+      "Script and storyboard, AI-generated scenes and voiceover, editing, captions and sound, and exports in the right sizes for each platform. We can produce a single video or a batch for an ongoing campaign.",
   },
 ];

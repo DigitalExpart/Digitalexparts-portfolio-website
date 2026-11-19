@@ -6,6 +6,7 @@ import { ensureGsapRegistered, gsap } from "@/lib/gsap";
 import { SERVICES, type ServiceItem } from "@/data/services";
 import { HeadingReveal, FadeUp } from "@/components/motion/TextReveal";
 import { MagneticButton } from "@/components/motion/MagneticButton";
+import { TransitionLink } from "@/components/motion/PageTransitionProvider";
 import { useMediaCapabilities } from "@/hooks/useMediaCapabilities";
 
 export function ServicesSection() {
@@ -125,16 +126,16 @@ export function ServicesSection() {
         {/* Section Header */}
         <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
           <div className="space-y-4 max-w-3xl">
-            <p className="text-eyebrow">02 · Capabilities</p>
-            <HeadingReveal as="h2" id="services-heading" className="text-h1">
-              Six disciplines. One digital partner.
+            <p className="text-eyebrow">02 · What We Do</p>
+            <HeadingReveal as="h2" id="services-heading" className="text-h2">
+              Everything your business needs to look good and get found online
             </HeadingReveal>
           </div>
 
           <FadeUp className="flex flex-col items-start gap-4 lg:items-end">
             <p className="max-w-md text-sm sm:text-base text-[var(--text-secondary)] lg:text-right">
-              Everything from custom Next.js builds and Webflow/Wix/Squarespace launches to
-              brand identity, retention email, and AI video.
+              We recommend the platform that fits your budget — Wix, Squarespace, WordPress,
+              Webflow or custom React code — plus brand, email and AI video under one roof.
             </p>
             <MagneticButton href="/services" variant="secondary" size="sm">
               <span>Explore all services</span>
@@ -236,6 +237,13 @@ export function ServicesSection() {
                         <p className="text-sm sm:text-base text-[var(--text-secondary)] leading-relaxed">
                           {service.description}
                         </p>
+                        <TransitionLink
+                          href={`/services/${service.slug}`}
+                          className="inline-flex min-h-[44px] items-center gap-2 text-xs font-mono uppercase tracking-[0.12em] text-[var(--accent)] hover:underline"
+                        >
+                          <span>View {service.title} details</span>
+                          <span aria-hidden="true">→</span>
+                        </TransitionLink>
                         {/* Compact preview thumbnail on mobile/tablet when expanded */}
                         <div className="relative aspect-[16/9] w-full overflow-hidden rounded-xl border border-[var(--border-subtle)] lg:hidden">
                           <Image

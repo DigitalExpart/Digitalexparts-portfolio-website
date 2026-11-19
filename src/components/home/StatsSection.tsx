@@ -3,6 +3,7 @@
 import React, { useEffect, useRef } from "react";
 import { ensureGsapRegistered, gsap } from "@/lib/gsap";
 import { STATS } from "@/data/home";
+import { SITE } from "@/data/site";
 import { HeadingReveal } from "@/components/motion/TextReveal";
 import { useMediaCapabilities } from "@/hooks/useMediaCapabilities";
 
@@ -10,11 +11,25 @@ interface StatsSectionProps {
   isLightTheme?: boolean;
 }
 
+function formatCounter(
+  val: number,
+  decimals: number,
+  padLength: number,
+  suffix: string
+): string {
+  if (decimals > 0) {
+    return `${val.toFixed(decimals)}${suffix}`;
+  }
+  const rounded = Math.round(val);
+  const core = padLength > 0 ? String(rounded).padStart(padLength, "0") : String(rounded);
+  return `${core}${suffix}`;
+}
+
 export function StatsSection({ isLightTheme = false }: StatsSectionProps) {
   const sectionRef = useRef<HTMLElement>(null);
   const { isDesktopFinePointer, prefersReducedMotion } = useMediaCapabilities();
 
-  // M9: Zero-padded count-up numbers (animate once on scroll enter)
+  // M9: Animated count-up numbers (integers and decimals) once on scroll enter
   useEffect(() => {
     ensureGsapRegistered();
     const section = sectionRef.current;
@@ -26,9 +41,10 @@ export function StatsSection({ isLightTheme = false }: StatsSectionProps) {
     if (prefersReducedMotion) {
       counters.forEach((el) => {
         const target = Number(el.dataset.counterTarget || "0");
-        const pad = Number(el.dataset.counterPad || "3");
+        const decimals = Number(el.dataset.counterDecimals || "0");
+        const pad = Number(el.dataset.counterPad || "0");
         const suffix = el.dataset.counterSuffix || "";
-        el.textContent = `${String(target).padStart(pad, "0")}${suffix}`;
+        el.textContent = formatCounter(target, decimals, pad, suffix);
       });
       return;
     }
@@ -36,7 +52,8 @@ export function StatsSection({ isLightTheme = false }: StatsSectionProps) {
     const ctx = gsap.context(() => {
       counters.forEach((el, idx) => {
         const target = Number(el.dataset.counterTarget || "0");
-        const pad = Number(el.dataset.counterPad || "3");
+        const decimals = Number(el.dataset.counterDecimals || "0");
+        const pad = Number(el.dataset.counterPad || "0");
         const suffix = el.dataset.counterSuffix || "";
         const obj = { val: 0 };
 
@@ -51,7 +68,7 @@ export function StatsSection({ isLightTheme = false }: StatsSectionProps) {
             once: true,
           },
           onUpdate: () => {
-            el.textContent = `${String(Math.round(obj.val)).padStart(pad, "0")}${suffix}`;
+            el.textContent = formatCounter(obj.val, decimals, pad, suffix);
           },
         });
       });
@@ -133,14 +150,24 @@ export function StatsSection({ isLightTheme = false }: StatsSectionProps) {
               05 · Track Record
             </p>
             <HeadingReveal as="h2" id="stats-heading" className="text-h1">
-              Numbers built on shipped work, not slides.
+              The track record
             </HeadingReveal>
           </div>
 
-          <p className={`max-w-md text-sm sm:text-base ${mutedTextClass}`}>
-            Consistent velocity across solo sprints and multi-specialist launches for founders,
-            small businesses, and partner agencies.
-          </p>
+          <div className="max-w-md space-y-2">
+            <p className={`text-sm sm:text-base ${mutedTextClass}`}>
+              Real delivery numbers across Fiverr ({SITE.fiverrBrand}) and Upwork ({SITE.owner}).
+            </p>
+            <a
+              href={SITE.fiverrUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex min-h-[44px] items-center gap-1.5 font-mono text-xs uppercase tracking-[0.12em] underline underline-offset-4 hover:opacity-75"
+            >
+              <span>4.7 from 57 reviews on Fiverr</span>
+              <span aria-hidden="true">↗</span>
+            </a>
+          </div>
         </div>
 
         <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
@@ -163,11 +190,12 @@ export function StatsSection({ isLightTheme = false }: StatsSectionProps) {
               <div className="space-y-2">
                 <p
                   data-counter-target={stat.value}
-                  data-counter-pad={stat.padLength}
+                  data-counter-decimals={stat.decimals || 0}
+                  data-counter-pad={stat.padLength || 0}
                   data-counter-suffix={stat.suffix}
                   className="font-display tabular-nums text-[clamp(2.75rem,4.8vw,4.5rem)] font-bold leading-none tracking-tight"
                 >
-                  {`${String(0).padStart(stat.padLength, "0")}${stat.suffix}`}
+                  {formatCounter(stat.value, stat.decimals || 0, stat.padLength || 0, stat.suffix)}
                 </p>
                 <h3 className="font-display text-lg sm:text-xl font-semibold">
                   {stat.label}

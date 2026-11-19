@@ -15,14 +15,15 @@ export function ContactSection() {
       <div className="container-editorial grid grid-cols-1 gap-10 lg:grid-cols-12 lg:gap-14">
         <div className="lg:col-span-5 flex flex-col justify-between gap-8">
           <div className="space-y-5">
-            <p className="text-eyebrow">10 · Start a Conversation</p>
+            <p className="text-eyebrow">10 · Start Your Project</p>
             <HeadingReveal as="h2" id="contact-heading" className="text-h1">
-              Ready to build something sharp?
+              Let&apos;s build something that brings you clients.
             </HeadingReveal>
             <FadeUp>
               <p className="text-base sm:text-lg text-[var(--text-secondary)] leading-relaxed">
-                Tell me what you&apos;re launching. I&apos;ll reply within 24 hours with a clear
-                approach, timeline, and whether a solo sprint or vetted team pod makes the most sense.
+                Tell us about your project and we will reply within {SITE.responseTime}. New
+                website enquiries go through this form or a booked call — or message us on your
+                preferred marketplace if you found us there.
               </p>
             </FadeUp>
           </div>

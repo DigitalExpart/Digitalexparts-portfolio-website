@@ -113,7 +113,7 @@ export function ProcessSection() {
             <div className="space-y-4 max-w-3xl">
               <p className="text-eyebrow">07 · Process</p>
               <HeadingReveal as="h2" id="process-heading" className="text-h1">
-                From first call to live launch in three crisp stages.
+                How a project runs
               </HeadingReveal>
             </div>
 

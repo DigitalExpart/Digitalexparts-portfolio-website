@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Image from "next/image";
 import { PROJECTS } from "@/data/projects";
+import { SERVICES } from "@/data/services";
 import { HeadingReveal, FadeUp } from "@/components/motion/TextReveal";
 import { MagneticButton } from "@/components/motion/MagneticButton";
 import { TransitionLink } from "@/components/motion/PageTransitionProvider";
@@ -24,10 +25,12 @@ export async function generateMetadata({
     return { title: "Project Not Found" };
   }
   return {
-    title: `${project.title} — ${project.category}`,
+    title: {
+      absolute: `${project.title} | ${project.category} Case Study | Digital Experts`,
+    },
     description: project.tagline,
     openGraph: {
-      title: `${project.title} | Digital Expert`,
+      title: `${project.title} | ${project.category} Case Study | Digital Experts`,
       description: project.tagline,
       images: [{ url: project.posterImage, width: 1280, height: 720, alt: project.title }],
     },
@@ -43,6 +46,7 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
 
   const project = PROJECTS[currentIdx];
   const nextProject = PROJECTS[(currentIdx + 1) % PROJECTS.length];
+  const linkedService = SERVICES.find((s) => s.slug === project.serviceSlug);
 
   return (
     <article className="pt-[calc(var(--header-height)+3rem)] pb-20 sm:pb-28">
@@ -61,6 +65,11 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
             <span className="rounded-full border border-[var(--border-subtle)] bg-[var(--bg-elevated)] px-3.5 py-1.5 font-mono text-xs uppercase tracking-[0.12em] text-[var(--text-primary)]">
               {project.category}
             </span>
+            {project.isConcept ? (
+              <span className="rounded-full border border-[var(--border-strong)] bg-[var(--bg-elevated)] px-3.5 py-1.5 font-mono text-xs uppercase tracking-[0.1em] text-[var(--text-secondary)]">
+                Studio Concept
+              </span>
+            ) : null}
             <span className="rounded-full border border-[var(--accent)]/40 bg-[var(--accent-soft)] px-3.5 py-1.5 font-mono text-xs uppercase tracking-[0.12em] text-[var(--accent)]">
               {project.engagementModel}
             </span>
@@ -81,32 +90,40 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
           </FadeUp>
         </div>
 
-        {/* Hero Visual */}
         <CaseStudyParallax
           src={project.posterImage}
-          alt={`${project.title} flagship hero preview`}
+          alt={`${project.title} homepage design showcase built with ${project.tools[0]}`}
           priority
         />
 
-        {/* Role, Tools, Client & Timeline Strip */}
+        {/* At a glance strip */}
         <div className="grid grid-cols-1 gap-6 border-y border-[var(--border-subtle)] py-8 sm:grid-cols-2 lg:grid-cols-4">
           <div>
-            <p className="text-eyebrow">Client</p>
+            <p className="text-eyebrow">Client Type</p>
             <p className="mt-2 font-display text-lg font-semibold">{project.client}</p>
           </div>
           <div>
-            <p className="text-eyebrow">Role &amp; Model</p>
-            <p className="mt-2 font-display text-lg font-semibold">{project.role}</p>
+            <p className="text-eyebrow">Service &amp; Model</p>
+            {linkedService ? (
+              <TransitionLink
+                href={`/services/${linkedService.slug}`}
+                className="mt-2 inline-block font-display text-lg font-semibold text-[var(--accent)] hover:underline"
+              >
+                {linkedService.title} →
+              </TransitionLink>
+            ) : (
+              <p className="mt-2 font-display text-lg font-semibold">{project.role}</p>
+            )}
             <p className="mt-0.5 text-xs text-[var(--text-muted)]">
               {project.engagementModel}
             </p>
           </div>
           <div>
-            <p className="text-eyebrow">Timeline</p>
+            <p className="text-eyebrow">Status / Timeline</p>
             <p className="mt-2 font-display text-lg font-semibold">{project.timeline}</p>
           </div>
           <div>
-            <p className="text-eyebrow">Tools &amp; Stack</p>
+            <p className="text-eyebrow">Platform &amp; Tools</p>
             <div className="mt-2 flex flex-wrap gap-1.5">
               {project.tools.map((tool) => (
                 <span
@@ -121,15 +138,15 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
         </div>
       </header>
 
-      {/* Metrics Highlights */}
-      <section aria-label="Key project outcomes" className="container-editorial py-8 sm:py-12">
+      {/* Snapshot Badges */}
+      <section aria-label="Case study snapshot" className="container-editorial py-8 sm:py-12">
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
           {project.metrics.map((metric) => (
             <div
               key={metric.label}
               className="rounded-2xl border border-[var(--border-subtle)] bg-[var(--bg-elevated)] p-6 sm:p-8"
             >
-              <p className="font-display text-4xl sm:text-5xl font-bold tracking-tight text-[var(--accent)]">
+              <p className="font-display text-3xl sm:text-4xl font-bold tracking-tight text-[var(--accent)]">
                 {metric.value}
               </p>
               <p className="mt-2 font-mono text-xs uppercase tracking-[0.14em] text-[var(--text-secondary)]">
@@ -140,14 +157,13 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
         </div>
       </section>
 
-      {/* Challenge, Process & Results */}
+      {/* The Challenge, What We Did & The Result */}
       <section className="container-editorial space-y-16 py-12 sm:py-16">
-        {/* Challenge */}
         <div className="grid grid-cols-1 gap-6 border-t border-[var(--border-subtle)] pt-10 lg:grid-cols-12">
           <div className="lg:col-span-4">
             <p className="text-eyebrow">01 · The Challenge</p>
             <h2 className="mt-2 font-display text-2xl sm:text-3xl font-bold">
-              What needed fixing
+              What needed to work better
             </h2>
           </div>
           <div className="lg:col-span-8">
@@ -157,12 +173,11 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
           </div>
         </div>
 
-        {/* Process */}
         <div className="grid grid-cols-1 gap-6 border-t border-[var(--border-subtle)] pt-10 lg:grid-cols-12">
           <div className="lg:col-span-4">
-            <p className="text-eyebrow">02 · The Process</p>
+            <p className="text-eyebrow">02 · What We Did</p>
             <h2 className="mt-2 font-display text-2xl sm:text-3xl font-bold">
-              How it came together
+              Design, build &amp; tools
             </h2>
           </div>
           <div className="lg:col-span-8 space-y-4">
@@ -182,12 +197,11 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
           </div>
         </div>
 
-        {/* Results */}
         <div className="grid grid-cols-1 gap-6 border-t border-[var(--border-subtle)] pt-10 lg:grid-cols-12">
           <div className="lg:col-span-4">
-            <p className="text-eyebrow">03 · Results</p>
+            <p className="text-eyebrow">03 · The Result</p>
             <h2 className="mt-2 font-display text-2xl sm:text-3xl font-bold">
-              Measurable impact
+              Outcome
             </h2>
           </div>
           <div className="lg:col-span-8 space-y-4">
@@ -209,22 +223,22 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
 
       {/* Gallery */}
       <section aria-label="Project gallery" className="container-editorial space-y-6 py-8">
-        <p className="text-eyebrow">04 · Gallery &amp; Frames</p>
+        <p className="text-eyebrow">04 · Gallery</p>
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
           {project.galleryImages.map((imgUrl, idx) => (
             <CaseStudyParallax
               key={`${imgUrl}-${idx}`}
               src={imgUrl}
-              alt={`${project.title} gallery frame ${idx + 1}`}
+              alt={`${project.title} screen preview ${idx + 1} built on ${project.tools[0]}`}
             />
           ))}
         </div>
       </section>
 
-      {/* Next Project Link */}
+      {/* Next Project & Footer CTA */}
       <section aria-label="Next case study" className="container-editorial pt-16 sm:pt-20">
         <div className="border-t border-[var(--border-subtle)] pt-12">
-          <p className="text-eyebrow mb-6">Next Case Study</p>
+          <p className="text-eyebrow mb-6">Next Project</p>
           <TransitionLink
             href={`/work/${nextProject.slug}`}
             data-cursor="view"
@@ -257,10 +271,10 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
 
           <div className="mt-10 flex flex-wrap items-center justify-between gap-4">
             <MagneticButton href="/work" variant="secondary" size="md">
-              ← Back to all work
+              ← See all work
             </MagneticButton>
             <MagneticButton href="/contact" variant="primary" size="md">
-              Start a similar project →
+              Want results like this? Start your project →
             </MagneticButton>
           </div>
         </div>

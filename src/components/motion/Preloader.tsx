@@ -170,8 +170,8 @@ export function Preloader() {
         </div>
 
         <div className="flex items-center justify-between text-xs font-mono uppercase tracking-[0.16em] text-[var(--text-muted)]">
-          <span>Web · No-Code · Brand · AI Video</span>
-          <span>Solo &amp; Vetted Team</span>
+          <span>{SITE.shortLockup}</span>
+          <span>Solo &amp; Full Team</span>
         </div>
       </div>
     </div>

@@ -417,7 +417,7 @@ export function SiteHeader() {
                         onMouseLeave={() => setHoveredIdx(null)}
                         onFocus={() => setHoveredIdx(idx)}
                         onBlur={() => setHoveredIdx(null)}
-                        className={`group flex min-h-[60px] items-center justify-between gap-4 py-3 sm:py-4 transition-all duration-300 ${
+                        className={`group flex min-h-[52px] items-center justify-between gap-4 py-2 sm:py-2.5 transition-all duration-300 ${
                           isDimmed ? "opacity-25" : "opacity-100"
                         }`}
                       >
@@ -432,7 +432,7 @@ export function SiteHeader() {
                             {item.index}
                           </span>
                           <span
-                            className={`font-display text-[clamp(2.1rem,5.4vw,4.5rem)] font-bold leading-[0.98] tracking-tight transition-transform duration-300 ${
+                            className={`font-display text-[clamp(1.7rem,4vw,3.35rem)] font-bold leading-[0.98] tracking-tight transition-transform duration-300 ${
                               isHighlighted ? "translate-x-2 text-[var(--accent)]" : ""
                             } ${isActive && !isHighlighted ? "text-[var(--accent)]" : ""}`}
                           >
@@ -471,7 +471,7 @@ export function SiteHeader() {
             <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-1">
               {/* Direct Email */}
               <div data-menu-meta className="space-y-2.5">
-                <p className="text-eyebrow">Direct contact</p>
+                <p className="text-eyebrow">Email</p>
                 <div className="flex flex-wrap items-center gap-3">
                   <a
                     href={`mailto:${SITE.email}`}
@@ -488,13 +488,13 @@ export function SiteHeader() {
                   </button>
                 </div>
                 <p className="text-xs text-[var(--text-muted)]">
-                  Led by {SITE.owner} · {SITE.location}
+                  {SITE.nameLine} · {SITE.location}
                 </p>
               </div>
 
               {/* Platforms: Fiverr & Upwork */}
               <div data-menu-meta className="space-y-2.5">
-                <p className="text-eyebrow">Hire via marketplaces</p>
+                <p className="text-eyebrow">Find us on</p>
                 <div className="flex flex-wrap gap-2.5">
                   {PLATFORM_PROFILES.map((profile) => (
                     <a

@@ -170,7 +170,7 @@ export async function POST(request: NextRequest) {
 
   // Local development preview fallback when no provider env vars are configured yet
   if (process.env.NODE_ENV !== "production") {
-    console.info("[Digital Expert Contact Preview]", {
+    console.info("[Digital Experts Contact Preview]", {
       name,
       email,
       service,

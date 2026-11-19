@@ -187,10 +187,17 @@ export function ProjectCard({
 
           {/* Kinetic Telemetry Overlay Pill (visible on hover / subtle mobile corner tag) */}
           <div className="pointer-events-none absolute inset-0 z-20 flex flex-col justify-between p-4 sm:p-5 bg-gradient-to-t from-black/70 via-transparent to-black/25">
-            <div className="flex items-center justify-between gap-2">
-              <span className="rounded-full border border-white/15 bg-black/55 px-3 py-1 font-mono text-[11px] uppercase tracking-[0.12em] text-white backdrop-blur-sm">
-                {project.category}
-              </span>
+            <div className="flex flex-wrap items-center justify-between gap-2">
+              <div className="flex items-center gap-2">
+                <span className="rounded-full border border-white/15 bg-black/55 px-3 py-1 font-mono text-[11px] uppercase tracking-[0.12em] text-white backdrop-blur-sm">
+                  {project.category}
+                </span>
+                {project.isConcept ? (
+                  <span className="rounded-full border border-white/15 bg-black/55 px-2.5 py-1 font-mono text-[10px] uppercase tracking-[0.1em] text-white/80 backdrop-blur-sm">
+                    Concept
+                  </span>
+                ) : null}
+              </div>
               <span className="rounded-full border border-white/15 bg-black/55 px-3 py-1 font-mono text-[11px] uppercase tracking-[0.1em] text-[var(--accent)] backdrop-blur-sm">
                 {project.engagementModel}
               </span>

@@ -4,9 +4,11 @@ import { ContactForm } from "@/components/shared/ContactForm";
 import { PLATFORM_PROFILES, SITE } from "@/data/site";
 
 export const metadata: Metadata = {
-  title: "Contact",
+  title: {
+    absolute: "Contact Digital Experts | Start Your Web or Design Project",
+  },
   description:
-    "Send a project inquiry, book a 30-minute discovery call, or reach Digital Expert via email, Fiverr, or Upwork.",
+    "Tell us about your website, design, email or AI video project. Send an enquiry or book a 30-minute call and we will get back to you quickly.",
 };
 
 interface ContactPageProps {
@@ -21,14 +23,14 @@ export default async function ContactPage({ searchParams }: ContactPageProps) {
       <section className="container-editorial grid grid-cols-1 gap-12 lg:grid-cols-12 lg:gap-14">
         <div className="lg:col-span-5 flex flex-col justify-between gap-10">
           <div className="space-y-6">
-            <p className="text-eyebrow">05 · Start a Project</p>
+            <p className="text-eyebrow">07 · Contact · Tell us what you need</p>
             <HeadingReveal as="h1" trigger="enter" delay={0.08} className="text-h1">
-              Let&apos;s scope your next launch.
+              Tell us about your project
             </HeadingReveal>
             <FadeUp trigger="enter" delay={0.2}>
               <p className="text-lead text-[var(--text-secondary)]">
-                Share what you&apos;re building, your ideal timeline, and budget range. You&apos;ll
-                hear back directly from {SITE.owner} within 24 hours.
+                The more detail you share, the better your quote. Not ready to write it all
+                down? Book a call instead.
               </p>
             </FadeUp>
           </div>
@@ -45,9 +47,9 @@ export default async function ContactPage({ searchParams }: ContactPageProps) {
             </div>
 
             <div className="rounded-2xl border border-[var(--border-subtle)] bg-[var(--bg-elevated)] p-5 space-y-3">
-              <p className="text-eyebrow">Quick intro call</p>
+              <p className="text-eyebrow">Prefer to talk?</p>
               <p className="text-sm text-[var(--text-secondary)]">
-                Want to walk through goals live before scoping? Grab a 30-minute slot.
+                Book a 30-minute scope call directly — no pressure, clear quote after.
               </p>
               <a
                 href={SITE.calendlyUrl}
@@ -61,7 +63,7 @@ export default async function ContactPage({ searchParams }: ContactPageProps) {
             </div>
 
             <div className="space-y-2.5">
-              <p className="text-eyebrow">Or hire via platforms</p>
+              <p className="text-eyebrow">Ordering on Fiverr or Upwork? Find us there</p>
               <div className="flex flex-wrap gap-3">
                 {PLATFORM_PROFILES.map((p) => (
                   <a
@@ -77,7 +79,7 @@ export default async function ContactPage({ searchParams }: ContactPageProps) {
                 ))}
               </div>
               <p className="text-xs text-[var(--text-muted)]">
-                {SITE.timezoneNote} · Based in {SITE.location}
+                Based in {SITE.location} and working with clients in every time zone.
               </p>
             </div>
           </FadeUp>

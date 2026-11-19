@@ -6,13 +6,13 @@ import { MagneticButton } from "@/components/motion/MagneticButton";
 import { SITE } from "@/data/site";
 
 export const CONTACT_SERVICES = [
-  "Website Design and Development",
-  "No-Code Platform Build",
-  "UI/UX Design",
-  "Graphic Design and Branding",
-  "Email Marketing",
-  "AI Video",
-  "Something Else",
+  "Website design and development",
+  "Wix, Squarespace, WordPress or Webflow build",
+  "UI/UX design",
+  "Graphic design and branding",
+  "Email marketing",
+  "AI video",
+  "Something else",
 ] as const;
 
 export const CONTACT_BUDGETS = [
@@ -86,14 +86,14 @@ export function ContactForm({ defaultService }: { defaultService?: string }) {
 
   const validateField = (field: keyof FormValues, val: string): string | undefined => {
     if (field === "name" && val.trim().length < 2) {
-      return "Please enter your name.";
+      return "Please enter your name";
     }
     if (field === "email") {
       const ok = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val.trim());
-      if (!ok) return "Please enter a valid email address.";
+      if (!ok) return "Please enter a valid email";
     }
     if (field === "message" && val.trim().length < 20) {
-      return `Please share at least 20 characters (${val.trim().length}/20).`;
+      return `Please tell us a little more, at least 20 characters (${val.trim().length}/20)`;
     }
     return undefined;
   };
@@ -140,7 +140,7 @@ export function ContactForm({ defaultService }: { defaultService?: string }) {
         const body = await res.json().catch(() => ({}));
         throw new Error(
           body?.error ||
-            `Could not send inquiry right now. You can email ${SITE.email} directly.`
+            `Could not send enquiry right now. Please email ${SITE.email} directly.`
         );
       }
 
@@ -179,11 +179,11 @@ export function ContactForm({ defaultService }: { defaultService?: string }) {
 
         <div className="space-y-2">
           <h3 className="font-display text-2xl sm:text-3xl font-bold text-[var(--text-primary)]">
-            Inquiry received.
+            Thanks, we have your message.
           </h3>
           <p className="max-w-lg text-sm sm:text-base text-[var(--text-secondary)]">
-            Thanks for reaching out — {SITE.owner} will review your project brief and reply within
-            one business day.
+            We will reply within {SITE.responseTime}. Need to add more context right away? Email{" "}
+            {SITE.email}.
           </p>
         </div>
 
@@ -192,7 +192,7 @@ export function ContactForm({ defaultService }: { defaultService?: string }) {
           size="md"
           onClick={() => setStatus("idle")}
         >
-          Send another message
+          Send another enquiry
         </MagneticButton>
       </div>
     );
@@ -218,9 +218,8 @@ export function ContactForm({ defaultService }: { defaultService?: string }) {
         />
       </div>
 
-      {/* Name & Email */}
+      {/* Your name & Your email */}
       <div className="grid grid-cols-1 gap-7 sm:grid-cols-2">
-        {/* Name */}
         <div className="relative pt-4">
           <input
             id="contact-name"
@@ -255,7 +254,6 @@ export function ContactForm({ defaultService }: { defaultService?: string }) {
           ) : null}
         </div>
 
-        {/* Email */}
         <div className="relative pt-4">
           <input
             id="contact-email"
@@ -270,7 +268,7 @@ export function ContactForm({ defaultService }: { defaultService?: string }) {
             aria-invalid={Boolean(errors.email)}
             aria-describedby={errors.email ? "contact-email-error" : undefined}
             className="peer w-full border-b border-[var(--border-strong)] bg-transparent py-3 text-base text-[var(--text-primary)] outline-none placeholder-transparent"
-            placeholder="Email address"
+            placeholder="Your email"
           />
           <label
             htmlFor="contact-email"
@@ -280,7 +278,7 @@ export function ContactForm({ defaultService }: { defaultService?: string }) {
                 : "top-7 text-sm text-[var(--text-secondary)]"
             }`}
           >
-            Email address *
+            Your email *
           </label>
           <FloatingUnderline active={focusedField === "email"} hasError={Boolean(errors.email)} />
           {errors.email ? (
@@ -291,14 +289,14 @@ export function ContactForm({ defaultService }: { defaultService?: string }) {
         </div>
       </div>
 
-      {/* Service & Budget Selectors */}
+      {/* What do you need? & Budget */}
       <div className="grid grid-cols-1 gap-7 sm:grid-cols-2">
         <div className="relative pt-4">
           <label
             htmlFor="contact-service"
             className="block font-mono text-[11px] uppercase tracking-[0.12em] text-[var(--text-secondary)]"
           >
-            Service needed
+            What do you need?
           </label>
           <select
             id="contact-service"
@@ -323,7 +321,7 @@ export function ContactForm({ defaultService }: { defaultService?: string }) {
             htmlFor="contact-budget"
             className="block font-mono text-[11px] uppercase tracking-[0.12em] text-[var(--text-secondary)]"
           >
-            Estimated budget
+            Budget
           </label>
           <select
             id="contact-budget"
@@ -344,7 +342,7 @@ export function ContactForm({ defaultService }: { defaultService?: string }) {
         </div>
       </div>
 
-      {/* Message */}
+      {/* Tell us about your project */}
       <div className="relative pt-5">
         <textarea
           id="contact-message"
@@ -358,7 +356,7 @@ export function ContactForm({ defaultService }: { defaultService?: string }) {
           aria-invalid={Boolean(errors.message)}
           aria-describedby={errors.message ? "contact-message-error" : "contact-message-hint"}
           className="peer w-full resize-y border-b border-[var(--border-strong)] bg-transparent py-3 text-base text-[var(--text-primary)] outline-none placeholder-transparent"
-          placeholder="Tell us about your timeline, goals, or platform preferences"
+          placeholder="Tell us about your project"
         />
         <label
           htmlFor="contact-message"
@@ -368,7 +366,7 @@ export function ContactForm({ defaultService }: { defaultService?: string }) {
               : "top-7 text-sm text-[var(--text-secondary)]"
           }`}
         >
-          Project details (min 20 chars) *
+          Tell us about your project (at least 20 characters) *
         </label>
         <FloatingUnderline active={focusedField === "message"} hasError={Boolean(errors.message)} />
         <div className="mt-2 flex items-center justify-between gap-2">
@@ -378,7 +376,7 @@ export function ContactForm({ defaultService }: { defaultService?: string }) {
             </p>
           ) : (
             <p id="contact-message-hint" className="text-xs text-[var(--text-muted)]">
-              Share your goals, timeline, and whether you want solo focus or a team pod.
+              Share your goals, platform preference, deadline, or whether you want one expert or a full team.
             </p>
           )}
           <span className="font-mono text-[11px] tabular-nums text-[var(--text-muted)]">
@@ -403,7 +401,7 @@ export function ContactForm({ defaultService }: { defaultService?: string }) {
           size="lg"
           disabled={status === "submitting"}
         >
-          <span>{status === "submitting" ? "Sending inquiry..." : "Send project inquiry"}</span>
+          <span>{status === "submitting" ? "Sending enquiry..." : "Send enquiry"}</span>
           <span aria-hidden="true">→</span>
         </MagneticButton>
 

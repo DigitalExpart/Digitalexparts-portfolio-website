@@ -7,9 +7,9 @@ import { HeadingReveal, FadeUp } from "@/components/motion/TextReveal";
 import { useMediaCapabilities } from "@/hooks/useMediaCapabilities";
 
 const FUN_STATUS_LINES = [
-  "Signal rerouted · Check the URL or pick a real destination below.",
-  "Even our AI video generator couldn't hallucinate this page.",
-  "Looks like this pixel took a solo sprint without telling anyone.",
+  "That page has moved or never existed. Head back home, see our work, or tell us what you were looking for.",
+  "Lost? Let's get you back on track.",
+  "Looks like this URL took a coffee break — pick a real destination below.",
 ];
 
 export function PlayfulNotFound() {
@@ -114,7 +114,7 @@ export function PlayfulNotFound() {
         </div>
 
         <HeadingReveal as="h1" trigger="enter" className="text-h2 max-w-2xl">
-          Wrong turn — this page hasn&apos;t launched yet.
+          Page not found
         </HeadingReveal>
 
         <FadeUp trigger="enter" delay={0.18} className="max-w-lg">
@@ -125,14 +125,14 @@ export function PlayfulNotFound() {
 
         <FadeUp trigger="enter" delay={0.26} className="flex flex-wrap items-center justify-center gap-3.5 pt-2">
           <MagneticButton href="/" variant="primary" size="lg">
-            <span>Back to Home</span>
+            <span>Back to home</span>
             <span aria-hidden="true">→</span>
           </MagneticButton>
           <MagneticButton href="/work" variant="secondary" size="lg">
-            <span>Browse Work</span>
+            <span>See our work</span>
           </MagneticButton>
           <MagneticButton href="/contact" variant="ghost" size="lg">
-            <span>Start a Project</span>
+            <span>Start your project</span>
           </MagneticButton>
         </FadeUp>
       </div>

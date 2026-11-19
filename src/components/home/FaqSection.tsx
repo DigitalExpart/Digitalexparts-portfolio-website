@@ -4,10 +4,17 @@ import React, { useEffect, useRef, useState } from "react";
 import { ensureGsapRegistered, gsap } from "@/lib/gsap";
 import { FAQ_ITEMS } from "@/data/home";
 import { HeadingReveal } from "@/components/motion/TextReveal";
+import { MagneticButton } from "@/components/motion/MagneticButton";
 import { useMediaCapabilities } from "@/hooks/useMediaCapabilities";
 
-export function FaqSection() {
-  const [openId, setOpenId] = useState<string | null>(FAQ_ITEMS[0].id);
+interface FaqSectionProps {
+  limit?: number;
+  showHeader?: boolean;
+}
+
+export function FaqSection({ limit, showHeader = true }: FaqSectionProps) {
+  const items = typeof limit === "number" ? FAQ_ITEMS.slice(0, limit) : FAQ_ITEMS;
+  const [openId, setOpenId] = useState<string | null>(items[0]?.id ?? null);
   const contentRefs = useRef<Record<string, HTMLDivElement | null>>({});
   const { prefersReducedMotion } = useMediaCapabilities();
 
@@ -55,23 +62,37 @@ export function FaqSection() {
   return (
     <section
       id="faq"
-      aria-labelledby="faq-heading"
-      className="section-pad hairline-t"
+      aria-labelledby={showHeader ? "faq-heading" : undefined}
+      className={showHeader ? "section-pad hairline-t" : "py-4"}
     >
       <div className="container-editorial grid grid-cols-1 gap-10 lg:grid-cols-12 lg:gap-14">
-        <div className="lg:col-span-4 space-y-4">
-          <p className="text-eyebrow">09 · Questions</p>
-          <HeadingReveal as="h2" id="faq-heading" className="text-h2">
-            Straight answers before we start.
-          </HeadingReveal>
-          <p className="text-sm sm:text-base text-[var(--text-secondary)]">
-            Clear expectations around pricing, sprint timelines, revisions, platforms, and
-            how the vetted team works.
-          </p>
-        </div>
+        {showHeader ? (
+          <div className="lg:col-span-4 space-y-5">
+            <p className="text-eyebrow">09 · FAQ</p>
+            <HeadingReveal as="h2" id="faq-heading" className="text-h2">
+              Questions before you start?
+            </HeadingReveal>
+            <p className="text-sm sm:text-base text-[var(--text-secondary)]">
+              Clear answers about our studio names, pricing, timelines, platforms and working
+              solo or with a team.
+            </p>
+            {typeof limit === "number" && limit < FAQ_ITEMS.length ? (
+              <div className="pt-1">
+                <MagneticButton href="/faq" variant="secondary" size="sm">
+                  <span>Read the full FAQ</span>
+                  <span aria-hidden="true">→</span>
+                </MagneticButton>
+              </div>
+            ) : null}
+          </div>
+        ) : null}
 
-        <div className="lg:col-span-8 border-t border-[var(--border-subtle)]">
-          {FAQ_ITEMS.map((item) => {
+        <div
+          className={`${
+            showHeader ? "lg:col-span-8" : "lg:col-span-12"
+          } border-t border-[var(--border-subtle)]`}
+        >
+          {items.map((item, idx) => {
             const isOpen = openId === item.id;
             return (
               <div
@@ -111,7 +132,7 @@ export function FaqSection() {
                   ref={(node) => {
                     contentRefs.current[item.id] = node;
                   }}
-                  style={{ height: item.id === FAQ_ITEMS[0].id ? "auto" : 0, overflow: "hidden" }}
+                  style={{ height: idx === 0 ? "auto" : 0, overflow: "hidden" }}
                 >
                   <p className="pb-6 pr-12 text-sm sm:text-base leading-relaxed text-[var(--text-secondary)]">
                     {item.answer}

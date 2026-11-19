@@ -3,6 +3,7 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { ensureGsapRegistered, gsap } from "@/lib/gsap";
 import { TESTIMONIALS } from "@/data/home";
+import { SITE } from "@/data/site";
 import { HeadingReveal } from "@/components/motion/TextReveal";
 import { useMediaCapabilities } from "@/hooks/useMediaCapabilities";
 
@@ -69,7 +70,6 @@ export function TestimonialsSection() {
   }, [activeIndex, snapToIndex]);
 
   const handlePointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
-    // Allow button clicks inside slider without hijacking
     if (e.target instanceof Element && e.target.closest("button, a")) return;
     const track = trackRef.current;
     if (!track) return;
@@ -101,7 +101,6 @@ export function TestimonialsSection() {
     const minOffset = -(TESTIMONIALS.length - 1) * ds.stride;
     let nextX = ds.startOffset + delta;
 
-    // Soft rubber-band resistance past ends
     if (nextX > maxOffset) {
       nextX = (nextX - maxOffset) * 0.35;
     } else if (nextX < minOffset) {
@@ -130,13 +129,25 @@ export function TestimonialsSection() {
       className="overflow-hidden section-pad hairline-t"
     >
       <div className="container-editorial space-y-10 sm:space-y-14">
-        {/* Header + Controls */}
         <div className="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
           <div className="space-y-4 max-w-3xl">
-            <p className="text-eyebrow">08 · Client Proof</p>
+            <p className="text-eyebrow">08 · Reviews from Fiverr &amp; Upwork</p>
             <HeadingReveal as="h2" id="testimonials-heading" className="text-h1">
-              Trusted by founders, teams &amp; marketplace clients.
+              What clients say
             </HeadingReveal>
+            <p className="text-sm sm:text-base text-[var(--text-secondary)]">
+              <a
+                href={SITE.fiverrUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex min-h-[44px] items-center gap-2 font-medium text-[var(--accent)] underline underline-offset-4 hover:text-[var(--text-primary)]"
+              >
+                <span>
+                  {SITE.proof.fiverrRating} from {SITE.proof.fiverrReviews} reviews on Fiverr (Isaac Clara)
+                </span>
+                <span aria-hidden="true">↗</span>
+              </a>
+            </p>
           </div>
 
           <div className="flex items-center gap-3">
@@ -164,7 +175,6 @@ export function TestimonialsSection() {
           </div>
         </div>
 
-        {/* Draggable Horizontal Slider Viewport */}
         <div
           ref={viewportRef}
           data-cursor="drag"
@@ -197,31 +207,40 @@ export function TestimonialsSection() {
                       : "border-[var(--border-subtle)] bg-[var(--bg-elevated)]/55 scale-[0.96] opacity-70 hover:opacity-90"
                   }`}
                 >
-                  <div className="flex items-center justify-between gap-3">
+                  <div className="flex flex-wrap items-center justify-between gap-2">
                     <span className="rounded-full border border-[var(--border-subtle)] bg-[var(--bg-primary)] px-3.5 py-1 font-mono text-[11px] uppercase tracking-[0.12em] text-[var(--accent)]">
                       {item.source}
                     </span>
-                    <span className="font-mono text-xs text-[var(--text-muted)]">
-                      {item.projectType}
-                    </span>
+                    <div className="flex items-center gap-2">
+                      {item.metaNote ? (
+                        <span className="rounded-full border border-[var(--accent)]/35 bg-[var(--accent-soft)] px-2.5 py-0.5 font-mono text-[10px] uppercase tracking-[0.1em] text-[var(--accent)]">
+                          {item.metaNote}
+                        </span>
+                      ) : null}
+                      {item.price ? (
+                        <span className="font-mono text-xs text-[var(--text-muted)]">
+                          {item.price}
+                        </span>
+                      ) : null}
+                    </div>
                   </div>
 
                   <blockquote className="font-display text-lg sm:text-2xl font-medium leading-[1.35] tracking-tight text-[var(--text-primary)]">
                     &ldquo;{item.quote}&rdquo;
                   </blockquote>
 
-                  <div className="flex items-center justify-between border-t border-[var(--border-subtle)] pt-5">
+                  <div className="flex items-center justify-between gap-4 border-t border-[var(--border-subtle)] pt-5">
                     <div>
                       <p className="font-display text-base font-bold text-[var(--text-primary)]">
                         {item.author}
                       </p>
                       <p className="text-xs sm:text-sm text-[var(--text-secondary)]">
-                        {item.role} · {item.company}
+                        {item.country} · {item.projectType}
                       </p>
                     </div>
                     <span
                       aria-label="5 out of 5 rating"
-                      className="font-mono text-xs tracking-[0.18em] text-[var(--accent)]"
+                      className="font-mono text-xs tracking-[0.18em] text-[var(--accent)] shrink-0"
                     >
                       ★★★★★
                     </span>
@@ -232,14 +251,13 @@ export function TestimonialsSection() {
           </div>
         </div>
 
-        {/* Dot Progress Indicators */}
         <div className="flex items-center gap-2 pt-2">
           {TESTIMONIALS.map((item, idx) => (
             <button
               key={item.id}
               type="button"
               onClick={() => snapToIndex(idx)}
-              aria-label={`Go to testimonial ${idx + 1} by ${item.author}`}
+              aria-label={`Go to review ${idx + 1} by ${item.author}`}
               aria-current={idx === activeIndex ? "true" : undefined}
               className="group flex min-h-[44px] items-center px-1"
             >
