@@ -19,7 +19,7 @@ export const SITE = {
   location: "[LOCATION]",
   timezoneNote: "Remote · Serving clients worldwide",
   calendlyUrl: "[CALENDLY URL]",
-  fiverrUrl: "https://www.fiverr.com/s/GPlqGkz",
+  fiverrUrl: "https://www.fiverr.com/clara_success?public_mode=true",
   upworkUrl: "https://www.upwork.com/freelancers/~01e12863196bfb5563?mp_source=share",
   siteUrl: process.env.NEXT_PUBLIC_SITE_URL || "https://digital-expert.example.com",
   tagline: "One-stop digital partner — solo speed or a vetted team.",
