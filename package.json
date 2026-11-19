@@ -1,10 +1,15 @@
 {
-  "name": "digital-expert-portfolio",
+  "name": "digitalexparts-portfolio-website",
   "version": "1.0.0",
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",
-    "build": "next build",
+    "build": "node scripts/build.mjs",
+    "build:next": "next build",
+    "build:cf": "opennextjs-cloudflare build",
+    "preview:cf": "opennextjs-cloudflare build && opennextjs-cloudflare preview",
+    "deploy:cf": "opennextjs-cloudflare build && opennextjs-cloudflare deploy",
+    "cf-typegen": "wrangler types --env-interface CloudflareEnv cloudflare-env.d.ts",
     "start": "next start",
     "lint": "eslint",
     "typecheck": "tsc --noEmit"
@@ -19,6 +24,7 @@
     "three": "^0.187.0"
   },
   "devDependencies": {
+    "@opennextjs/cloudflare": "^1.20.17",
     "@tailwindcss/postcss": "^4.3.5",
     "@types/node": "^24.0.0",
     "@types/react": "^19.1.0",
@@ -27,6 +33,7 @@
     "eslint": "^9.26.0",
     "eslint-config-next": "^16.4.6",
     "tailwindcss": "^4.3.5",
-    "typescript": "^5.8.3"
+    "typescript": "^5.8.3",
+    "wrangler": "^4.165.0"
   }
 }
