@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useRef } from "react";
+import Image from "next/image";
 import { ensureGsapRegistered, gsap } from "@/lib/gsap";
 import { NAV_LINKS, PLATFORM_PROFILES, SITE, SOCIAL_LINKS } from "@/data/site";
 import { TransitionLink } from "@/components/motion/PageTransitionProvider";
@@ -122,6 +123,14 @@ export function SiteFooter() {
         <div className="grid grid-cols-1 gap-10 md:grid-cols-12 md:gap-8">
           {/* Brand Summary & Name Clarity */}
           <div className="md:col-span-5 space-y-4">
+            <Image
+              src="/brand/logo-nav-dark.svg"
+              alt={SITE.brand}
+              width={628}
+              height={120}
+              unoptimized
+              className="h-7 sm:h-8 w-auto"
+            />
             <p className="text-eyebrow">{SITE.shortLockup} · Replies within {SITE.responseTime}</p>
             <p className="max-w-md font-display text-xl sm:text-2xl font-semibold leading-snug">
               {SITE.tagline}

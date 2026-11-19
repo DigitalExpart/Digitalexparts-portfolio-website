@@ -48,6 +48,11 @@ export const metadata: Metadata = {
     title: "Digital Experts | Web Design, Development & AI Video Studio",
     description: SITE.description,
   },
+  appleWebApp: {
+    capable: true,
+    title: SITE.brand,
+    statusBarStyle: "black-translucent",
+  },
 };
 
 const PRELOADER_BOOT_SCRIPT = `
@@ -73,6 +78,8 @@ export default function RootLayout({
     name: SITE.brand,
     alternateName: SITE.alternateName,
     url: `${baseUrl}/`,
+    logo: `${baseUrl}/brand/app-icon.png`,
+    image: `${baseUrl}/brand/logo-mark-dark.png`,
     description:
       "Remote studio (6+ years, 25+ specialists) for web design, custom development, AI automation, 2D/3D animation, illustration, video editing, email marketing and AI video.",
     email: SITE.email,

@@ -32,16 +32,29 @@ export default function OpenGraphImage() {
             alignItems: "center",
           }}
         >
-          <div style={{ display: "flex", alignItems: "center", gap: "16px" }}>
-            <div
-              style={{
-                width: "22px",
-                height: "22px",
-                borderRadius: "6px",
-                backgroundColor: "#B6FF4A",
-              }}
-            />
-            <span style={{ fontSize: "24px", fontWeight: 700, letterSpacing: "0.08em" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: "18px" }}>
+            <svg
+              width="48"
+              height="48"
+              viewBox="0 0 64 64"
+              style={{ display: "flex" }}
+            >
+              <rect width="64" height="64" rx="14" fill="#B6FF4A" />
+              <path
+                d="M18.47 15H28.53A17 17 0 0 1 28.53 49H18.47Z"
+                fill="none"
+                stroke="#090A10"
+                strokeWidth="6.2"
+                strokeLinejoin="miter"
+              />
+              <path
+                d="M18.47 23.5H36.42M18.47 32H33.26M18.47 40.5H36.42"
+                fill="none"
+                stroke="#090A10"
+                strokeWidth="6.2"
+              />
+            </svg>
+            <span style={{ fontSize: "26px", fontWeight: 700, letterSpacing: "0.08em" }}>
               {SITE.brandUpper}
             </span>
           </div>
@@ -59,16 +72,16 @@ export default function OpenGraphImage() {
               fontWeight: 600,
             }}
           >
-            200+ Orders · 4.7 Rating · Solo &amp; Full Team
+            6+ Years · 25+ Team · 200+ Orders · 4.7 Rating
           </div>
         </div>
 
         <div style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
           <div
             style={{
-              fontSize: "72px",
+              fontSize: "66px",
               fontWeight: 800,
-              lineHeight: 1.02,
+              lineHeight: 1.04,
               letterSpacing: "-0.04em",
             }}
           >
@@ -76,14 +89,14 @@ export default function OpenGraphImage() {
           </div>
           <div
             style={{
-              fontSize: "26px",
+              fontSize: "25px",
               color: "#A5ACB9",
-              maxWidth: "960px",
+              maxWidth: "1000px",
               lineHeight: 1.35,
             }}
           >
-            Wix · Squarespace · WordPress · Webflow · React &amp; Next.js · UI/UX · Email · AI
-            Video
+            Wix · Squarespace · WordPress · Webflow · React &amp; Next.js · AI Automation ·
+            2D/3D · Editing · AI Video
           </div>
         </div>
 

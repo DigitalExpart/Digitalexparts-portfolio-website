@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useRef, useState } from "react";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { ensureGsapRegistered, gsap } from "@/lib/gsap";
 import { NAV_LINKS, PLATFORM_PROFILES, SITE, SOCIAL_LINKS } from "@/data/site";
@@ -307,15 +308,18 @@ export function SiteHeader() {
           {/* Brand Logo */}
           <TransitionLink
             href="/"
-            className="group inline-flex min-h-[44px] items-center gap-2.5 text-[var(--text-primary)]"
+            className="group inline-flex min-h-[44px] items-center text-[var(--text-primary)] active:scale-95 transition-transform duration-200"
             aria-label={`${SITE.brand} — Home`}
           >
-            <span className="relative flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-[var(--border-strong)] bg-[var(--bg-elevated)] transition-colors duration-300 group-hover:border-[var(--accent)]">
-              <span className="h-2.5 w-2.5 rounded-xs bg-[var(--accent)] transition-transform duration-300 group-hover:rotate-45" />
-            </span>
-            <span className="font-display text-sm sm:text-base font-bold tracking-tight whitespace-nowrap">
-              {SITE.brand}
-            </span>
+            <Image
+              src="/brand/logo-nav-dark.svg"
+              alt={SITE.brand}
+              width={628}
+              height={120}
+              priority
+              unoptimized
+              className="h-[22px] min-[390px]:h-7 sm:h-8 lg:h-9 w-auto transition-transform duration-300 group-hover:scale-[1.02]"
+            />
           </TransitionLink>
 
           {/* Right Controls: Let's talk + Menu Toggle */}
@@ -373,14 +377,17 @@ export function SiteHeader() {
           <TransitionLink
             href="/"
             onClick={() => setMenuOpen(false)}
-            className="inline-flex min-h-[44px] items-center gap-2.5"
+            className="inline-flex min-h-[44px] items-center active:scale-95 transition-transform duration-200"
+            aria-label={`${SITE.brand} — Home`}
           >
-            <span className="flex h-8 w-8 items-center justify-center rounded-lg border border-[var(--accent)]/60 bg-[var(--bg-elevated)]">
-              <span className="h-2.5 w-2.5 rounded-xs bg-[var(--accent)]" />
-            </span>
-            <span className="font-display text-sm sm:text-base font-bold tracking-tight">
-              {SITE.brand}
-            </span>
+            <Image
+              src="/brand/logo-nav-dark.svg"
+              alt={SITE.brand}
+              width={628}
+              height={120}
+              unoptimized
+              className="h-[22px] min-[390px]:h-7 sm:h-8 w-auto"
+            />
           </TransitionLink>
 
           <button
