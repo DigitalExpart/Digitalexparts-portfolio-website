@@ -25,7 +25,7 @@ export const SITE = {
   teamSize: "[TEAM SIZE]",
   responseTime: "[ONE BUSINESS DAY]",
   timezoneNote: "Fully remote · Working across all time zones",
-  calendlyUrl: "[BOOKING LINK]",
+  calendlyUrl: "https://calendly.com/digitalexparts/30min",
   fiverrUrl: "https://www.fiverr.com/clara_success?public_mode=true",
   upworkUrl: "https://www.upwork.com/freelancers/~01e12863196bfb5563?mp_source=share",
   behanceUrl: "https://www.behance.net/bellojumato",
