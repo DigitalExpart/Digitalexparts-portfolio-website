@@ -159,7 +159,7 @@ export function TestimonialsSection() {
               onClick={() => snapToIndex(activeIndex - 1)}
               disabled={activeIndex === 0}
               aria-label="Previous testimonial"
-              className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-[var(--border-strong)] bg-[var(--bg-elevated)] text-base text-[var(--text-primary)] transition-colors hover:border-[var(--accent)] hover:text-[var(--accent)] disabled:opacity-35 disabled:pointer-events-none"
+              className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-[var(--border-strong)] bg-[var(--bg-elevated)] text-base text-[var(--text-primary)] transition-all active:scale-95 hover:border-[var(--accent)] hover:text-[var(--accent)] disabled:opacity-35 disabled:pointer-events-none"
             >
               ←
             </button>
@@ -168,7 +168,7 @@ export function TestimonialsSection() {
               onClick={() => snapToIndex(activeIndex + 1)}
               disabled={activeIndex === TESTIMONIALS.length - 1}
               aria-label="Next testimonial"
-              className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-[var(--border-strong)] bg-[var(--bg-elevated)] text-base text-[var(--text-primary)] transition-colors hover:border-[var(--accent)] hover:text-[var(--accent)] disabled:opacity-35 disabled:pointer-events-none"
+              className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-[var(--border-strong)] bg-[var(--bg-elevated)] text-base text-[var(--text-primary)] transition-all active:scale-95 hover:border-[var(--accent)] hover:text-[var(--accent)] disabled:opacity-35 disabled:pointer-events-none"
             >
               →
             </button>

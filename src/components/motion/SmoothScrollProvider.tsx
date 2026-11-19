@@ -35,9 +35,9 @@ export function SmoothScrollProvider({ children }: { children: React.ReactNode }
   useEffect(() => {
     if (!mounted) return;
     ensureGsapRegistered();
+    ScrollTrigger.config({ ignoreMobileResize: true });
 
-    // Use native scrolling on touch devices and when reduced motion is enabled
-    if (!isDesktopFinePointer || prefersReducedMotion) {
+    if (prefersReducedMotion) {
       lenisRef.current?.destroy();
       lenisRef.current = null;
       ScrollTrigger.refresh();
@@ -45,9 +45,12 @@ export function SmoothScrollProvider({ children }: { children: React.ReactNode }
     }
 
     const lenis = new Lenis({
-      lerp: 0.1,
+      lerp: isDesktopFinePointer ? 0.1 : 0.12,
       smoothWheel: true,
-      syncTouch: false,
+      syncTouch: true,
+      syncTouchLerp: 0.085,
+      touchInertiaExponent: 1.55,
+      touchMultiplier: 1,
       wheelMultiplier: 1,
     });
 
@@ -62,7 +65,12 @@ export function SmoothScrollProvider({ children }: { children: React.ReactNode }
     gsap.ticker.add(tick);
     gsap.ticker.lagSmoothing(0);
 
+    const refreshId = window.requestAnimationFrame(() => {
+      ScrollTrigger.refresh();
+    });
+
     return () => {
+      window.cancelAnimationFrame(refreshId);
       gsap.ticker.remove(tick);
       lenis.off("scroll", ScrollTrigger.update);
       lenis.destroy();

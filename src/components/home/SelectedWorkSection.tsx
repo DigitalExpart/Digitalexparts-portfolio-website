@@ -11,7 +11,7 @@ export function SelectedWorkSection() {
     <section
       id="work"
       aria-labelledby="selected-work-heading"
-      className="section-pad hairline-t"
+      className="section-pad hairline-t overflow-x-clip"
     >
       <div className="container-editorial space-y-12 sm:space-y-16">
         <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">

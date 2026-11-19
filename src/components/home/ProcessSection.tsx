@@ -10,15 +10,17 @@ export function ProcessSection() {
   const sectionRef = useRef<HTMLElement>(null);
   const pinWrapRef = useRef<HTMLDivElement>(null);
   const progressPathRef = useRef<SVGPathElement>(null);
+  const mobileProgressBarRef = useRef<HTMLDivElement>(null);
   const [activeStep, setActiveStep] = useState(0);
   const { prefersReducedMotion } = useMediaCapabilities();
 
-  // M12: Pinned 3-step process with SVG line draw on desktop; stacks vertically on mobile
+  // M12: Pinned 3-step process with SVG draw on desktop + scrubbed 3D depth & progress rail on mobile
   useEffect(() => {
     ensureGsapRegistered();
     const section = sectionRef.current;
     const pinWrap = pinWrapRef.current;
     const pathEl = progressPathRef.current;
+    const mobileBar = mobileProgressBarRef.current;
     if (!section || !pinWrap) return;
 
     if (prefersReducedMotion) {
@@ -26,6 +28,9 @@ export function ProcessSection() {
         const len = pathEl.getTotalLength();
         pathEl.style.strokeDasharray = `${len}`;
         pathEl.style.strokeDashoffset = "0";
+      }
+      if (mobileBar) {
+        mobileBar.style.transform = "scaleX(1)";
       }
       return;
     }
@@ -73,24 +78,57 @@ export function ProcessSection() {
 
     mm.add("(max-width: 1023px)", () => {
       const cards = pinWrap.querySelectorAll<HTMLElement>("[data-process-card]");
-      cards.forEach((card, idx) => {
+
+      if (mobileBar) {
         gsap.fromTo(
-          card,
-          { opacity: 0, y: 24 },
+          mobileBar,
+          { scaleX: 0.08 },
           {
-            opacity: 1,
-            y: 0,
-            duration: 0.7,
-            ease: "power3.out",
+            scaleX: 1,
+            ease: "none",
             scrollTrigger: {
-              trigger: card,
-              start: "top 85%",
-              once: true,
-              onEnter: () => setActiveStep(idx),
+              trigger: section,
+              start: "top 68%",
+              end: "bottom 72%",
+              scrub: 0.35,
             },
           }
         );
+      }
+
+      const triggers: ScrollTrigger[] = [];
+      cards.forEach((card, idx) => {
+        gsap.fromTo(
+          card,
+          { opacity: 0.45, y: 34, scale: 0.96, rotateX: 6, transformPerspective: 900 },
+          {
+            opacity: 1,
+            y: 0,
+            scale: 1,
+            rotateX: 0,
+            ease: "none",
+            scrollTrigger: {
+              trigger: card,
+              start: "top 94%",
+              end: "center 68%",
+              scrub: 0.4,
+            },
+          }
+        );
+
+        const activeTrigger = ScrollTrigger.create({
+          trigger: card,
+          start: "top 62%",
+          end: "bottom 38%",
+          onEnter: () => setActiveStep(idx),
+          onEnterBack: () => setActiveStep(idx),
+        });
+        triggers.push(activeTrigger);
       });
+
+      return () => {
+        triggers.forEach((t) => t.kill());
+      };
     });
 
     return () => mm.revert();
@@ -173,6 +211,17 @@ export function ProcessSection() {
                 strokeWidth="1.5"
               />
             </svg>
+          </div>
+
+          {/* Mobile & Tablet Scrubbed Step Progress Rail */}
+          <div aria-hidden="true" className="lg:hidden space-y-2">
+            <div className="h-[3px] w-full overflow-hidden rounded-full bg-white/10">
+              <div
+                ref={mobileProgressBarRef}
+                className="h-full w-full origin-left rounded-full bg-[var(--accent)] shadow-[0_0_12px_rgba(182,255,74,0.45)] will-change-transform"
+                style={{ transform: "scaleX(0.08)" }}
+              />
+            </div>
           </div>
 
           {/* 3 Process Step Cards */}

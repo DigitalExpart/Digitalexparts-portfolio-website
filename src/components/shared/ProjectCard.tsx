@@ -47,14 +47,22 @@ export function ProjectCard({
 
     const ctx = gsap.context(() => {
       const isRightCol = index % 2 === 1;
-      const canSlideX = staggerOffset && window.innerWidth >= 768;
+      const slideOffset = staggerOffset
+        ? window.innerWidth >= 768
+          ? isRightCol
+            ? 18
+            : -18
+          : isRightCol
+            ? 12
+            : -12
+        : 0;
 
       gsap.fromTo(
         frame,
         {
           clipPath: "inset(14% 0% 14% 0% round 16px)",
           y: 36,
-          x: canSlideX ? (isRightCol ? 18 : -18) : 0,
+          x: slideOffset,
         },
         {
           clipPath: "inset(0% 0% 0% 0% round 16px)",
@@ -65,7 +73,7 @@ export function ProjectCard({
           clearProps: "transform",
           scrollTrigger: {
             trigger: card,
-            start: "top 86%",
+            start: "top 88%",
             once: true,
           },
         }
@@ -74,9 +82,10 @@ export function ProjectCard({
       if (parallaxEl) {
         gsap.fromTo(
           parallaxEl,
-          { yPercent: -8 },
+          { yPercent: -8, scale: 1.07 },
           {
             yPercent: 8,
+            scale: 1,
             ease: "none",
             scrollTrigger: {
               trigger: frame,
@@ -136,7 +145,7 @@ export function ProjectCard({
         <div
           ref={frameRef}
           onPointerMove={handlePointerMove}
-          className="relative aspect-[16/10] w-full overflow-hidden rounded-2xl border border-[var(--border-subtle)] bg-[var(--bg-elevated)] transition-colors duration-300 group-hover:border-[var(--border-strong)]"
+          className="relative aspect-[16/10] w-full overflow-hidden rounded-2xl border border-[var(--border-subtle)] bg-[var(--bg-elevated)] transition-all duration-300 active:scale-[0.985] active:border-[var(--accent)]/60 group-hover:border-[var(--border-strong)]"
         >
           {/* Inner Scrubbed Parallax Wrapper */}
           <div

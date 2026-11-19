@@ -332,6 +332,8 @@ export default function HeroCanvas({ onHoldingChange }: HeroCanvasProps) {
       lastTime = now;
       elapsed += dt;
 
+      const scrollRatio = Math.min(1, window.scrollY / Math.max(1, window.innerHeight));
+
       if (pointer.holding) {
         pointer.holdPower = Math.min(1.5, pointer.holdPower + dt * 1.4);
         holdPulseTimer += dt;
@@ -358,12 +360,17 @@ export default function HeroCanvas({ onHoldingChange }: HeroCanvasProps) {
         rippleRingMat.opacity = 0;
       }
 
-      // Centerpiece parallax & hold glow
-      const targetRotY = pointer.active ? pointer.x * 0.45 : Math.sin(elapsed * 0.35) * 0.2;
-      const targetRotX = pointer.active ? -pointer.y * 0.32 : Math.cos(elapsed * 0.28) * 0.14;
+      // Centerpiece parallax, scroll depth rotation & hold glow (responsive on desktop and mobile)
+      const targetRotY =
+        (pointer.active ? pointer.x * 0.45 : Math.sin(elapsed * 0.35) * 0.2) +
+        scrollRatio * 0.85;
+      const targetRotX =
+        (pointer.active ? -pointer.y * 0.32 : Math.cos(elapsed * 0.28) * 0.14) +
+        scrollRatio * 0.42;
       centerpieceGroup.rotation.y += (targetRotY + elapsed * 0.14 - centerpieceGroup.rotation.y) * 0.06;
       centerpieceGroup.rotation.x += (targetRotX - centerpieceGroup.rotation.x) * 0.06;
-      ringMesh.rotation.z += dt * (pointer.holding ? 1.15 : 0.25);
+      centerpieceGroup.position.y += (scrollRatio * 1.35 - centerpieceGroup.position.y) * 0.08;
+      ringMesh.rotation.z += dt * (pointer.holding ? 1.15 : 0.25 + scrollRatio * 0.4);
 
       const pulseBoost = pointer.holding ? 1 + pointer.holdPower * 0.12 : 1;
       centerpieceGroup.scale.lerp(new THREE.Vector3(pulseBoost, pulseBoost, pulseBoost), 0.1);

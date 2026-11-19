@@ -17,6 +17,38 @@ export function SoloOrTeamSection() {
 
   const current = ENGAGEMENT_MODELS[mode];
 
+  // Initial scroll cascade on team role cards for mobile & desktop
+  useEffect(() => {
+    ensureGsapRegistered();
+    const roster = rosterRef.current;
+    if (!roster || prefersReducedMotion) return;
+
+    const roles = roster.querySelectorAll<HTMLElement>("[data-role-card]");
+    if (!roles.length) return;
+
+    const ctx = gsap.context(() => {
+      gsap.fromTo(
+        roles,
+        { opacity: 0.25, y: 22 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.65,
+          stagger: 0.045,
+          ease: "expo.out",
+          clearProps: "transform",
+          scrollTrigger: {
+            trigger: roster,
+            start: "top 88%",
+            once: true,
+          },
+        }
+      );
+    }, rosterRef);
+
+    return () => ctx.revert();
+  }, [prefersReducedMotion]);
+
   useEffect(() => {
     ensureGsapRegistered();
     const panel = panelRef.current;

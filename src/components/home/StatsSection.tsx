@@ -77,51 +77,126 @@ export function StatsSection({ isLightTheme = false }: StatsSectionProps) {
     return () => ctx.revert();
   }, [prefersReducedMotion]);
 
-  // Subtle desktop-only 3D hover tilt on stat cards
+  // 3D depth tilt: pointer-following on desktop + scrubbed 3D scroll tilt & touch press on mobile
   useEffect(() => {
-    if (!isDesktopFinePointer || prefersReducedMotion) return;
+    ensureGsapRegistered();
+    if (prefersReducedMotion) return;
     const section = sectionRef.current;
     if (!section) return;
 
     const cards = Array.from(section.querySelectorAll<HTMLElement>("[data-stat-card]"));
-    const cleanups: Array<() => void> = [];
+    if (!cards.length) return;
 
-    cards.forEach((card) => {
-      const onMove = (e: PointerEvent) => {
-        const rect = card.getBoundingClientRect();
-        const nx = (e.clientX - rect.left) / Math.max(1, rect.width) - 0.5;
-        const ny = (e.clientY - rect.top) / Math.max(1, rect.height) - 0.5;
-        gsap.to(card, {
-          rotateY: nx * 7,
-          rotateX: -ny * 7,
-          y: -4,
-          transformPerspective: 900,
-          duration: 0.35,
-          ease: "power2.out",
-          overwrite: "auto",
+    if (isDesktopFinePointer) {
+      const cleanups: Array<() => void> = [];
+
+      cards.forEach((card) => {
+        const onMove = (e: PointerEvent) => {
+          const rect = card.getBoundingClientRect();
+          const nx = (e.clientX - rect.left) / Math.max(1, rect.width) - 0.5;
+          const ny = (e.clientY - rect.top) / Math.max(1, rect.height) - 0.5;
+          gsap.to(card, {
+            rotateY: nx * 7,
+            rotateX: -ny * 7,
+            y: -4,
+            transformPerspective: 900,
+            duration: 0.35,
+            ease: "power2.out",
+            overwrite: "auto",
+          });
+        };
+
+        const onLeave = () => {
+          gsap.to(card, {
+            rotateY: 0,
+            rotateX: 0,
+            y: 0,
+            duration: 0.55,
+            ease: "power3.out",
+            overwrite: "auto",
+          });
+        };
+
+        card.addEventListener("pointermove", onMove, { passive: true });
+        card.addEventListener("pointerleave", onLeave);
+        cleanups.push(() => {
+          card.removeEventListener("pointermove", onMove);
+          card.removeEventListener("pointerleave", onLeave);
         });
-      };
-
-      const onLeave = () => {
-        gsap.to(card, {
-          rotateY: 0,
-          rotateX: 0,
-          y: 0,
-          duration: 0.55,
-          ease: "power3.out",
-          overwrite: "auto",
-        });
-      };
-
-      card.addEventListener("pointermove", onMove, { passive: true });
-      card.addEventListener("pointerleave", onLeave);
-      cleanups.push(() => {
-        card.removeEventListener("pointermove", onMove);
-        card.removeEventListener("pointerleave", onLeave);
       });
-    });
 
-    return () => cleanups.forEach((fn) => fn());
+      return () => cleanups.forEach((fn) => fn());
+    }
+
+    const cleanups: Array<() => void> = [];
+    const ctx = gsap.context(() => {
+      cards.forEach((card, idx) => {
+        gsap.fromTo(
+          card,
+          {
+            y: 26,
+            scale: 0.95,
+            rotateX: 9,
+            rotateY: idx % 2 === 0 ? -5 : 5,
+            transformPerspective: 900,
+          },
+          {
+            y: 0,
+            scale: 1,
+            rotateX: 0,
+            rotateY: 0,
+            ease: "none",
+            scrollTrigger: {
+              trigger: card,
+              start: "top 95%",
+              end: "center 64%",
+              scrub: 0.45,
+            },
+          }
+        );
+
+        const onDown = (e: PointerEvent) => {
+          if (e.pointerType === "mouse") return;
+          const rect = card.getBoundingClientRect();
+          const nx = (e.clientX - rect.left) / Math.max(1, rect.width) - 0.5;
+          const ny = (e.clientY - rect.top) / Math.max(1, rect.height) - 0.5;
+          gsap.to(card, {
+            rotateY: nx * 8,
+            rotateX: -ny * 8,
+            scale: 0.98,
+            transformPerspective: 900,
+            duration: 0.22,
+            ease: "power2.out",
+            overwrite: "auto",
+          });
+        };
+
+        const onRelease = () => {
+          gsap.to(card, {
+            rotateY: 0,
+            rotateX: 0,
+            scale: 1,
+            duration: 0.65,
+            ease: "elastic.out(1, 0.45)",
+            overwrite: "auto",
+          });
+        };
+
+        card.addEventListener("pointerdown", onDown, { passive: true });
+        card.addEventListener("pointerup", onRelease, { passive: true });
+        card.addEventListener("pointercancel", onRelease, { passive: true });
+        cleanups.push(() => {
+          card.removeEventListener("pointerdown", onDown);
+          card.removeEventListener("pointerup", onRelease);
+          card.removeEventListener("pointercancel", onRelease);
+        });
+      });
+    }, sectionRef);
+
+    return () => {
+      cleanups.forEach((fn) => fn());
+      ctx.revert();
+    };
   }, [isDesktopFinePointer, prefersReducedMotion]);
 
   const mutedTextClass = isLightTheme

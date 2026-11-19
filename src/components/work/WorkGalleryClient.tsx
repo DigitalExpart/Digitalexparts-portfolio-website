@@ -70,7 +70,7 @@ export function WorkGalleryClient() {
   };
 
   return (
-    <div className="space-y-10 sm:space-y-14">
+    <div className="space-y-10 sm:space-y-14 overflow-x-clip">
       {/* Category Filter Pills */}
       <div
         role="tablist"
@@ -86,7 +86,7 @@ export function WorkGalleryClient() {
               role="tab"
               aria-selected={isActive}
               onClick={() => handleFilterChange(category)}
-              className={`inline-flex min-h-[44px] items-center gap-2 rounded-full border px-4 sm:px-5 text-xs sm:text-sm font-medium transition-all duration-300 ${
+              className={`inline-flex min-h-[44px] items-center gap-2 rounded-full border px-4 sm:px-5 text-xs sm:text-sm font-medium transition-all duration-300 active:scale-95 ${
                 isActive
                   ? "border-[var(--accent)] bg-[var(--accent)] text-[var(--accent-ink)] font-semibold"
                   : "border-[var(--border-subtle)] bg-[var(--bg-elevated)] text-[var(--text-secondary)] hover:border-[var(--border-strong)] hover:text-[var(--text-primary)]"

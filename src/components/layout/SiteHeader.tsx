@@ -340,7 +340,7 @@ export function SiteHeader() {
               aria-expanded={isMenuOpen}
               aria-controls="fullscreen-nav-menu"
               aria-label="Open navigation menu"
-              className="group inline-flex min-h-[44px] min-w-[44px] items-center justify-center gap-2.5 rounded-full border border-[var(--border-strong)] bg-[var(--bg-elevated)]/80 px-3.5 sm:px-5 text-xs font-mono uppercase tracking-[0.12em] text-[var(--text-primary)] transition-colors hover:border-[var(--accent)] hover:text-[var(--accent)]"
+              className="group inline-flex min-h-[44px] min-w-[44px] items-center justify-center gap-2.5 rounded-full border border-[var(--border-strong)] bg-[var(--bg-elevated)]/80 px-3.5 sm:px-5 text-xs font-mono uppercase tracking-[0.12em] text-[var(--text-primary)] transition-transform transition-colors duration-300 active:scale-95 hover:border-[var(--accent)] hover:text-[var(--accent)]"
             >
               <span className="hidden xs:inline sm:inline">Menu</span>
               <span className="flex flex-col gap-1.5" aria-hidden="true">
@@ -360,6 +360,7 @@ export function SiteHeader() {
         aria-modal="true"
         aria-label="Primary site navigation"
         aria-hidden={!isMenuOpen}
+        data-lenis-prevent
         className="fixed inset-0 z-[var(--z-menu)] flex flex-col justify-between overflow-y-auto bg-[#07090F] text-[var(--text-primary)]"
         style={{
           visibility: "hidden",

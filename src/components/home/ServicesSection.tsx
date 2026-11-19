@@ -75,6 +75,39 @@ export function ServicesSection() {
     };
   }, [canFloatPreview]);
 
+  // Staggered scroll entrance on service accordion rows for mobile & desktop
+  useEffect(() => {
+    ensureGsapRegistered();
+    const list = listRef.current;
+    if (!list || prefersReducedMotion) return;
+
+    const rows = list.querySelectorAll<HTMLElement>("[data-service-id]");
+    if (!rows.length) return;
+
+    const ctx = gsap.context(() => {
+      rows.forEach((row) => {
+        gsap.fromTo(
+          row,
+          { opacity: 0.32, y: 24 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.68,
+            ease: "expo.out",
+            clearProps: "transform",
+            scrollTrigger: {
+              trigger: row,
+              start: "top 92%",
+              once: true,
+            },
+          }
+        );
+      });
+    }, listRef);
+
+    return () => ctx.revert();
+  }, [prefersReducedMotion]);
+
   // Animate capability bullets stagger & smooth panel expansion when activeId changes
   useEffect(() => {
     ensureGsapRegistered();
