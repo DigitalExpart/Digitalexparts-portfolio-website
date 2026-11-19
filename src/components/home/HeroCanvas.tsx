@@ -78,36 +78,127 @@ export default function HeroCanvas({ onHoldingChange }: HeroCanvasProps) {
     };
     updateSize();
 
-    // 1. Original Kinetic 3D Geometric Centerpiece (Wireframe Icosahedron + Orbital Ring)
+    // Studio Lighting for Specular Obsidian & Neon-Lime Edge Reflections
+    const ambientLight = new THREE.AmbientLight(0x1e2536, 1.8);
+    scene.add(ambientLight);
+
+    const keyLight = new THREE.DirectionalLight(0xffffff, 4.2);
+    keyLight.position.set(-5, 6, 7);
+    scene.add(keyLight);
+
+    const rimLight = new THREE.DirectionalLight(0xcbd5e1, 2.2);
+    rimLight.position.set(5, -4, -3);
+    scene.add(rimLight);
+
+    const accentPoint = new THREE.PointLight(0xb6ff4a, 2.4, 16);
+    accentPoint.position.set(2.2, 0.8, 4.2);
+    scene.add(accentPoint);
+
+    // 1. Sculpted 3D Specular Obsidian & Lime "DE" Brand Emblem Centerpiece
     const centerpieceGroup = new THREE.Group();
-    const coreGeo = new THREE.IcosahedronGeometry(isMobile ? 1.45 : 1.85, 1);
-    const coreMat = new THREE.MeshBasicMaterial({
-      color: 0x0c0f18,
-      transparent: true,
-      opacity: 0.72,
+    const metalMaterial = new THREE.MeshStandardMaterial({
+      color: 0x0b0e16,
+      metalness: 0.9,
+      roughness: 0.2,
     });
-    const coreMesh = new THREE.Mesh(coreGeo, coreMat);
-
-    const wireGeo = new THREE.EdgesGeometry(coreGeo);
+    const edgeBaseColor = new THREE.Color(0x4a5568);
+    const edgeLimeColor = new THREE.Color(0xb6ff4a);
     const wireMat = new THREE.LineBasicMaterial({
-      color: 0x3b4254,
+      color: edgeBaseColor.clone(),
       transparent: true,
-      opacity: 0.52,
+      opacity: 0.42,
     });
-    const wireMesh = new THREE.LineSegments(wireGeo, wireMat);
 
-    const ringGeo = new THREE.TorusGeometry(isMobile ? 2.25 : 2.85, 0.012, 8, 96);
+    const disposableGeos: THREE.BufferGeometry[] = [];
+    const disposableMats: THREE.Material[] = [metalMaterial, wireMat];
+
+    const createExtrudedPiece = (shape: THREE.Shape, depth: number) => {
+      const geo = new THREE.ExtrudeGeometry(shape, {
+        depth,
+        bevelEnabled: true,
+        bevelThickness: 0.08,
+        bevelSize: 0.06,
+        bevelSegments: 3,
+        curveSegments: 32,
+      });
+      geo.translate(0, 0, -depth / 2);
+      const edgeGeo = new THREE.EdgesGeometry(geo, 24);
+      disposableGeos.push(geo, edgeGeo);
+
+      const group = new THREE.Group();
+      const mesh = new THREE.Mesh(geo, metalMaterial);
+      const edges = new THREE.LineSegments(edgeGeo, wireMat);
+      group.add(mesh, edges);
+      return group;
+    };
+
+    // D Arch outer + inner cutout
+    const dShape = new THREE.Shape();
+    const outerR = 1.48;
+    const innerR = 0.96;
+    dShape.moveTo(-1.12, -outerR);
+    dShape.lineTo(-0.18, -outerR);
+    dShape.absarc(-0.18, 0, outerR, -Math.PI / 2, Math.PI / 2, false);
+    dShape.lineTo(-1.12, outerR);
+    dShape.closePath();
+
+    const dHole = new THREE.Path();
+    dHole.moveTo(-0.62, innerR);
+    dHole.lineTo(-0.18, innerR);
+    dHole.absarc(-0.18, 0, innerR, Math.PI / 2, -Math.PI / 2, true);
+    dHole.lineTo(-0.62, -innerR);
+    dHole.closePath();
+    dShape.holes.push(dHole);
+
+    const dGroup = createExtrudedPiece(dShape, 0.56);
+
+    const makeBarShape = (x0: number, x1: number, cy: number, halfH: number) => {
+      const s = new THREE.Shape();
+      s.moveTo(x0, cy - halfH);
+      s.lineTo(x1, cy - halfH);
+      s.lineTo(x1, cy + halfH);
+      s.lineTo(x0, cy + halfH);
+      s.closePath();
+      return s;
+    };
+
+    const barTopGroup = createExtrudedPiece(makeBarShape(-0.62, 0.58, 0.58, 0.16), 0.44);
+    const barMidGroup = createExtrudedPiece(makeBarShape(-0.62, 0.34, 0, 0.16), 0.48);
+    const barBotGroup = createExtrudedPiece(makeBarShape(-0.62, 0.58, -0.58, 0.16), 0.44);
+
+    // Top Lime Diamond Prism accent
+    const diamondGeo = new THREE.OctahedronGeometry(0.21, 0);
+    const diamondMat = new THREE.MeshStandardMaterial({
+      color: 0xb6ff4a,
+      emissive: 0x3f6212,
+      emissiveIntensity: 0.65,
+      metalness: 0.45,
+      roughness: 0.25,
+    });
+    const diamondMesh = new THREE.Mesh(diamondGeo, diamondMat);
+    diamondMesh.position.set(0.05, 1.96, 0.08);
+    disposableGeos.push(diamondGeo);
+    disposableMats.push(diamondMat);
+
+    // Outer Orbital Hairline Ring
+    const ringGeo = new THREE.TorusGeometry(2.45, 0.014, 8, 96);
     const ringMat = new THREE.MeshBasicMaterial({
       color: 0xb6ff4a,
       transparent: true,
       opacity: 0.24,
     });
     const ringMesh = new THREE.Mesh(ringGeo, ringMat);
-    ringMesh.rotation.x = Math.PI * 0.36;
-    ringMesh.rotation.y = -Math.PI * 0.18;
+    ringMesh.rotation.x = Math.PI * 0.38;
+    ringMesh.rotation.y = -Math.PI * 0.22;
+    disposableGeos.push(ringGeo);
+    disposableMats.push(ringMat);
 
-    centerpieceGroup.add(coreMesh, wireMesh, ringMesh);
-    centerpieceGroup.position.set(isMobile ? 0 : 1.15, 0, -1.2);
+    const emblemPieces = new THREE.Group();
+    emblemPieces.add(dGroup, barTopGroup, barMidGroup, barBotGroup, diamondMesh);
+    emblemPieces.scale.setScalar(isMobile ? 0.84 : 1.12);
+
+    centerpieceGroup.add(emblemPieces, ringMesh);
+    centerpieceGroup.position.set(isMobile ? 0 : 0.2, isMobile ? 0.25 : 0.05, -0.7);
     scene.add(centerpieceGroup);
 
     // 2. Sweeping Spring-Physics Lines
@@ -360,26 +451,44 @@ export default function HeroCanvas({ onHoldingChange }: HeroCanvasProps) {
         rippleRingMat.opacity = 0;
       }
 
-      // Centerpiece parallax, scroll depth rotation & hold glow (responsive on desktop and mobile)
+      // Centerpiece 3D sculpted DE motion, scroll tilt & hold separation blast
       const targetRotY =
-        (pointer.active ? pointer.x * 0.45 : Math.sin(elapsed * 0.35) * 0.2) +
-        scrollRatio * 0.85;
+        -0.32 +
+        (pointer.active ? pointer.x * 0.48 : Math.sin(elapsed * 0.4) * 0.22) +
+        scrollRatio * 0.72;
       const targetRotX =
-        (pointer.active ? -pointer.y * 0.32 : Math.cos(elapsed * 0.28) * 0.14) +
-        scrollRatio * 0.42;
-      centerpieceGroup.rotation.y += (targetRotY + elapsed * 0.14 - centerpieceGroup.rotation.y) * 0.06;
+        -0.16 +
+        (pointer.active ? -pointer.y * 0.32 : Math.cos(elapsed * 0.32) * 0.12) +
+        scrollRatio * 0.36;
+      centerpieceGroup.rotation.y += (targetRotY + Math.sin(elapsed * 0.22) * 0.14 - centerpieceGroup.rotation.y) * 0.06;
       centerpieceGroup.rotation.x += (targetRotX - centerpieceGroup.rotation.x) * 0.06;
-      centerpieceGroup.position.y += (scrollRatio * 1.35 - centerpieceGroup.position.y) * 0.08;
-      ringMesh.rotation.z += dt * (pointer.holding ? 1.15 : 0.25 + scrollRatio * 0.4);
+      centerpieceGroup.position.y +=
+        ((isMobile ? 0.25 : 0.05) + scrollRatio * 1.15 - centerpieceGroup.position.y) * 0.08;
+      ringMesh.rotation.z += dt * (pointer.holding ? 1.35 : 0.22 + scrollRatio * 0.4);
+      diamondMesh.rotation.y += dt * (pointer.holding ? 2.4 : 0.7);
 
-      const pulseBoost = pointer.holding ? 1 + pointer.holdPower * 0.12 : 1;
+      // Explode / breathe extruded DE bars apart smoothly while holding
+      const blast = pointer.holding ? 0.25 + pointer.holdPower * 0.35 : 0;
+      dGroup.position.z += (-blast * 0.65 - dGroup.position.z) * 0.12;
+      barTopGroup.position.z += (blast * 0.7 - barTopGroup.position.z) * 0.12;
+      barTopGroup.position.y += (blast * 0.22 - barTopGroup.position.y) * 0.12;
+      barMidGroup.position.z += (blast * 1.15 - barMidGroup.position.z) * 0.12;
+      barMidGroup.position.x += (blast * 0.18 - barMidGroup.position.x) * 0.12;
+      barBotGroup.position.z += (blast * 0.7 - barBotGroup.position.z) * 0.12;
+      barBotGroup.position.y += (-blast * 0.22 - barBotGroup.position.y) * 0.12;
+      diamondMesh.position.y += (1.96 + blast * 0.45 - diamondMesh.position.y) * 0.12;
+
+      const pulseBoost = pointer.holding ? 1 + pointer.holdPower * 0.1 : 1;
       centerpieceGroup.scale.lerp(new THREE.Vector3(pulseBoost, pulseBoost, pulseBoost), 0.1);
-      ringMat.opacity = pointer.holding ? 0.62 : 0.24;
-      wireMat.color.lerpColors(
-        new THREE.Color(0x3b4254),
-        new THREE.Color(0xb6ff4a),
-        pointer.holding ? 0.55 : 0.08
-      );
+      ringMat.opacity = pointer.holding ? 0.68 : 0.24;
+      accentPoint.intensity += ((pointer.holding ? 8.5 : 2.6) - accentPoint.intensity) * 0.1;
+      const edgeActivity = pointer.holding
+        ? 0.85
+        : pointer.active
+          ? 0.32
+          : 0.08;
+      wireMat.color.lerpColors(edgeBaseColor, edgeLimeColor, edgeActivity);
+      wireMat.opacity += ((pointer.holding ? 0.88 : 0.44) - wireMat.opacity) * 0.1;
 
       // Update Spring Lines
       const springK = 52;
@@ -520,12 +629,8 @@ export default function HeroCanvas({ onHoldingChange }: HeroCanvasProps) {
       container.removeEventListener("pointerdown", onPointerDown);
       container.removeEventListener("pointerleave", onPointerLeave);
 
-      coreGeo.dispose();
-      coreMat.dispose();
-      wireGeo.dispose();
-      wireMat.dispose();
-      ringGeo.dispose();
-      ringMat.dispose();
+      for (const geo of disposableGeos) geo.dispose();
+      for (const mat of disposableMats) mat.dispose();
       particleGeo.dispose();
       particleMat.dispose();
       rippleRingGeo.dispose();
