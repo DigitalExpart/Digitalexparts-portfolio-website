@@ -29,12 +29,12 @@ export const SITE = {
   upworkUrl: "https://www.upwork.com/freelancers/~01e12863196bfb5563?mp_source=share",
   behanceUrl: "https://www.behance.net/bellojumato",
   siteUrl: process.env.NEXT_PUBLIC_SITE_URL || "https://digital-exparts.example.com",
-  tagline: "Websites, brands, AI automation and video that turn visitors into clients.",
-  shortLockup: "Web · Automation · 2D/3D · AI Video",
+  tagline: "Websites, mobile apps, AI automation and video that turn visitors into clients.",
+  shortLockup: "Web · Mobile Apps · AI · 2D/3D · Video",
   nameLine:
     "Digital Experts is the studio of Jumat Bello, also known as Isaac Clara on Fiverr.",
   description:
-    "Remote studio (6+ years, 25+ team) for Wix, Squarespace, WordPress, Webflow & React websites, AI automation, 2D/3D animation, illustration, video editing & AI video.",
+    "Remote studio (6+ years, 25+ team) for websites (Next.js, React, Wix, WordPress, Webflow), iOS & Android mobile apps, AI automation, 2D/3D animation & AI video.",
   availability: {
     active: true,
     label: "Taking on new projects",
@@ -66,7 +66,7 @@ export const NAV_LINKS: NavItem[] = [
     index: "03",
     label: "Services",
     href: "/services",
-    description: "Web, AI automation, 2D/3D, editing & AI video",
+    description: "Web, mobile apps, AI automation, 2D/3D & video",
   },
   {
     index: "04",
@@ -96,12 +96,12 @@ export const NAV_LINKS: NavItem[] = [
 
 export const PLATFORM_PROFILES: ExternalProfile[] = [
   {
-    label: "Fiverr (Isaac Clara)",
+    label: "Fiverr",
     href: SITE.fiverrUrl,
     handle: "4.7 rating · 57 reviews",
   },
   {
-    label: "Upwork (Jumat Bello)",
+    label: "Upwork",
     href: SITE.upworkUrl,
     handle: "16 jobs · 416 hours",
   },

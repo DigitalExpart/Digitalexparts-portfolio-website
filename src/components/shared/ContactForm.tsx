@@ -7,6 +7,7 @@ import { SITE } from "@/data/site";
 
 export const CONTACT_SERVICES = [
   "Website design and development",
+  "Mobile app design and development",
   "Wix, Squarespace, WordPress or Webflow build",
   "UI/UX design",
   "Graphic design and branding",

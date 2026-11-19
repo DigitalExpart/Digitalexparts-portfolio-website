@@ -59,9 +59,9 @@ export interface FaqItem {
 
 export const HERO_COPY = {
   availabilityLabel: "Taking on new projects · Replies within 1 hour",
-  headline: "Websites, brands, AI automation and video that turn visitors into clients.",
+  headline: "Websites, mobile apps, AI automation and video that turn visitors into clients.",
   subhead:
-    "Digital Experts is a remote studio with over 6 years experience and 25+ specialists across Wix, Squarespace, WordPress, Webflow and custom React code — plus AI automation, UI/UX, branding, 2D/3D animation, illustration, video editing, email and AI video.",
+    "Digital Experts is a remote studio with over 6 years experience and 25+ specialists building iOS & Android mobile apps, websites on Wix, Squarespace, WordPress, Webflow & React, AI automation, 2D/3D animation, illustration, video editing, email and AI video.",
   primaryCta: "Start your project",
   secondaryCta: "Book a 30-minute call",
   canvasHint: "Hold to ripple · Press and hold the lines",
@@ -69,7 +69,7 @@ export const HERO_COPY = {
   trustItems: [
     "200+ Fiverr orders · 4.7 rating (57 reviews)",
     "100+ clients · 416 Upwork hours",
-    "Replies within 1 hour",
+    "Web, Mobile Apps & AI · Replies within 1 hour",
   ],
   nameClarityLine:
     "You may know us as Isaac Clara on Fiverr or Jumat Bello on Upwork. Same studio, same standards.",
@@ -79,7 +79,7 @@ export const HERO_COPY = {
 export const INTRO_COPY = {
   eyebrow: "01 · About Digital Experts",
   statement:
-    "Over 6 years of delivery with a 25+ specialist remote team. Digital Experts helps founders and growing businesses launch sharp websites on Wix, Squarespace, WordPress, Webflow or custom React code — paired with AI automation, UI/UX, branding, 2D/3D animation, illustration, video editing, email marketing and AI video.",
+    "Over 6 years of delivery with a 25+ specialist remote team. Digital Experts builds fast websites (Wix, Squarespace, WordPress, Webflow & React) and custom iOS & Android mobile apps (React Native & Flutter) — paired with AI automation, UI/UX, branding, 2D/3D animation, illustration, video editing, email and AI video.",
   ctaLabel: "More about us",
 };
 
@@ -123,13 +123,13 @@ export const ENGAGEMENT_MODELS: Record<"solo" | "team", EngagementModel> = {
 export const TEAM_ROLES: TeamRole[] = [
   {
     title: "Web & UI/UX Designer",
-    focus: "Clear user flows, wireframes & high-fidelity Figma screens",
-    tools: "Figma · Prototypes",
+    focus: "Mobile app UX, user flows, wireframes & high-fidelity Figma systems",
+    tools: "Figma · Mobile & Web UI",
   },
   {
-    title: "Front-End & Back-End Developer",
-    focus: "Custom React, Next.js, APIs, forms, bookings & deployments",
-    tools: "React · Next.js · APIs",
+    title: "Web & Mobile App Developer",
+    focus: "React Native & Flutter iOS/Android apps, React, Next.js & APIs",
+    tools: "iOS · Android · Next.js",
   },
   {
     title: "No-Code Platform Specialist",
@@ -183,7 +183,7 @@ export const STATS: StatItem[] = [
     decimals: 1,
     suffix: "",
     label: "Average rating",
-    detail: "Verified 4.7 rating from 57 client reviews on Fiverr (Isaac Clara).",
+    detail: "Verified 4.7 rating from 57 client reviews on Fiverr.",
   },
   {
     value: 416,
@@ -203,6 +203,8 @@ export const TOOLS_MARQUEE: ToolLogoItem[] = [
   { name: "Figma", category: "UI/UX" },
   { name: "React", category: "Front-End" },
   { name: "Next.js", category: "Full-Stack" },
+  { name: "React Native", category: "Mobile Apps" },
+  { name: "Flutter", category: "iOS & Android" },
   { name: "Make & n8n", category: "AI Automation" },
   { name: "2D & 3D Animation", category: "Motion" },
   { name: "Illustration", category: "Custom Art" },

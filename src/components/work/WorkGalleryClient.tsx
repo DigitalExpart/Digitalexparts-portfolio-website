@@ -63,6 +63,7 @@ export function WorkGalleryClient() {
   const counts: Record<FilterCategory, number> = {
     All: PROJECTS.length,
     Websites: PROJECTS.filter((p) => p.category === "Websites").length,
+    "Mobile Apps": PROJECTS.filter((p) => p.category === "Mobile Apps").length,
     "UI/UX": PROJECTS.filter((p) => p.category === "UI/UX").length,
     Branding: PROJECTS.filter((p) => p.category === "Branding").length,
     Email: PROJECTS.filter((p) => p.category === "Email").length,

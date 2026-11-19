@@ -5,10 +5,10 @@ import { MagneticButton } from "@/components/motion/MagneticButton";
 
 export const metadata: Metadata = {
   title: {
-    absolute: "Portfolio | Websites, Branding & AI Video | Digital Experts",
+    absolute: "Portfolio | Websites, Mobile Apps, Branding & AI Video | Digital Experts",
   },
   description:
-    "Browse website, UI/UX, branding, email and AI video projects by Digital Experts. See the problem, the process and the results for each client.",
+    "Browse website, iOS & Android mobile app, UI/UX, branding, AI automation, email and AI video projects by Digital Experts.",
 };
 
 export default function WorkPage() {
@@ -17,16 +17,16 @@ export default function WorkPage() {
       <section className="container-editorial space-y-12 sm:space-y-16">
         <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
           <div className="space-y-4 max-w-4xl">
-            <p className="text-eyebrow">02 · Portfolio · Real projects for real businesses</p>
+            <p className="text-eyebrow">02 · Portfolio · Websites, Mobile Apps &amp; Creative</p>
             <HeadingReveal as="h1" trigger="enter" delay={0.08} className="text-h1">
-              Websites, brands and campaigns we have built
+              Websites, mobile apps and campaigns we have built
             </HeadingReveal>
           </div>
 
           <FadeUp trigger="enter" delay={0.2} className="max-w-md space-y-3">
             <p className="text-sm sm:text-base text-[var(--text-secondary)]">
-              A selection of projects across web design, UI/UX, branding, email marketing and
-              AI video. Filter by service to see work like yours. (Illustrative studio concepts
+              A selection of projects across custom websites, iOS &amp; Android mobile apps, UI/UX,
+              branding, AI automation, email marketing and AI video. (Illustrative studio concepts
               are labeled clearly; NDA client work details are shared on request.)
             </p>
           </FadeUp>

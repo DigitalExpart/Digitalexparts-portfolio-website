@@ -51,9 +51,9 @@ export default function HowWeWorkPage() {
         <FadeUp trigger="enter" delay={0.2} className="max-w-3xl">
           <p className="text-lead text-[var(--text-secondary)]">
             Backed by {SITE.yearsExperience} and {SITE.teamSize}, we scale cleanly from a single
-            dedicated specialist to a full cross-functional pod — across web, AI automation,
-            2D/3D animation, illustration, video editing and AI video — with replies within{" "}
-            {SITE.responseTime}.
+            dedicated specialist to a full cross-functional pod — across web, iOS &amp; Android
+            mobile apps, AI automation, 2D/3D animation, illustration, video editing and AI video
+            — with replies within {SITE.responseTime}.
           </p>
         </FadeUp>
       </section>

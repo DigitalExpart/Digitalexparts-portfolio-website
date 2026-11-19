@@ -143,7 +143,7 @@ export function TestimonialsSection() {
                 className="inline-flex min-h-[44px] items-center gap-2 font-medium text-[var(--accent)] underline underline-offset-4 hover:text-[var(--text-primary)]"
               >
                 <span>
-                  {SITE.proof.fiverrRating} from {SITE.proof.fiverrReviews} reviews on Fiverr (Isaac Clara)
+                  {SITE.proof.fiverrRating} from {SITE.proof.fiverrReviews} reviews on Fiverr
                 </span>
                 <span aria-hidden="true">↗</span>
               </a>

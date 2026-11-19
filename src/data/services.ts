@@ -264,10 +264,41 @@ export const SERVICES: ServiceItem[] = [
       "Automated client onboarding & follow-up sequences",
       "Clean handover documentation and error alerts",
     ],
-    relatedSlugs: ["web-design-development", "email-marketing"],
+    relatedSlugs: ["mobile-app-development", "ai-automation"],
     contactOption: "AI automation and workflows",
-    previewImage: "/images/projects/pulseboard-crm.jpg",
+    previewImage: "/images/projects/nexaflow-automation.jpg",
     previewAlt: "AI automation workflow and connected dashboard system built by Digital Experts",
     accentLabel: "AI bots, APIs & Make/n8n flows",
+  },
+  {
+    id: "mobile-apps",
+    slug: "mobile-app-development",
+    index: "09",
+    title: "Mobile App Design & Development",
+    shortTag: "iOS · Android · React Native · Flutter",
+    seoTitle: "Mobile App Design & Development (iOS & Android) | Digital Experts",
+    seoDescription:
+      "Custom iOS and Android mobile apps built with React Native and Flutter — UI/UX screens, real-time APIs, payments and App Store/Play Store launch.",
+    pageH1: "Mobile apps built for speed, smooth gestures and everyday retention",
+    pageTagline: "Native-feel iOS & Android apps built to scale.",
+    description:
+      "Cross-platform iOS & Android mobile apps in React Native and Flutter — designed, connected to APIs and launched to both stores.",
+    intro:
+      "Mobile app development is one of our core strengths. We design intuitive mobile flows in Figma and engineer smooth, responsive iOS and Android apps in React Native and Flutter with backends, payments and push notifications.",
+    bestFor:
+      "Founders, startups and service businesses launching an iOS or Android product or companion mobile app.",
+    capabilities: [
+      "iOS & Android mobile app UI/UX & gesture choreography",
+      "React Native & Flutter cross-platform engineering",
+      "Authentication, biometric login & push notifications",
+      "Stripe/in-app payments, maps & real-time bookings",
+      "Supabase, Firebase & custom REST/GraphQL API backends",
+      "App Store & Google Play publishing, QA & ongoing releases",
+    ],
+    relatedSlugs: ["ui-ux-design", "web-design-development"],
+    contactOption: "Mobile app design and development",
+    previewImage: "/images/projects/velo-mobile-app.jpg",
+    previewAlt: "iOS and Android mobile application interface built by Digital Experts",
+    accentLabel: "iOS, Android, React Native & Flutter",
   },
 ];

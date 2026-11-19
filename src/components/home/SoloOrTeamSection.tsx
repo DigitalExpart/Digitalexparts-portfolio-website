@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useRef, useState } from "react";
+import Image from "next/image";
 import { ensureGsapRegistered, gsap } from "@/lib/gsap";
 import { ENGAGEMENT_MODELS, TEAM_ROLES } from "@/data/home";
 import { SITE } from "@/data/site";
@@ -94,9 +95,22 @@ export function SoloOrTeamSection() {
     <section
       id="engagement"
       aria-labelledby="engagement-heading"
-      className="section-pad hairline-t"
+      className="relative overflow-hidden section-pad hairline-t bg-[linear-gradient(180deg,#05060A_0%,#0C1220_52%,#05060A_100%)]"
     >
-      <div className="container-editorial space-y-12 sm:space-y-14">
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute -left-24 top-1/2 -translate-y-1/2 h-[420px] w-[420px] sm:h-[580px] sm:w-[580px] opacity-[0.05]"
+      >
+        <Image
+          src="/brand/logo-mark-dark.svg"
+          alt=""
+          width={580}
+          height={580}
+          unoptimized
+          className="h-full w-full -rotate-12"
+        />
+      </div>
+      <div className="container-editorial relative z-10 space-y-12 sm:space-y-14">
         <div className="flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
           <div className="space-y-4 max-w-3xl">
             <p className="text-eyebrow">04 · Solo or Team</p>

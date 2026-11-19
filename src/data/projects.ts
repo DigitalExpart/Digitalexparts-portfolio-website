@@ -1,4 +1,10 @@
-export type ProjectCategory = "Websites" | "UI/UX" | "Branding" | "Email" | "AI Video";
+export type ProjectCategory =
+  | "Websites"
+  | "Mobile Apps"
+  | "UI/UX"
+  | "Branding"
+  | "Email"
+  | "AI Video";
 
 export interface ProjectItem {
   slug: string;
@@ -28,6 +34,7 @@ export interface ProjectItem {
 export const PROJECT_CATEGORIES: Array<"All" | ProjectCategory> = [
   "All",
   "Websites",
+  "Mobile Apps",
   "UI/UX",
   "Branding",
   "Email",
@@ -259,6 +266,80 @@ export const PROJECTS: ProjectItem[] = [
     galleryImages: [
       "/images/projects/northline-logistics.jpg",
       "/images/projects/pulseboard-crm.jpg",
+    ],
+  },
+  {
+    slug: "velo-mobile-app",
+    index: "07",
+    title: "Velo Mobile",
+    tagline: "iOS & Android instant booking & fintech wallet app built in React Native (Studio Concept).",
+    category: "Mobile Apps",
+    serviceSlug: "mobile-app-development",
+    isConcept: true,
+    year: "2026",
+    client: "Studio Concept · iOS & Android",
+    engagementModel: "Solo + Team",
+    role: "Mobile App Designer & React Native Engineer",
+    tools: ["React Native", "TypeScript", "Flutter", "Supabase", "Stripe"],
+    timeline: "Concept Case Study",
+    posterImage: "/images/projects/velo-mobile-app.jpg",
+    accentHue: "#B6FF4A",
+    challenge:
+      "Designing and engineering a cross-platform mobile experience combining instant hotel & service booking, peer transfers and live analytics with smooth native 60fps gestures on iOS and Android.",
+    process: [
+      "Mapped thumb-friendly navigation ergonomics, biometric auth and instant checkout flows in Figma.",
+      "Engineered reusable React Native & Flutter components backed by Supabase real-time state and Stripe payments.",
+      "Optimized startup speed, push notification deep-links and iOS App Store & Google Play release pipelines.",
+    ],
+    results: [
+      "Single shared mobile architecture targeting both iOS App Store and Google Play with native gesture feel.",
+      "Live client iOS & Android app demos available on request.",
+    ],
+    metrics: [
+      { label: "Status", value: "Concept" },
+      { label: "Platforms", value: "iOS & Android" },
+      { label: "Stack", value: "React Native" },
+    ],
+    galleryImages: [
+      "/images/projects/velo-mobile-app.jpg",
+      "/images/projects/pulseboard-crm.jpg",
+    ],
+  },
+  {
+    slug: "nexaflow-automation",
+    index: "08",
+    title: "NexaFlow AI",
+    tagline: "AI lead qualification engine, CRM sync & automated booking workflows (Studio Concept).",
+    category: "Websites",
+    serviceSlug: "ai-automation",
+    isConcept: true,
+    year: "2026",
+    client: "Studio Concept · AI Automation",
+    engagementModel: "Solo",
+    role: "AI Automation Architect",
+    tools: ["Next.js API", "n8n", "Make", "OpenAI API", "Calendly"],
+    timeline: "Concept Case Study",
+    posterImage: "/images/projects/nexaflow-automation.jpg",
+    accentHue: "#9DFF4A",
+    challenge:
+      "Replacing manual lead qualification, delayed follow-up emails and disconnected spreadsheets with an end-to-end automated pipeline connecting website forms, AI chat and CRM records.",
+    process: [
+      "Audited enquiry routing bottlenecks and designed an automated triage workflow in n8n and Make.",
+      "Integrated structured LLM enrichment, instant Slack/email routing and Calendly booking webhooks.",
+      "Delivered webhook error alerts and clear operational documentation for easy monitoring.",
+    ],
+    results: [
+      "End-to-end automated qualification & instant response flow wired directly from site to inbox and calendar.",
+      "Custom workflow walkthroughs available on request.",
+    ],
+    metrics: [
+      { label: "Status", value: "Concept" },
+      { label: "Engine", value: "n8n / Make" },
+      { label: "Reply SLA", value: "< 1 min bot" },
+    ],
+    galleryImages: [
+      "/images/projects/nexaflow-automation.jpg",
+      "/images/projects/kinetik-pay.jpg",
     ],
   },
 ];

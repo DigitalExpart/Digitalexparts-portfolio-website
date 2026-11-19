@@ -2,63 +2,69 @@
 
 import React, { useEffect, useRef } from "react";
 import Image from "next/image";
-import { ensureGsapRegistered, gsap } from "@/lib/gsap";
+import { ensureGsapRegistered, gsap, ScrollTrigger } from "@/lib/gsap";
 import { NAV_LINKS, PLATFORM_PROFILES, SITE, SOCIAL_LINKS } from "@/data/site";
 import { TransitionLink } from "@/components/motion/PageTransitionProvider";
 import { MagneticButton } from "@/components/motion/MagneticButton";
 import { useSmoothScroll } from "@/components/motion/SmoothScrollProvider";
 import { useMediaCapabilities } from "@/hooks/useMediaCapabilities";
 
-const WORDMARK_LETTERS = SITE.brandUpper.split("");
 const FOOTER_MARQUEE_PHRASES = ["Let's talk", "Let's build", "Let's grow"];
 const FOOTER_NAV = NAV_LINKS.filter((item) => item.href !== "/");
 
 export function SiteFooter() {
   const footerRef = useRef<HTMLElement>(null);
-  const wordmarkRef = useRef<HTMLDivElement>(null);
+  const wordmarkTrackRef = useRef<HTMLDivElement>(null);
   const marqueeTrackRef = useRef<HTMLDivElement>(null);
 
   const { scrollTo } = useSmoothScroll();
   const { prefersReducedMotion } = useMediaCapabilities();
 
-  // M15: Giant wordmark letters rise as main content lifts to reveal footer
+  // M15: Bottom giant DIGITAL EXPERTS wordmark infinite continuous marquee (never clipped!)
   useEffect(() => {
     ensureGsapRegistered();
     const footer = footerRef.current;
-    const wordmark = wordmarkRef.current;
-    if (!footer || !wordmark || prefersReducedMotion) return;
+    const track = wordmarkTrackRef.current;
+    if (!footer || !track || prefersReducedMotion) return;
 
-    const letters = wordmark.querySelectorAll<HTMLElement>("[data-wordmark-char]");
-    if (!letters.length) return;
-
-    const prevContent = footer.previousElementSibling as HTMLElement | null;
+    let xPercent = 0;
+    let direction = -1;
+    let boost = 0;
+    const baseSpeed = 0.042;
 
     const ctx = gsap.context(() => {
-      gsap.fromTo(
-        letters,
-        { yPercent: 105, opacity: 0 },
-        {
-          yPercent: 0,
-          opacity: 1,
-          duration: 0.85,
-          stagger: 0.026,
-          ease: "expo.out",
-          scrollTrigger: prevContent
-            ? {
-                trigger: prevContent,
-                start: "bottom 96%",
-                once: true,
-              }
-            : {
-                trigger: wordmark,
-                start: "top 95%",
-                once: true,
-              },
-        }
-      );
+      ScrollTrigger.create({
+        trigger: footer,
+        start: "top bottom",
+        end: "bottom bottom",
+        onUpdate: (self) => {
+          const vel = self.getVelocity();
+          if (Math.abs(vel) > 20) {
+            direction = vel > 0 ? -1 : 1;
+            boost = Math.min(0.18, Math.abs(vel) / 4500);
+          }
+        },
+      });
     }, footerRef);
 
-    return () => ctx.revert();
+    const tick = (_time: number, deltaTime: number) => {
+      const dtFactor = Math.min(2.5, deltaTime / 16.667);
+      boost *= Math.pow(0.92, dtFactor);
+      xPercent += direction * (baseSpeed + boost) * dtFactor;
+      if (xPercent <= -50) {
+        xPercent += 50;
+      } else if (xPercent > 0) {
+        xPercent -= 50;
+      }
+      track.style.transform = `translate3d(${xPercent}%, 0, 0)`;
+    };
+
+    gsap.ticker.add(tick);
+
+    return () => {
+      gsap.ticker.remove(tick);
+      ctx.revert();
+    };
   }, [prefersReducedMotion]);
 
   // M15: Looping footer strip
@@ -232,25 +238,36 @@ export function SiteFooter() {
         </div>
       </div>
 
-      {/* Giant Full-Width Wordmark (M15) */}
-      <div className="container-editorial border-t border-[var(--border-subtle)] pt-5 pb-5">
+      {/* Giant Bottom Continuous Scrolling Wordmark (M15) */}
+      <div className="border-t border-[var(--border-subtle)] pt-6 pb-5 overflow-hidden">
         <div
-          ref={wordmarkRef}
           aria-hidden="true"
-          className="flex w-full items-center justify-between overflow-hidden select-none"
+          className="overflow-hidden select-none py-1"
         >
-          {WORDMARK_LETTERS.map((char, idx) => (
-            <span
-              key={`${char}-${idx}`}
-              data-wordmark-char
-              className="font-display text-[clamp(1.42rem,9vw,8.8rem)] font-extrabold leading-[0.86] tracking-[-0.04em] text-[var(--text-primary)] will-change-transform"
-            >
-              {char === " " ? "\u00A0" : char}
-            </span>
-          ))}
+          <div
+            ref={wordmarkTrackRef}
+            className="flex w-max items-center will-change-transform"
+          >
+            {[0, 1].map((dup) => (
+              <div
+                key={dup}
+                aria-hidden={dup === 1}
+                className="flex shrink-0 items-center gap-8 sm:gap-14 pr-8 sm:pr-14"
+              >
+                {Array.from({ length: 3 }).map((_, idx) => (
+                  <div key={`${dup}-${idx}`} className="flex items-center gap-8 sm:gap-14">
+                    <span className="font-display text-[clamp(2.8rem,9.2vw,8.4rem)] font-extrabold uppercase leading-[0.9] tracking-[-0.04em] whitespace-nowrap text-[var(--text-primary)]">
+                      {SITE.brandUpper}
+                    </span>
+                    <span className="h-3 w-3 sm:h-4 sm:w-4 rotate-45 bg-[var(--accent)] shrink-0" />
+                  </div>
+                ))}
+              </div>
+            ))}
+          </div>
         </div>
 
-        <div className="mt-4 flex flex-wrap items-center justify-between gap-3 text-xs text-[var(--text-muted)]">
+        <div className="container-editorial mt-5 flex flex-wrap items-center justify-between gap-3 text-xs text-[var(--text-muted)]">
           <span suppressHydrationWarning>
             © {new Date().getFullYear()} {SITE.brand}. All rights reserved.
           </span>

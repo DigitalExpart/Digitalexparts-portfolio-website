@@ -82,10 +82,10 @@ export default function AboutPage() {
             </p>
             <p>
               We recommend the platform that fits each client — Wix, Squarespace, WordPress and
-              Webflow when you want speed and easy editing, custom React code when you need
-              unique architecture — and pair it with UI/UX, branding, custom illustration, 2D/3D
-              animation, video editing, AI automation, email marketing and AI video (short movies,
-              AI UGC, product commercials, product ads and YouTube videos).
+              Webflow when you want speed, custom React code when you need unique web architecture,
+              and React Native or Flutter for iOS &amp; Android mobile apps — paired with UI/UX,
+              branding, custom illustration, 2D/3D animation, video editing, AI automation, email
+              marketing and AI video (short movies, AI UGC, commercials, product ads and YouTube).
             </p>
             <p className="text-[var(--text-primary)] font-medium">
               Everything is 100% remote across all time zones — with replies within{" "}

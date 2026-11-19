@@ -81,7 +81,7 @@ export default function RootLayout({
     logo: `${baseUrl}/brand/app-icon.png`,
     image: `${baseUrl}/brand/logo-mark-dark.png`,
     description:
-      "Remote studio (6+ years, 25+ specialists) for web design, custom development, AI automation, 2D/3D animation, illustration, video editing, email marketing and AI video.",
+      "Remote studio (6+ years, 25+ specialists) for web design, custom development, iOS & Android mobile apps, AI automation, 2D/3D animation, illustration, video editing, email marketing and AI video.",
     email: SITE.email,
     areaServed: "Worldwide",
     founder: {

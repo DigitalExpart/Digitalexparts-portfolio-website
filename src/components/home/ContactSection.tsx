@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import Image from "next/image";
 import { HeadingReveal, FadeUp } from "@/components/motion/TextReveal";
 import { ContactForm } from "@/components/shared/ContactForm";
 import { PLATFORM_PROFILES, SITE } from "@/data/site";
@@ -10,9 +11,22 @@ export function ContactSection() {
     <section
       id="contact"
       aria-labelledby="contact-heading"
-      className="section-pad hairline-t"
+      className="relative overflow-hidden section-pad hairline-t bg-[radial-gradient(ellipse_75%_65%_at_18%_25%,rgba(182,255,74,0.08),rgba(11,16,28,0.75)_55%,#05060A_100%)]"
     >
-      <div className="container-editorial grid grid-cols-1 gap-10 lg:grid-cols-12 lg:gap-14">
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute -left-20 bottom-6 h-[340px] w-[340px] sm:h-[460px] sm:w-[460px] opacity-[0.05]"
+      >
+        <Image
+          src="/brand/logo-mark-dark.svg"
+          alt=""
+          width={460}
+          height={460}
+          unoptimized
+          className="h-full w-full -rotate-12"
+        />
+      </div>
+      <div className="container-editorial relative z-10 grid grid-cols-1 gap-10 lg:grid-cols-12 lg:gap-14">
         <div className="lg:col-span-5 flex flex-col justify-between gap-8">
           <div className="space-y-5">
             <p className="text-eyebrow">10 · Start Your Project</p>

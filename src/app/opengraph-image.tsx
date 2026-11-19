@@ -95,8 +95,8 @@ export default function OpenGraphImage() {
               lineHeight: 1.35,
             }}
           >
-            Wix · Squarespace · WordPress · Webflow · React &amp; Next.js · AI Automation ·
-            2D/3D · Editing · AI Video
+            Wix · Squarespace · WordPress · Webflow · React · Mobile Apps · AI Automation ·
+            2D/3D · AI Video
           </div>
         </div>
 

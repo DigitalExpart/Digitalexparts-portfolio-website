@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useRef } from "react";
+import Image from "next/image";
 import { ensureGsapRegistered, gsap } from "@/lib/gsap";
 import { STATS } from "@/data/home";
 import { SITE } from "@/data/site";
@@ -214,9 +215,22 @@ export function StatsSection({ isLightTheme = false }: StatsSectionProps) {
       id="stats"
       ref={sectionRef}
       aria-labelledby="stats-heading"
-      className={`section-pad border-t transition-colors duration-500 ${borderClass}`}
+      className={`relative overflow-hidden section-pad border-t transition-colors duration-500 ${borderClass}`}
     >
-      <div className="container-editorial space-y-12 sm:space-y-16">
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute -right-16 -top-12 h-[320px] w-[320px] sm:h-[440px] sm:w-[440px] opacity-[0.055]"
+      >
+        <Image
+          src={isLightTheme ? "/brand/logo-mark-light.svg" : "/brand/logo-mark-dark.svg"}
+          alt=""
+          width={440}
+          height={440}
+          unoptimized
+          className="h-full w-full rotate-12"
+        />
+      </div>
+      <div className="container-editorial relative z-10 space-y-12 sm:space-y-16">
         <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
           <div className="space-y-4 max-w-3xl">
             <p
@@ -231,7 +245,7 @@ export function StatsSection({ isLightTheme = false }: StatsSectionProps) {
 
           <div className="max-w-md space-y-2">
             <p className={`text-sm sm:text-base ${mutedTextClass}`}>
-              Real delivery numbers across Fiverr ({SITE.fiverrBrand}) and Upwork ({SITE.owner}).
+              Real delivery numbers across Fiverr and Upwork.
             </p>
             <a
               href={SITE.fiverrUrl}

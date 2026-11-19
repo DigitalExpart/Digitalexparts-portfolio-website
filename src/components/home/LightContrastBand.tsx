@@ -4,6 +4,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { ensureGsapRegistered, ScrollTrigger } from "@/lib/gsap";
 import { StatsSection } from "@/components/home/StatsSection";
 import { ToolsMarqueeSection } from "@/components/home/ToolsMarqueeSection";
+import { DesignInMotionSection } from "@/components/home/DesignInMotionSection";
 import { useMediaCapabilities } from "@/hooks/useMediaCapabilities";
 
 /**
@@ -28,6 +29,7 @@ export function LightContrastBand() {
       trigger: el,
       start: "top 64%",
       end: "bottom 36%",
+      refreshPriority: 1,
       onEnter: () => setIsLight(true),
       onEnterBack: () => setIsLight(true),
       onLeave: () => setIsLight(false),
@@ -50,6 +52,7 @@ export function LightContrastBand() {
     >
       <StatsSection isLightTheme={isLight} />
       <ToolsMarqueeSection isLightTheme={isLight} />
+      <DesignInMotionSection />
     </div>
   );
 }

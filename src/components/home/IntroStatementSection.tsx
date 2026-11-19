@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useRef } from "react";
+import Image from "next/image";
 import { ensureGsapRegistered, gsap } from "@/lib/gsap";
 import { INTRO_COPY } from "@/data/home";
 import { WordScrubHighlight, FadeUp } from "@/components/motion/TextReveal";
@@ -55,23 +56,44 @@ export function IntroStatementSection() {
       id="intro"
       ref={sectionRef}
       aria-labelledby="intro-heading"
-      className="relative overflow-hidden section-pad hairline-t"
+      className="relative overflow-hidden section-pad hairline-t bg-[linear-gradient(180deg,#05060A_0%,#0B111E_52%,#05060A_100%)]"
     >
-      {/* M13 Background Parallax Shapes */}
+      {/* Atmospheric Radial + Brand Kit Orbital Watermark */}
       <div
         ref={orbRef}
         aria-hidden="true"
-        className="pointer-events-none absolute -right-28 top-10 h-80 w-80 rounded-full opacity-20 blur-3xl will-change-transform"
-        style={{
-          background:
-            "radial-gradient(circle, var(--accent-glow) 0%, transparent 70%)",
-        }}
-      />
+        className="pointer-events-none absolute -right-24 top-4 h-[440px] w-[440px] sm:h-[580px] sm:w-[580px] opacity-90 will-change-transform flex items-center justify-center"
+      >
+        <div
+          className="absolute inset-0 rounded-full blur-3xl opacity-30"
+          style={{
+            background:
+              "radial-gradient(circle, var(--accent-glow) 0%, transparent 68%)",
+          }}
+        />
+        <Image
+          src="/brand/logo-mark-dark.svg"
+          alt=""
+          width={560}
+          height={560}
+          unoptimized
+          className="h-[340px] w-[340px] sm:h-[480px] sm:w-[480px] opacity-[0.07]"
+        />
+      </div>
       <div
         ref={gridShapeRef}
         aria-hidden="true"
-        className="pointer-events-none absolute -left-16 bottom-12 h-56 w-56 rounded-3xl border border-[var(--border-subtle)] opacity-35 will-change-transform"
-      />
+        className="pointer-events-none absolute -left-16 bottom-10 h-60 w-60 rounded-3xl border border-[var(--border-subtle)] opacity-35 will-change-transform flex items-center justify-center p-10"
+      >
+        <Image
+          src="/brand/monogram-lime.svg"
+          alt=""
+          width={120}
+          height={120}
+          unoptimized
+          className="h-full w-full opacity-[0.16]"
+        />
+      </div>
 
       <div className="container-editorial relative z-10">
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-12 lg:gap-12">

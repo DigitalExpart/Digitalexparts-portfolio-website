@@ -153,9 +153,23 @@ export function ServicesSection() {
       id="services"
       ref={sectionRef}
       aria-labelledby="services-heading"
-      className="relative section-pad hairline-t"
+      className="relative overflow-hidden section-pad hairline-t bg-[linear-gradient(180deg,#05060A_0%,#0A0F1A_55%,#05060A_100%)]"
     >
-      <div className="container-editorial space-y-12 sm:space-y-16">
+      {/* Brand Kit Monogram Background Layer */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute right-[-8%] top-20 h-[380px] w-[380px] sm:h-[520px] sm:w-[520px] opacity-[0.045]"
+      >
+        <Image
+          src="/brand/monogram-lime.svg"
+          alt=""
+          width={520}
+          height={520}
+          unoptimized
+          className="h-full w-full rotate-12"
+        />
+      </div>
+      <div className="container-editorial relative z-10 space-y-12 sm:space-y-16">
         {/* Section Header */}
         <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
           <div className="space-y-4 max-w-3xl">
@@ -167,8 +181,8 @@ export function ServicesSection() {
 
           <FadeUp className="flex flex-col items-start gap-4 lg:items-end">
             <p className="max-w-md text-sm sm:text-base text-[var(--text-secondary)] lg:text-right">
-              Wix, Squarespace, WordPress, Webflow and custom React code — paired with AI
-              automation, UI/UX, 2D/3D animation, illustration, video editing, email and AI video.
+              Websites (Wix, Squarespace, WordPress, Webflow &amp; React), iOS &amp; Android mobile
+              apps, AI automation, UI/UX, 2D/3D animation, illustration, video editing &amp; AI video.
             </p>
             <MagneticButton href="/services" variant="secondary" size="sm">
               <span>Explore all services</span>
