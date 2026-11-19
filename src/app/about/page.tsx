@@ -13,7 +13,7 @@ export const metadata: Metadata = {
     absolute: "About Digital Experts | Web Design & Development Team",
   },
   description:
-    "Meet Digital Experts, the remote web design, development and AI video studio of Jumat Bello, known as Isaac Clara on Fiverr. 200+ orders, 4.7 rating.",
+    "Meet Digital Experts, a remote team of 25+ specialists led by Jumat Bello (Isaac Clara on Fiverr) with 6+ years across web, AI automation, 2D/3D, editing & AI video.",
 };
 
 const BELIEFS = [
@@ -74,19 +74,22 @@ export default function AboutPage() {
 
           <div className="lg:col-span-8 space-y-6 text-base sm:text-lg leading-relaxed text-[var(--text-secondary)]">
             <p>
-              Digital Experts builds websites and creative work for founders and small
-              businesses. Over the years we have completed more than 200 orders for more than
-              100 unique clients on Fiverr, with a 4.7 rating from 57 reviews, and we have
-              added direct contracts and hundreds of hours of work on Upwork.
+              Digital Experts builds websites, AI automations and creative work for founders and
+              growing businesses worldwide. Across {SITE.yearsExperience}, our team of{" "}
+              {SITE.teamSize} has completed more than 200 orders for more than 100 unique clients
+              on Fiverr (4.7 rating from 57 reviews), alongside 416 hours of direct contracts on
+              Upwork.
             </p>
             <p>
-              We work with the platform that suits each client: Wix, Squarespace, WordPress and
+              We recommend the platform that fits each client — Wix, Squarespace, WordPress and
               Webflow when you want speed and easy editing, custom React code when you need
-              something no template can do. Then we add the pieces that bring in customers, from
-              brand design and email marketing to AI video.
+              unique architecture — and pair it with UI/UX, branding, custom illustration, 2D/3D
+              animation, video editing, AI automation, email marketing and AI video (short movies,
+              AI UGC, product commercials, product ads and YouTube videos).
             </p>
             <p className="text-[var(--text-primary)] font-medium">
-              Everything is remote, so we work with clients in any time zone.
+              Everything is 100% remote across all time zones — with replies within{" "}
+              {SITE.responseTime}.
             </p>
           </div>
         </div>
@@ -109,7 +112,7 @@ export default function AboutPage() {
 
           <div className="lg:col-span-8 space-y-6">
             <WordScrubHighlight
-              text={`Hi, I'm ${SITE.owner}, founder of Digital Experts. I design and build websites and lead a team of freelance designers, developers and video specialists. I have been doing this for ${SITE.yearsExperience}. I take on small projects myself and bring in the team when a project needs more hands. Either way, you know who is responsible for your work.`}
+              text={`Hi, I'm ${SITE.owner}, founder of Digital Experts. I design and build websites and lead a remote team of ${SITE.teamSize} — designers, developers, AI automation engineers, 2D/3D animators, illustrators, video editors and AI video producers. I have been doing this for ${SITE.yearsExperience}. I handle small projects directly and bring in specialists when a build needs more hands.`}
               className="font-display text-[clamp(1.45rem,2.7vw,2.35rem)] font-semibold leading-[1.25] tracking-[-0.02em]"
             />
           </div>
@@ -197,6 +200,41 @@ export default function AboutPage() {
                 <p className="text-sm sm:text-base text-[var(--text-secondary)]">{b.body}</p>
               </div>
             ))}
+          </div>
+        </div>
+
+        <div className="grid grid-cols-2 gap-4 rounded-3xl border border-[var(--border-subtle)] bg-[var(--bg-elevated)] p-6 sm:grid-cols-4 sm:p-8">
+          <div>
+            <p className="font-display text-3xl sm:text-4xl font-bold text-[var(--accent)]">
+              6+ yrs
+            </p>
+            <p className="mt-1 text-xs sm:text-sm text-[var(--text-secondary)]">
+              Over 6 years of delivery
+            </p>
+          </div>
+          <div>
+            <p className="font-display text-3xl sm:text-4xl font-bold text-[var(--accent)]">
+              25+
+            </p>
+            <p className="mt-1 text-xs sm:text-sm text-[var(--text-secondary)]">
+              Multi-disciplinary specialists
+            </p>
+          </div>
+          <div>
+            <p className="font-display text-3xl sm:text-4xl font-bold text-[var(--accent)]">
+              &lt; 1 hr
+            </p>
+            <p className="mt-1 text-xs sm:text-sm text-[var(--text-secondary)]">
+              Typical reply within {SITE.responseTime}
+            </p>
+          </div>
+          <div>
+            <p className="font-display text-3xl sm:text-4xl font-bold text-[var(--accent)]">
+              24/7
+            </p>
+            <p className="mt-1 text-xs sm:text-sm text-[var(--text-secondary)]">
+              Remote across every time zone
+            </p>
           </div>
         </div>
 

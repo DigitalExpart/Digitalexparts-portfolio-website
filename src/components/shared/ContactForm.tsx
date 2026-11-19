@@ -11,7 +11,9 @@ export const CONTACT_SERVICES = [
   "UI/UX design",
   "Graphic design and branding",
   "Email marketing",
-  "AI video",
+  "AI video (short movies, UGC, ads & YouTube)",
+  "2D/3D animation, illustration & video editing",
+  "AI automation and workflows",
   "Something else",
 ] as const;
 

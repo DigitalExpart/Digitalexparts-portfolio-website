@@ -74,7 +74,7 @@ export default function RootLayout({
     alternateName: SITE.alternateName,
     url: `${baseUrl}/`,
     description:
-      "Remote web design, development, email marketing and AI video studio.",
+      "Remote studio (6+ years, 25+ specialists) for web design, custom development, AI automation, 2D/3D animation, illustration, video editing, email marketing and AI video.",
     email: SITE.email,
     areaServed: "Worldwide",
     founder: {

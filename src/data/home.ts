@@ -58,19 +58,18 @@ export interface FaqItem {
 }
 
 export const HERO_COPY = {
-  availabilityLabel: "Taking on new projects",
-  headline: "Websites, brands and AI video that turn visitors into clients.",
+  availabilityLabel: "Taking on new projects · Replies within 1 hour",
+  headline: "Websites, brands, AI automation and video that turn visitors into clients.",
   subhead:
-    "Digital Experts is a remote web design and development studio for Wix, Squarespace, WordPress, Webflow and custom code. We also handle UI/UX, graphic design, email marketing and AI video, solo or with a full team.",
+    "Digital Experts is a remote studio with over 6 years experience and 25+ specialists across Wix, Squarespace, WordPress, Webflow and custom React code — plus AI automation, UI/UX, branding, 2D/3D animation, illustration, video editing, email and AI video.",
   primaryCta: "Start your project",
   secondaryCta: "Book a 30-minute call",
   canvasHint: "Hold to ripple · Press and hold the lines",
-  trustHeading: "Trusted by 100+ clients",
+  trustHeading: "Over 6 years active · 25+ team",
   trustItems: [
-    "200+ orders completed on Fiverr",
-    "4.7 rating from 57 reviews",
-    "100+ unique clients",
-    "416 hours on Upwork",
+    "200+ Fiverr orders · 4.7 rating (57 reviews)",
+    "100+ clients · 416 Upwork hours",
+    "Replies within 1 hour",
   ],
   nameClarityLine:
     "You may know us as Isaac Clara on Fiverr or Jumat Bello on Upwork. Same studio, same standards.",
@@ -80,7 +79,7 @@ export const HERO_COPY = {
 export const INTRO_COPY = {
   eyebrow: "01 · About Digital Experts",
   statement:
-    "Digital Experts helps founders and small businesses get a website that looks sharp, loads fast and brings in enquiries. We build on Wix, Squarespace, WordPress and Webflow, or write custom code when a project needs it. Need a brand, email campaigns or AI video to go with it? One team handles all of it.",
+    "Over 6 years of delivery with a 25+ specialist remote team. Digital Experts helps founders and growing businesses launch sharp websites on Wix, Squarespace, WordPress, Webflow or custom React code — paired with AI automation, UI/UX, branding, 2D/3D animation, illustration, video editing, email marketing and AI video.",
   ctaLabel: "More about us",
 };
 
@@ -105,18 +104,18 @@ export const ENGAGEMENT_MODELS: Record<"solo" | "team", EngagementModel> = {
   team: {
     id: "team",
     label: "Work with the team",
-    badge: "Coordinated Pod",
-    headline: "Full-studio capacity with one point of contact.",
+    badge: "25+ Specialists Pod",
+    headline: "25+ specialists backing your project with one point of contact.",
     summary:
-      "Bigger build? We bring in specialist designers, developers, motion artists and email experts from our team — work happens in parallel across roles while you still talk to one lead.",
+      "Bigger build? We pull in specialists from our 25+ member team — designers, developers, AI automation engineers, 2D/3D animators, illustrators, video editors and email experts — working in parallel while you talk to one lead.",
     howItWorks: [
-      "One point of contact who coordinates every designer, developer and specialist.",
-      "Work happens in parallel across web, branding, email and AI video.",
+      "One point of contact who coordinates our 25+ specialist roster for you.",
+      "Work happens in parallel across web, AI automation, branding, 2D/3D, editing, email & AI video.",
       "Fixed quote with a clear breakdown by role before work begins.",
     ],
     typicalScope:
-      "Full websites with branding, online stores, campaigns that combine web, email and video.",
-    speedLabel: "Work happens in parallel across roles",
+      "Full websites with AI automation, SaaS launches, e-commerce brands, multi-channel ad & video campaigns.",
+    speedLabel: "25+ specialists · Parallel delivery",
     idealFor: "Multi-track launches, growing businesses and agency partners.",
   },
 };
@@ -138,14 +137,24 @@ export const TEAM_ROLES: TeamRole[] = [
     tools: "Wix · WP · Webflow",
   },
   {
-    title: "Graphic Designer",
-    focus: "Logos, brand guidelines, pitch decks & social ad creative",
-    tools: "Identity · Social Kits",
+    title: "AI Automation Engineer",
+    focus: "AI chatbots, n8n/Make/Zapier workflows, CRM sync & API agents",
+    tools: "n8n · Make · AI APIs",
   },
   {
-    title: "Motion & AI Video Creator",
-    focus: "Scripted AI scenes, UGC product ads, explainers & captions",
-    tools: "AI Video · Editing",
+    title: "Graphic Designer & Illustrator",
+    focus: "Logos, brand guidelines, custom illustrations & social ad creative",
+    tools: "Identity · Illustration",
+  },
+  {
+    title: "2D/3D Animator & Video Editor",
+    focus: "2D/3D animation, product renders, YouTube & commercial editing",
+    tools: "2D/3D · Post-Production",
+  },
+  {
+    title: "AI Video Producer",
+    focus: "AI short movies, AI UGC, product commercials, product ads & YouTube",
+    tools: "AI Video · Ads · Films",
   },
   {
     title: "Email Specialist",
@@ -194,22 +203,26 @@ export const TOOLS_MARQUEE: ToolLogoItem[] = [
   { name: "Figma", category: "UI/UX" },
   { name: "React", category: "Front-End" },
   { name: "Next.js", category: "Full-Stack" },
+  { name: "Make & n8n", category: "AI Automation" },
+  { name: "2D & 3D Animation", category: "Motion" },
+  { name: "Illustration", category: "Custom Art" },
+  { name: "Video Editing", category: "Post-Prod" },
+  { name: "AI Video Tools", category: "AI Video" },
   { name: "Mailchimp", category: "Email" },
   { name: "Klaviyo", category: "Retention" },
   { name: "HubSpot", category: "CRM & Email" },
-  { name: "AI Video Tools", category: "Motion" },
 ];
 
 export const PROCESS_STEPS: ProcessStep[] = [
   {
     index: "01",
     title: "Discover",
-    subtitle: "Scope & price in writing",
+    subtitle: "Reply within 1 hour · Scope & price",
     description:
-      "We learn your goals, audience and deadline, then agree scope and price in writing before work starts.",
+      "We reply within 1 hour, learn your goals, audience and deadline, then agree scope and price in writing before work starts.",
     deliverables: [
-      "30-minute scope call or written brief review",
-      "Honest platform & solo-or-team recommendation",
+      "Response within 1 hour + 30-minute Calendly scope call",
+      "Honest platform, AI automation & solo-or-team recommendation",
       "Written scope, timeline and fixed quote",
     ],
   },
@@ -218,10 +231,10 @@ export const PROCESS_STEPS: ProcessStep[] = [
     title: "Design and build",
     subtitle: "Progress at milestones",
     description:
-      "We design the pages, build on the right platform and share progress so there are no surprises.",
+      "We design the pages, configure automations or animate and edit video — sharing progress at milestones so there are no surprises.",
     deliverables: [
-      "Wireframes & high-fidelity visual direction",
-      "Custom code or clean no-code implementation",
+      "Wireframes, visual direction or storyboards",
+      "Custom code, no-code, AI workflows or 2D/3D motion",
       "Milestone check-ins and revision rounds",
     ],
   },
@@ -230,11 +243,11 @@ export const PROCESS_STEPS: ProcessStep[] = [
     title: "Launch and grow",
     subtitle: "Tested & handed over",
     description:
-      "We test on every device, launch, hand over training and stay available for updates and improvements.",
+      "We test on every device, launch, hand over training and stay available for updates, automation tuning and ongoing creative.",
     deliverables: [
       "Cross-device QA, speed & SEO foundation checks",
       "Short training videos so you can edit on your own",
-      "Ongoing support for email, updates & AI video",
+      "Ongoing support for updates, AI automation, 2D/3D, editing & AI video",
     ],
   },
 ];
@@ -324,7 +337,7 @@ export const FAQ_ITEMS: FaqItem[] = [
     tag: "Team",
     question: "Do you work alone or with a team?",
     answer:
-      "Both. Small projects can be handled by one expert working directly with you. Larger projects bring in designers, developers, video and email specialists, with one person coordinating so you have one point of contact.",
+      "Both. Digital Experts has over 6 years of delivery experience and a remote team of 25+ specialists. Small projects can be handled one-to-one with Jumat directly, while larger builds bring in specialist developers, UI/UX designers, AI automation engineers, 2D/3D animators, illustrators, video editors and email specialists — all through one point of contact.",
   },
   {
     id: "platform-choice",
@@ -385,9 +398,16 @@ export const FAQ_ITEMS: FaqItem[] = [
   },
   {
     id: "ai-video-included",
-    tag: "AI Video",
-    question: "What does AI video production include?",
+    tag: "AI Video & Editing",
+    question: "What types of AI video, 2D/3D animation and video editing do you handle?",
     answer:
-      "Script and storyboard, AI-generated scenes and voiceover, editing, captions and sound, and exports in the right sizes for each platform. We can produce a single video or a batch for an ongoing campaign.",
+      "We produce AI short movies, AI UGC videos, product commercials, paid product ads and YouTube videos — including scripts, storyboards, AI scenes, voiceover, 2D/3D animation, custom illustration, full video editing, colour grading, captions and sound in platform-ready formats.",
+  },
+  {
+    id: "ai-automation-included",
+    tag: "AI Automation",
+    question: "What can you automate with AI workflows?",
+    answer:
+      "We build AI website chat assistants, lead capture and Calendly qualification flows, CRM and email syncs, and custom workflows using Make, n8n, Zapier and LLM APIs — so enquiries get fast answers and repetitive manual tasks run automatically.",
   },
 ];

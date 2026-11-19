@@ -134,8 +134,8 @@ export function ServicesSection() {
 
           <FadeUp className="flex flex-col items-start gap-4 lg:items-end">
             <p className="max-w-md text-sm sm:text-base text-[var(--text-secondary)] lg:text-right">
-              We recommend the platform that fits your budget — Wix, Squarespace, WordPress,
-              Webflow or custom React code — plus brand, email and AI video under one roof.
+              Wix, Squarespace, WordPress, Webflow and custom React code — paired with AI
+              automation, UI/UX, 2D/3D animation, illustration, video editing, email and AI video.
             </p>
             <MagneticButton href="/services" variant="secondary" size="sm">
               <span>Explore all services</span>

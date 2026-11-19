@@ -9,7 +9,7 @@ export const metadata: Metadata = {
     absolute: "Web Design, Development & AI Video FAQ | Digital Experts",
   },
   description:
-    "Straight answers about Digital Experts, Isaac Clara and Jumat Bello, Wix/Squarespace/WordPress/Webflow vs React builds, pricing, timelines and AI video.",
+    "Straight answers about Digital Experts, 6+ years & 25+ team, Wix/Squarespace/WordPress/Webflow vs React, AI automation, 2D/3D, editing & AI video.",
 };
 
 export default function FaqPage() {
@@ -22,8 +22,8 @@ export default function FaqPage() {
         </HeadingReveal>
         <FadeUp trigger="enter" delay={0.2} className="max-w-2xl">
           <p className="text-lead text-[var(--text-secondary)]">
-            Everything you might want to know about our studio names, platforms, timelines,
-            revisions and working solo or with our team.
+            Everything you might want to know about our studio names, {SITE.teamSize},{" "}
+            platforms, AI automation, 2D/3D animation, video editing, AI video and pricing.
           </p>
         </FadeUp>
       </section>

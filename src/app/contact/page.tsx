@@ -8,7 +8,7 @@ export const metadata: Metadata = {
     absolute: "Contact Digital Experts | Start Your Web or Design Project",
   },
   description:
-    "Tell us about your website, design, email or AI video project. Send an enquiry or book a 30-minute call and we will get back to you quickly.",
+    "Tell us about your website, AI automation, 2D/3D animation, video editing, design, email or AI video project. Book a 30-minute call — replies within 1 hour.",
 };
 
 interface ContactPageProps {
@@ -79,7 +79,8 @@ export default async function ContactPage({ searchParams }: ContactPageProps) {
                 ))}
               </div>
               <p className="text-xs text-[var(--text-muted)]">
-                Based in {SITE.location} and working with clients in every time zone.
+                Fully remote with {SITE.teamSize} and {SITE.yearsExperience} experience — replying
+                within {SITE.responseTime} across every time zone.
               </p>
             </div>
           </FadeUp>

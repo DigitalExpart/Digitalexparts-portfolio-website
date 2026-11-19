@@ -73,9 +73,10 @@ export function SoloOrTeamSection() {
             </HeadingReveal>
             <FadeUp>
               <p className="max-w-2xl text-sm sm:text-base text-[var(--text-secondary)]">
-                Small project? You work directly with one specialist. Bigger build? We bring in
-                specialist designers, developers, motion artists and email experts from our
-                team, and you still have one person to talk to.
+                Small project? Work directly with one specialist. Bigger build? Tap into our{" "}
+                {SITE.teamSize} across web, AI automation, 2D/3D animation, illustration, video
+                editing, email and AI video — backed by {SITE.yearsExperience} working together,
+                with one point of contact.
               </p>
             </FadeUp>
           </div>

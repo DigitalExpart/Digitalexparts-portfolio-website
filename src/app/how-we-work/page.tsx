@@ -9,7 +9,7 @@ export const metadata: Metadata = {
     absolute: "Hire a Solo Expert or a Full Team | Digital Experts",
   },
   description:
-    "Work directly with one expert or bring in a remote team of designers, developers and video editors. One point of contact, clear pricing.",
+    "Work directly with one expert or tap into a 25+ specialist remote team (6+ years active) across web, AI automation, 2D/3D animation, editing & AI video.",
 };
 
 const PROJECT_STEPS = [
@@ -31,7 +31,7 @@ const PROJECT_STEPS = [
   {
     index: "04",
     title: "Review and revisions",
-    body: "You give feedback and we refine it. [Add your real revision policy here.]",
+    body: "You share feedback at each milestone and we refine cleanly before moving to final sign-off.",
   },
   {
     index: "05",
@@ -50,9 +50,10 @@ export default function HowWeWorkPage() {
         </HeadingReveal>
         <FadeUp trigger="enter" delay={0.2} className="max-w-3xl">
           <p className="text-lead text-[var(--text-secondary)]">
-            Some projects need one skilled person. Others need a designer, a developer and a
-            video editor working together. We scale to fit, and you always have one person to
-            talk to.
+            Backed by {SITE.yearsExperience} and {SITE.teamSize}, we scale cleanly from a single
+            dedicated specialist to a full cross-functional pod — across web, AI automation,
+            2D/3D animation, illustration, video editing and AI video — with replies within{" "}
+            {SITE.responseTime}.
           </p>
         </FadeUp>
       </section>
@@ -133,7 +134,7 @@ export default function HowWeWorkPage() {
           <h2 className="text-h2">Roles we can bring in</h2>
         </div>
 
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {TEAM_ROLES.map((role, i) => (
             <div
               key={role.title}

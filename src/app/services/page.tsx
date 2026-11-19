@@ -10,7 +10,7 @@ import { TransitionLink } from "@/components/motion/PageTransitionProvider";
 export const metadata: Metadata = {
   title: "Services",
   description:
-    "One team for everything your business needs online: custom React/Next.js web builds, Wix, Squarespace, WordPress, Webflow, UI/UX, branding, email and AI video.",
+    "Websites on Wix, Squarespace, WordPress, Webflow & React, plus AI automation, UI/UX, 2D/3D animation, illustration, video editing, email marketing & AI video.",
 };
 
 export default function ServicesPage() {
@@ -25,8 +25,9 @@ export default function ServicesPage() {
           <FadeUp trigger="enter" delay={0.2}>
             <p className="text-lead text-[var(--text-secondary)] max-w-3xl">
               Platform-neutral builds across Wix, Squarespace, WordPress, Webflow and custom React
-              code — paired with UI/UX, graphic design, email marketing and AI video under{" "}
-              {SITE.owner}.
+              code — paired with AI automation, UI/UX, branding, 2D/3D animation, illustration,
+              video editing, email and AI video (short movies, AI UGC, commercials, ads &amp; YouTube)
+              backed by our {SITE.teamSize} under {SITE.owner}.
             </p>
           </FadeUp>
         </div>

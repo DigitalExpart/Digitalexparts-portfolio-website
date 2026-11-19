@@ -488,7 +488,7 @@ export function SiteHeader() {
                   </button>
                 </div>
                 <p className="text-xs text-[var(--text-muted)]">
-                  {SITE.nameLine} · {SITE.location}
+                  {SITE.nameLine} · {SITE.timezoneNote}
                 </p>
               </div>
 
