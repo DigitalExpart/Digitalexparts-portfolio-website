@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { ensureGsapRegistered, gsap } from "@/lib/gsap";
 import { ENGAGEMENT_MODELS, TEAM_ROLES } from "@/data/home";
@@ -10,54 +10,37 @@ import { MagneticButton } from "@/components/motion/MagneticButton";
 import { TransitionLink } from "@/components/motion/PageTransitionProvider";
 import { useMediaCapabilities } from "@/hooks/useMediaCapabilities";
 
+const ROLE_SHORT_LABELS = [
+  "UI/UX",
+  "Web & Apps",
+  "No-Code",
+  "AI Auto",
+  "Branding",
+  "2D/3D & Edit",
+  "AI Video",
+  "Email",
+];
+
 export function SoloOrTeamSection() {
   const [mode, setMode] = useState<"solo" | "team">("solo");
+  const [activeRoleIdx, setActiveRoleIdx] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
+
   const panelRef = useRef<HTMLDivElement>(null);
-  const rosterRef = useRef<HTMLDivElement>(null);
+  const spotlightCardRef = useRef<HTMLDivElement>(null);
+  const progressBarRef = useRef<HTMLDivElement>(null);
   const { prefersReducedMotion } = useMediaCapabilities();
 
   const current = ENGAGEMENT_MODELS[mode];
+  const activeRole = TEAM_ROLES[activeRoleIdx] ?? TEAM_ROLES[0];
 
-  // Initial scroll cascade on team role cards for mobile & desktop
-  useEffect(() => {
-    ensureGsapRegistered();
-    const roster = rosterRef.current;
-    if (!roster || prefersReducedMotion) return;
-
-    const roles = roster.querySelectorAll<HTMLElement>("[data-role-card]");
-    if (!roles.length) return;
-
-    const ctx = gsap.context(() => {
-      gsap.fromTo(
-        roles,
-        { opacity: 0.25, y: 22 },
-        {
-          opacity: 1,
-          y: 0,
-          duration: 0.65,
-          stagger: 0.045,
-          ease: "expo.out",
-          clearProps: "transform",
-          scrollTrigger: {
-            trigger: roster,
-            start: "top 88%",
-            once: true,
-          },
-        }
-      );
-    }, rosterRef);
-
-    return () => ctx.revert();
-  }, [prefersReducedMotion]);
-
+  // Mode toggle animation
   useEffect(() => {
     ensureGsapRegistered();
     const panel = panelRef.current;
     if (!panel || prefersReducedMotion) return;
 
     const items = panel.querySelectorAll("[data-morph-item]");
-    const roles = rosterRef.current?.querySelectorAll("[data-role-card]") ?? [];
-
     const ctx = gsap.context(() => {
       gsap.fromTo(
         items,
@@ -71,25 +54,80 @@ export function SoloOrTeamSection() {
           overwrite: true,
         }
       );
-
-      if (roles.length) {
-        gsap.fromTo(
-          roles,
-          { scale: 0.98, opacity: 0.65 },
-          {
-            scale: 1,
-            opacity: 1,
-            duration: 0.45,
-            stagger: 0.04,
-            ease: "power3.out",
-            overwrite: true,
-          }
-        );
-      }
     }, panelRef);
 
     return () => ctx.revert();
   }, [mode, prefersReducedMotion]);
+
+  // Kinetic 3D card swap whenever activeRoleIdx changes
+  useEffect(() => {
+    ensureGsapRegistered();
+    const card = spotlightCardRef.current;
+    if (!card || prefersReducedMotion) return;
+
+    const ctx = gsap.context(() => {
+      gsap.fromTo(
+        card,
+        {
+          opacity: 0,
+          y: 22,
+          rotateX: -8,
+          scale: 0.96,
+          transformPerspective: 900,
+        },
+        {
+          opacity: 1,
+          y: 0,
+          rotateX: 0,
+          scale: 1,
+          duration: 0.58,
+          ease: "expo.out",
+          clearProps: "transform",
+          overwrite: true,
+        }
+      );
+    }, spotlightCardRef);
+
+    return () => ctx.revert();
+  }, [activeRoleIdx, prefersReducedMotion]);
+
+  const goToRole = useCallback((idx: number) => {
+    const normalized = (idx + TEAM_ROLES.length) % TEAM_ROLES.length;
+    setActiveRoleIdx(normalized);
+  }, []);
+
+  // Auto-cycle single specialist spotlight every 3.4s with live lime progress bar
+  useEffect(() => {
+    ensureGsapRegistered();
+    const bar = progressBarRef.current;
+
+    if (prefersReducedMotion || isPaused) {
+      if (bar) gsap.killTweensOf(bar);
+      return;
+    }
+
+    if (bar) {
+      gsap.fromTo(
+        bar,
+        { scaleX: 0 },
+        {
+          scaleX: 1,
+          duration: 3.4,
+          ease: "none",
+          overwrite: true,
+        }
+      );
+    }
+
+    const timer = window.setTimeout(() => {
+      setActiveRoleIdx((prev) => (prev + 1) % TEAM_ROLES.length);
+    }, 3400);
+
+    return () => {
+      window.clearTimeout(timer);
+      if (bar) gsap.killTweensOf(bar);
+    };
+  }, [activeRoleIdx, isPaused, prefersReducedMotion]);
 
   return (
     <section
@@ -110,7 +148,8 @@ export function SoloOrTeamSection() {
           className="h-full w-full -rotate-12"
         />
       </div>
-      <div className="container-editorial relative z-10 space-y-12 sm:space-y-14">
+
+      <div className="container-editorial relative z-10 space-y-10 sm:space-y-12">
         <div className="flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
           <div className="space-y-4 max-w-3xl">
             <p className="text-eyebrow">04 · Solo or Team</p>
@@ -120,9 +159,9 @@ export function SoloOrTeamSection() {
             <FadeUp>
               <p className="max-w-2xl text-sm sm:text-base text-[var(--text-secondary)]">
                 Small project? Work directly with one specialist. Bigger build? Tap into our{" "}
-                {SITE.teamSize} across web, AI automation, 2D/3D animation, illustration, video
-                editing, email and AI video — backed by {SITE.yearsExperience} working together,
-                with one point of contact.
+                {SITE.teamSize} across web, mobile apps, AI automation, 2D/3D animation,
+                illustration, video editing, email and AI video — backed by {SITE.yearsExperience}{" "}
+                working together, with one point of contact.
               </p>
             </FadeUp>
           </div>
@@ -188,9 +227,10 @@ export function SoloOrTeamSection() {
           role="tabpanel"
           aria-labelledby={mode === "solo" ? "tab-solo" : "tab-team"}
           ref={panelRef}
-          className="grid grid-cols-1 gap-8 rounded-3xl border border-[var(--border-subtle)] bg-[var(--bg-elevated)]/70 p-6 sm:p-10 lg:grid-cols-12 lg:gap-12"
+          className="grid grid-cols-1 gap-8 rounded-3xl border border-[var(--border-subtle)] bg-[var(--bg-elevated)]/75 p-6 sm:p-10 lg:grid-cols-12 lg:items-stretch lg:gap-12"
         >
-          <div className="lg:col-span-7 space-y-8">
+          {/* Left Engagement Model Summary */}
+          <div className="lg:col-span-7 flex flex-col justify-between gap-7">
             <div data-morph-item className="space-y-4">
               <div className="inline-flex items-center gap-2 rounded-full border border-[var(--accent)]/40 bg-[var(--accent-soft)] px-3.5 py-1.5 font-mono text-xs uppercase tracking-[0.12em] text-[var(--accent)]">
                 <span>{current.label}</span>
@@ -255,58 +295,106 @@ export function SoloOrTeamSection() {
             </div>
           </div>
 
-          <div className="lg:col-span-5 flex flex-col justify-between gap-6 lg:border-l lg:border-[var(--border-subtle)] lg:pl-10">
+          {/* Right Compact Single-Role Kinetic Spotlight Stage (displays one specialist at a time!) */}
+          <div
+            onMouseEnter={() => setIsPaused(true)}
+            onMouseLeave={() => setIsPaused(false)}
+            className="lg:col-span-5 flex flex-col justify-between gap-6 lg:border-l lg:border-[var(--border-subtle)] lg:pl-10"
+          >
             <div data-morph-item className="space-y-4">
               <div className="flex flex-wrap items-center justify-between gap-2">
                 <p className="text-eyebrow">
-                  {mode === "solo"
-                    ? "Lead + expandable team roles"
-                    : "Roles we can bring in"}
+                  Specialist Spotlight · Lead: {SITE.owner}
                 </p>
-                <span className="font-mono text-xs text-[var(--text-muted)]">
-                  Lead: {SITE.owner}
-                </span>
+                <div className="flex items-center gap-2">
+                  <span className="font-mono text-xs tabular-nums text-[var(--accent)]">
+                    0{activeRoleIdx + 1} / 0{TEAM_ROLES.length}
+                  </span>
+                  <button
+                    type="button"
+                    onClick={() => goToRole(activeRoleIdx - 1)}
+                    aria-label="Previous specialist role"
+                    className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-[var(--border-strong)] bg-[var(--bg-primary)]/80 text-sm text-[var(--text-primary)] transition-all active:scale-95 hover:border-[var(--accent)] hover:text-[var(--accent)]"
+                  >
+                    ←
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => goToRole(activeRoleIdx + 1)}
+                    aria-label="Next specialist role"
+                    className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-[var(--border-strong)] bg-[var(--bg-primary)]/80 text-sm text-[var(--text-primary)] transition-all active:scale-95 hover:border-[var(--accent)] hover:text-[var(--accent)]"
+                  >
+                    →
+                  </button>
+                </div>
               </div>
 
-              <div ref={rosterRef} className="space-y-2.5">
-                {TEAM_ROLES.map((role) => {
-                  const isTeamActive = mode === "team";
+              {/* Single Animated Specialist Showcase Card */}
+              <div
+                ref={spotlightCardRef}
+                className="relative overflow-hidden rounded-2xl border border-[var(--accent)]/40 bg-[linear-gradient(145deg,#0B101D_0%,#07090F_100%)] p-6 sm:p-7 shadow-[0_18px_48px_rgba(5,6,10,0.45)] will-change-transform"
+              >
+                {/* Live cycling progress line */}
+                <div className="absolute inset-x-0 top-0 h-[2px] bg-white/10">
+                  <div
+                    ref={progressBarRef}
+                    className="h-full w-full origin-left bg-[var(--accent)]"
+                    style={{ transform: "scaleX(0)" }}
+                  />
+                </div>
+
+                <div className="flex items-center justify-between gap-2">
+                  <span className="inline-flex items-center gap-2 rounded-full border border-[var(--accent)]/35 bg-[var(--accent-soft)] px-3 py-1 font-mono text-[10px] uppercase tracking-[0.12em] text-[var(--accent)]">
+                    <span className="h-1.5 w-1.5 rounded-full bg-[var(--accent)]" />
+                    ROLE 0{activeRoleIdx + 1}
+                  </span>
+                  <span className="font-mono text-[11px] text-[var(--text-secondary)]">
+                    {activeRole.tools}
+                  </span>
+                </div>
+
+                <h4 className="mt-5 font-display text-2xl sm:text-3xl font-bold tracking-tight text-[var(--text-primary)]">
+                  {activeRole.title}
+                </h4>
+
+                <p className="mt-3 text-sm sm:text-base leading-relaxed text-[var(--text-secondary)]">
+                  {activeRole.focus}.
+                </p>
+
+                <div className="mt-6 flex items-center justify-between border-t border-[var(--border-subtle)] pt-4 text-xs font-mono uppercase tracking-[0.12em]">
+                  <span className="text-[var(--text-muted)]">
+                    {mode === "solo" ? "Direct 1-on-1 option" : "Backed by 25+ team"}
+                  </span>
+                  <span className="text-[var(--accent)]">100% Remote</span>
+                </div>
+              </div>
+
+              {/* Compact Interactive Role Switcher Pills */}
+              <div className="flex flex-wrap gap-2" role="tablist" aria-label="Select specialist role">
+                {TEAM_ROLES.map((role, idx) => {
+                  const isActive = idx === activeRoleIdx;
                   return (
-                    <div
+                    <button
                       key={role.title}
-                      data-role-card
-                      className={`rounded-xl border p-3.5 transition-colors duration-300 ${
-                        isTeamActive
-                          ? "border-[var(--accent)]/40 bg-[var(--bg-primary)]"
-                          : "border-[var(--border-subtle)] bg-[var(--bg-primary)]/50"
+                      type="button"
+                      role="tab"
+                      aria-selected={isActive}
+                      onClick={() => goToRole(idx)}
+                      className={`inline-flex min-h-[36px] items-center gap-1.5 rounded-full border px-3 font-mono text-[11px] transition-all active:scale-95 ${
+                        isActive
+                          ? "border-[var(--accent)] bg-[var(--accent)] text-[var(--accent-ink)] font-semibold"
+                          : "border-[var(--border-subtle)] bg-[var(--bg-primary)]/60 text-[var(--text-secondary)] hover:border-[var(--border-strong)] hover:text-[var(--text-primary)]"
                       }`}
                     >
-                      <div className="flex flex-wrap items-center justify-between gap-2">
-                        <div className="flex items-center gap-2.5">
-                          <span
-                            aria-hidden="true"
-                            className={`h-2 w-2 rounded-full transition-colors duration-300 ${
-                              isTeamActive ? "bg-[var(--accent)]" : "bg-[var(--text-muted)]"
-                            }`}
-                          />
-                          <h4 className="font-display text-sm sm:text-base font-semibold text-[var(--text-primary)]">
-                            {role.title}
-                          </h4>
-                        </div>
-                        <span className="font-mono text-[11px] text-[var(--text-muted)]">
-                          {role.tools}
-                        </span>
-                      </div>
-                      <p className="mt-1 pl-4.5 text-xs sm:text-sm text-[var(--text-secondary)]">
-                        {role.focus}
-                      </p>
-                    </div>
+                      <span className="opacity-70">0{idx + 1}</span>
+                      <span>{ROLE_SHORT_LABELS[idx] ?? role.title}</span>
+                    </button>
                   );
                 })}
               </div>
             </div>
 
-            <div data-morph-item className="flex flex-wrap items-center justify-between gap-4 pt-2">
+            <div data-morph-item className="flex flex-wrap items-center justify-between gap-4 border-t border-[var(--border-subtle)] pt-5">
               <p className="text-xs text-[var(--text-muted)] max-w-[230px]">
                 Not sure whether you need one expert or a team? We will recommend the simplest option.
               </p>
